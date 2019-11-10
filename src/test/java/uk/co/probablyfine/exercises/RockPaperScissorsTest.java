@@ -35,12 +35,9 @@ public class RockPaperScissorsTest {
     }
 
     private Outcome play(Throw move1, Throw move2) {
-        if(move1 == PAPER && move2 == ROCK) {
-            return P1;
-        } else if (move1 == ROCK && move2 == PAPER) {
-            return P2;
-        } else {
-            return DRAW;
-        }
+        return new Outcome[][] {
+            { DRAW, P2 },
+            { P1, DRAW }
+        }[move1.ordinal()][move2.ordinal()];
     }
 }
