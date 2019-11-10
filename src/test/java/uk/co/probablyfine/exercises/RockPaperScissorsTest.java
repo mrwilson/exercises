@@ -9,6 +9,10 @@ public class RockPaperScissorsTest {
 
     @Test
     public void first() {
-        assertThat(1, is(1));
+        assertThat(play("ROCK", "ROCK"), is("DRAW"));
+    }
+
+    private Object play(String rock, String rock1) {
+        return "DRAW";
     }
 }
