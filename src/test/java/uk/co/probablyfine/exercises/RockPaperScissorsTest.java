@@ -26,13 +26,9 @@ public class RockPaperScissorsTest {
     }
 
     private Object play(Throw move1, Throw move2) {
-        return play(move1.name(), move2.name());
-    }
-
-    private Object play(String move1, String move2) {
-        if("PAPER".equals(move1) && "ROCK".equals(move2)) {
+        if(move1 == PAPER && move2 == ROCK) {
             return "P1";
-        } else if ("ROCK".equals(move1) && "PAPER".equals(move2)) {
+        } else if (move1 == ROCK && move2 == PAPER) {
             return "P2";
         } else {
             return "DRAW";
