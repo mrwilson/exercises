@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Outcome.DRAW;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.PAPER;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.ROCK;
 
@@ -14,9 +15,13 @@ public class RockPaperScissorsTest {
         PAPER
     }
 
+    enum Outcome {
+        DRAW
+    }
+
     @Test
     public void first() {
-        assertThat(play(ROCK, ROCK), is("DRAW"));
+        assertThat(play(ROCK, ROCK), is(DRAW));
     }
 
     @Test
@@ -31,7 +36,7 @@ public class RockPaperScissorsTest {
         } else if (move1 == ROCK && move2 == PAPER) {
             return "P2";
         } else {
-            return "DRAW";
+            return DRAW;
         }
     }
 }
