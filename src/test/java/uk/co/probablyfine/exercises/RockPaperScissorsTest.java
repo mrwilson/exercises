@@ -40,11 +40,12 @@ public class RockPaperScissorsTest {
     @Test
     public void third() {
         assertThat(play(PAPER, SCISSORS), is(P2));
+        assertThat(play(ROCK, SCISSORS), is(P1));
     }
 
     private Outcome play(Throw move1, Throw move2) {
         return new Outcome[][] {
-            { DRAW, P2 },
+            { DRAW, P2, P1 },
             { P1, DRAW, P2 }
         }[move1.ordinal()][move2.ordinal()];
     }
