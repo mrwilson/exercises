@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.PAPER;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.ROCK;
 
 public class RockPaperScissorsTest {
@@ -20,8 +21,8 @@ public class RockPaperScissorsTest {
 
     @Test
     public void second() {
-        assertThat(play("PAPER","ROCK"), is("P1"));
-        assertThat(play("ROCK","PAPER"), is("P2"));
+        assertThat(play(PAPER, ROCK), is("P1"));
+        assertThat(play(ROCK, PAPER), is("P2"));
     }
 
     private Object play(Throw move1, Throw move2) {
