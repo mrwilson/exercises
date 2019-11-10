@@ -9,12 +9,14 @@ import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Outcome.P1;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Outcome.P2;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.PAPER;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.ROCK;
+import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.SCISSORS;
 
 public class RockPaperScissorsTest {
 
     enum Throw {
         ROCK,
-        PAPER
+        PAPER,
+        SCISSORS
     }
 
     enum Outcome {
@@ -35,10 +37,15 @@ public class RockPaperScissorsTest {
         assertThat(play(PAPER, PAPER), is(DRAW));
     }
 
+    @Test
+    public void third() {
+        assertThat(play(PAPER, SCISSORS), is(P2));
+    }
+
     private Outcome play(Throw move1, Throw move2) {
         return new Outcome[][] {
             { DRAW, P2 },
-            { P1, DRAW }
+            { P1, DRAW, P2 }
         }[move1.ordinal()][move2.ordinal()];
     }
 }
