@@ -32,6 +32,7 @@ public class RockPaperScissorsTest {
     public void second() {
         assertThat(play(PAPER, ROCK), is(P1));
         assertThat(play(ROCK, PAPER), is(P2));
+        assertThat(play(PAPER, PAPER), is(DRAW));
     }
 
     private Outcome play(Throw move1, Throw move2) {
