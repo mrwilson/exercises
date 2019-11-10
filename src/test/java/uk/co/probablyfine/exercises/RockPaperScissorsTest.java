@@ -12,7 +12,7 @@ public class RockPaperScissorsTest {
         assertThat(play("ROCK", "ROCK"), is("DRAW"));
     }
 
-    private Object play(String rock, String rock1) {
+    private Object play(String move1, String move2) {
         return "DRAW";
     }
 }
