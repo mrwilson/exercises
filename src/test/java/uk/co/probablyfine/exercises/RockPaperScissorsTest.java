@@ -9,7 +9,8 @@ import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.ROCK;
 public class RockPaperScissorsTest {
 
     enum Throw {
-        ROCK;
+        ROCK,
+        PAPER;
     }
 
     @Test
