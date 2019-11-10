@@ -34,7 +34,7 @@ public class RockPaperScissorsTest {
         assertThat(play(ROCK, PAPER), is(P2));
     }
 
-    private Object play(Throw move1, Throw move2) {
+    private Outcome play(Throw move1, Throw move2) {
         if(move1 == PAPER && move2 == ROCK) {
             return P1;
         } else if (move1 == ROCK && move2 == PAPER) {
