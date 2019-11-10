@@ -13,6 +13,12 @@ import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.SCISSORS;
 
 public class RockPaperScissorsTest {
 
+    private static final Outcome[][] ROCK_PAPER_SCISSORS = {
+            {DRAW, P2, P1},
+            {P1, DRAW, P2},
+            {P2, P1, DRAW}
+    };
+
     enum Throw {
         ROCK,
         PAPER,
@@ -49,10 +55,6 @@ public class RockPaperScissorsTest {
     }
 
     private Outcome play(Throw move1, Throw move2) {
-        return new Outcome[][] {
-            { DRAW, P2, P1 },
-            { P1, DRAW, P2 },
-            { P2, P1, DRAW }
-        }[move1.ordinal()][move2.ordinal()];
+        return ROCK_PAPER_SCISSORS[move1.ordinal()][move2.ordinal()];
     }
 }
