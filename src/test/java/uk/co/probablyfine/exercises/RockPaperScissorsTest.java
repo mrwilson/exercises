@@ -11,7 +11,7 @@ public class RockPaperScissorsTest {
 
     enum Throw {
         ROCK,
-        PAPER;
+        PAPER
     }
 
     @Test
