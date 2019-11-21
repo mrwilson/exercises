@@ -10,10 +10,14 @@ public class SortingCharactersTest {
     @Test
     public void one() {
         assertThat(sort("a"), is("a"));
+    }
 
+    @Test
+    public void caps() {
+        assertThat(sort("aA"), is("aa"));
     }
 
     private String sort(String input) {
-        return input;
+        return input.toLowerCase();
     }
 }
