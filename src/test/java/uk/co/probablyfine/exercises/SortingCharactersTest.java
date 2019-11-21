@@ -26,9 +26,15 @@ public class SortingCharactersTest {
         assertThat(sort("Ba"), is("ab"));
     }
 
+    @Test
+    public void capsExample() {
+        assertThat(sort("When not studying nuclear physics, Bambi likes to play beach volleyball."), is("aaaaabbbbcccdeeeeeghhhiiiiklllllllmnnnnooopprsssstttuuvwyyyy"));
+    }
+
     private String sort(String input) {
         return input.toLowerCase()
             .chars()
+            .filter(character -> character >= 'A' && character <= 'z')
             .sorted()
             .mapToObj(Character::toString)
             .collect(Collectors.joining());
