@@ -19,4 +19,7 @@ testCommitRevert {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    testCompile 'org.openjdk.jmh:jmh-core:1.19'
+    testCompile 'org.openjdk.jmh:jmh-generator-annprocess:1.19'
 }
