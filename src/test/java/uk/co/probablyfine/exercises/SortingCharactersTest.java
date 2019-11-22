@@ -32,7 +32,7 @@ public class SortingCharactersTest {
     static String sort(String input) {
         return input.toLowerCase()
             .chars()
-            .filter(character -> 'A' <= character && character <= 'z')
+            .filter(character -> 'a' <= character && character <= 'z')
             .sorted()
             .mapToObj(Character::toString)
             .collect(Collectors.joining());
