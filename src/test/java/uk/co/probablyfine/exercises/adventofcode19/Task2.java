@@ -91,6 +91,7 @@ public class Task2 {
     interface Operation {
         int ADD = 1;
         int MULTIPLY = 2;
+        int HALT = 99;
     }
 
     private static int[] runIntcode(int[] input) {
@@ -100,7 +101,7 @@ public class Task2 {
                 input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
             } else if (input[i] == Operation.MULTIPLY) {
                 input[input[i+3]] = input[input[i+1]] * input[input[i+2]];
-            } else if (input[i] == 99) {
+            } else if (input[i] == Operation.HALT) {
                 break;
             }
         }
