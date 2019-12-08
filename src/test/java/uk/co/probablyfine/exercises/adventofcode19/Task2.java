@@ -96,13 +96,18 @@ public class Task2 {
 
     private static int[] runIntcode(int[] input) {
 
-        for (int i = 0; i < input.length; i += 4) {
-            if (input[i] == Operation.ADD) {
-                input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
-            } else if (input[i] == Operation.MULTIPLY) {
-                input[input[i+3]] = input[input[i+1]] * input[input[i+2]];
-            } else if (input[i] == Operation.HALT) {
-                break;
+        loop: for (int i = 0; i < input.length; i += 4) {
+
+            switch(input[i]) {
+                case Operation.ADD:
+                    input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
+                    break;
+                case Operation.MULTIPLY:
+                    input[input[i+3]] = input[input[i+1]] * input[input[i+2]];
+                    break;
+                case Operation.HALT:
+                default:
+                    break loop;
             }
         }
 
