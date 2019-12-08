@@ -50,6 +50,18 @@ public class Task2 {
         assertThat(output[0], is(3500));
     }
 
+    @Test
+    public void halt() {
+        int[] input = {
+            99,
+            1, 0, 0, 0,
+        };
+
+        int[] output = runIntcode(input);
+
+        assertThat(output[0], is(99));
+    }
+
     private int[] runIntcode(int[] input) {
 
         for (int i = 0; i < input.length; i += 4) {
@@ -57,6 +69,8 @@ public class Task2 {
                 input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
             } else if (input[i] == 2) {
                 input[input[i+3]] = input[input[i+1]] * input[input[i+2]];
+            } else if (input[i] == 99) {
+                break;
             }
         }
 
