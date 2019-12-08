@@ -34,9 +34,25 @@ public class Task2 {
         assertThat(output[3], is(6));
     }
 
+    @Test
+    public void multipleOpcodes() {
+        int[] input = {
+            1, 9, 10, 3,
+            2, 3, 11, 0,
+            99,
+            30, 40, 50
+
+        };
+
+        int[] output = runIntcode(input);
+
+        assertThat(output[3], is(70));
+        assertThat(output[0], is(3500));
+    }
+
     private int[] runIntcode(int[] input) {
 
-        for (int i = 0; i < input.length; i++) {
+        for (int i = 0; i < input.length; i += 4) {
             if (input[i] == 1) {
                 input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
             } else if (input[i] == 2) {
