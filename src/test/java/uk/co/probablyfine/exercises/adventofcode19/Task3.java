@@ -25,21 +25,20 @@ public class Task3 {
                 {1, 1}
         };
 
-        assertThat(wireCross(wire1Points, wire2Points), is(2));
+        assertThat(wireCross(
+            Arrays.stream(wire1Points),
+            Arrays.stream(wire2Points)
+        ), is(2));
 
     }
 
-    private int wireCross(int[][] wire1Points, int[][] wire2Points) {
-        Stream<int[]> wire1 = Arrays.stream(wire1Points);
-        Stream<int[]> wire2 = Arrays.stream(wire2Points);
-
+    private int wireCross(Stream<int[]> wire1, Stream<int[]> wire2) {
         return Stream.concat(wire1, wire2)
         .map(this::toPair)
         .distinct()
         .mapToInt(pair -> pair.x + pair.y)
         .max()
         .orElse(0);
-
     }
 
     private Pair toPair(int[] ints) {
