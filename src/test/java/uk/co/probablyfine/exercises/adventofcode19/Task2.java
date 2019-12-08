@@ -62,6 +62,18 @@ public class Task2 {
         assertThat(output[0], is(99));
     }
 
+    @Test
+    public void exampleFromSpec() {
+        int[] input = {
+            1,1,1,4,99,5,6,0,99
+        };
+
+        int[] output = runIntcode(input);
+
+        assertThat(output[0], is(30));
+        assertThat(output[4], is(2));
+    }
+
     private int[] runIntcode(int[] input) {
 
         for (int i = 0; i < input.length; i += 4) {
