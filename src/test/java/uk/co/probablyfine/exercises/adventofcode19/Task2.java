@@ -88,10 +88,14 @@ public class Task2 {
         assertThat(output[4], is(2));
     }
 
+    interface Operation {
+        int ADD = 1;
+    }
+
     private static int[] runIntcode(int[] input) {
 
         for (int i = 0; i < input.length; i += 4) {
-            if (input[i] == 1) {
+            if (input[i] == Operation.ADD) {
                 input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
             } else if (input[i] == 2) {
                 input[input[i+3]] = input[input[i+1]] * input[input[i+2]];
