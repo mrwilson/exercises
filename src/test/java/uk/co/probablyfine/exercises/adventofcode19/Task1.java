@@ -12,7 +12,12 @@ public class Task1 {
         assertThat(fuelRequiredForMass(12), is(2));
     }
 
+    @Test
+    public void secondExample() {
+        assertThat(fuelRequiredForMass(1969), is(654));
+    }
+
     private int fuelRequiredForMass(int mass) {
-        return 2;
+        return (mass / 3) - 2;
     }
 }
