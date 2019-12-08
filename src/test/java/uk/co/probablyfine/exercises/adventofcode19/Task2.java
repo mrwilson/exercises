@@ -25,11 +25,22 @@ public class Task2 {
         assertThat(output[0], is(2));
     }
 
+    @Test
+    public void multiplication() {
+        int[] input = {2, 3, 0, 3};
+
+        int[] output = runIntcode(input);
+
+        assertThat(output[3], is(6));
+    }
+
     private int[] runIntcode(int[] input) {
 
         for (int i = 0; i < input.length; i++) {
             if (input[i] == 1) {
                 input[input[i+3]] = input[input[i+1]] + input[input[i+2]];
+            } else if (input[i] == 2) {
+                input[input[i+3]] = input[input[i+1]] * input[input[i+2]];
             }
         }
 
