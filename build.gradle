@@ -14,6 +14,7 @@ repositories {
 }
 
 testCommitRevert {
+    revertCommand = "ls"
     commitCommand = "git commit --all --message AdventOfCode19"
 }
 
