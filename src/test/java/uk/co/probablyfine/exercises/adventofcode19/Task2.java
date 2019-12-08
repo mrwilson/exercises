@@ -9,6 +9,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Task2 {
 
+    public static void main(String... args) {
+
+        int[] input = {
+            // PASTE INPUT FROM TEST
+        };
+
+        input[1] = 12;
+        input[2] = 2;
+
+        int[] output = runIntcode(input);
+
+        System.out.println(output[0]);
+    }
+
     @Test
     public void noOps() {
         int[] input = {};
@@ -74,7 +88,7 @@ public class Task2 {
         assertThat(output[4], is(2));
     }
 
-    private int[] runIntcode(int[] input) {
+    private static int[] runIntcode(int[] input) {
 
         for (int i = 0; i < input.length; i += 4) {
             if (input[i] == 1) {
