@@ -18,39 +18,39 @@ class IntCode {
 
     static int[] runIntcode(int[] program, int input, Consumer<Integer> output) {
 
-        int i = 0;
+        int pointer = 0;
 
         loop:
-        while (i < program.length) {
+        while (pointer < program.length) {
 
-            boolean firstArgMode = ((program[i] / 100) % 10) == 0;
-            boolean secondArgMode = (program[i] / 1000) == 0;
+            boolean firstArgMode = ((program[pointer] / 100) % 10) == 0;
+            boolean secondArgMode = (program[pointer] / 1000) == 0;
 
-            int operation = program[i] % 100;
+            int operation = program[pointer] % 100;
 
             switch (operation) {
                 case Operation.ADD:
-                    program[program[i + 3]] =
-                            arg(program, i + 1, firstArgMode) + arg(program, i + 2, secondArgMode);
+                    program[program[pointer + 3]] =
+                            arg(program, pointer + 1, firstArgMode) + arg(program, pointer + 2, secondArgMode);
 
-                    i += 4;
+                    pointer += 4;
                     break;
 
                 case Operation.MULTIPLY:
-                    program[program[i + 3]] =
-                            arg(program, i + 1, firstArgMode) * arg(program, i + 2, secondArgMode);
+                    program[program[pointer + 3]] =
+                            arg(program, pointer + 1, firstArgMode) * arg(program, pointer + 2, secondArgMode);
 
-                    i += 4;
+                    pointer += 4;
                     break;
 
                 case Operation.STORE:
-                    program[program[i + 1]] = input;
-                    i += 2;
+                    program[program[pointer + 1]] = input;
+                    pointer += 2;
                     break;
 
                 case Operation.RETURN:
-                    output.accept(arg(program, i + 1, firstArgMode));
-                    i += 2;
+                    output.accept(arg(program, pointer + 1, firstArgMode));
+                    pointer += 2;
                     break;
 
                 case Operation.HALT:
