@@ -28,7 +28,7 @@ class IntCode {
                     program[program[i+3]] = program[program[i+1]] * program[program[i+2]]; break;
 
                 case Operation.STORE:
-                    program[program[i+1]] = input;
+                    program[program[i+1]] = input; break;
 
                 case Operation.HALT:
                 default:
