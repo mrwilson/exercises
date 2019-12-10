@@ -2,8 +2,6 @@ package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -18,7 +16,7 @@ public class Task2 {
         input[1] = 12;
         input[2] = 2;
 
-        int[] output = runIntcode(input);
+        int[] output = IntCode.runIntcode(input);
 
         System.out.println(output[0]);
     }
@@ -27,14 +25,14 @@ public class Task2 {
     public void noOps() {
         int[] input = {};
 
-        assertThat(runIntcode(input), is(input));
+        assertThat(IntCode.runIntcode(input), is(input));
     }
 
     @Test
     public void addition() {
         int[] input = {1, 0, 0, 0};
 
-        int[] output = runIntcode(input);
+        int[] output = IntCode.runIntcode(input);
 
         assertThat(output[0], is(2));
     }
@@ -43,7 +41,7 @@ public class Task2 {
     public void multiplication() {
         int[] input = {2, 3, 0, 3};
 
-        int[] output = runIntcode(input);
+        int[] output = IntCode.runIntcode(input);
 
         assertThat(output[3], is(6));
     }
@@ -58,7 +56,7 @@ public class Task2 {
 
         };
 
-        int[] output = runIntcode(input);
+        int[] output = IntCode.runIntcode(input);
 
         assertThat(output[3], is(70));
         assertThat(output[0], is(3500));
@@ -71,7 +69,7 @@ public class Task2 {
             1, 0, 0, 0,
         };
 
-        int[] output = runIntcode(input);
+        int[] output = IntCode.runIntcode(input);
 
         assertThat(output[0], is(99));
     }
@@ -82,36 +80,10 @@ public class Task2 {
             1,1,1,4,99,5,6,0,99
         };
 
-        int[] output = runIntcode(input);
+        int[] output = IntCode.runIntcode(input);
 
         assertThat(output[0], is(30));
         assertThat(output[4], is(2));
     }
 
-    interface Operation {
-        int ADD = 1;
-        int MULTIPLY = 2;
-        int HALT = 99;
     }
-
-    private static int[] runIntcode(int[] input) {
-
-        loop: for (int i = 0; i < input.length; i += 4) {
-
-            switch(input[i]) {
-
-                case Operation.ADD:
-                    input[input[i+3]] = input[input[i+1]] + input[input[i+2]]; break;
-
-                case Operation.MULTIPLY:
-                    input[input[i+3]] = input[input[i+1]] * input[input[i+2]]; break;
-
-                case Operation.HALT:
-                default:
-                    break loop;
-            }
-        }
-
-        return input;
-    }
-}
