@@ -20,15 +20,24 @@ public class Task4 {
     public void atLeastOnePairOfMatchingDigits() {
         assertTrue(validPassword("111111"));
         assertFalse(validPassword("121212"));
+    }
 
+    @Test
+    public void notDescendingOrder() {
+        assertTrue(validPassword("123466"));
+        assertFalse(validPassword("664321"));
     }
 
     private boolean validPassword(String password) {
+        boolean hasADouble = false;
+        boolean notDescending = true;
+
         for (int i = 0; i < password.length() - 1; i++) {
-            if (password.charAt(i) == password.charAt(i+1)) return true;
+            if (password.charAt(i) == password.charAt(i+1)) hasADouble = true;
+            if (password.charAt(i) > password.charAt(i+1)) notDescending = false;
         }
 
-        return false;
+        return hasADouble && notDescending;
     }
 
 }
