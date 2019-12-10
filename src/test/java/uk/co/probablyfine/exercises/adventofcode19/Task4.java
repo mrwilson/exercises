@@ -30,14 +30,14 @@ public class Task4 {
 
     private boolean validPassword(String password) {
         boolean hasADouble = false;
-        boolean notDescending = true;
+        boolean descending = false;
 
         for (int i = 0; i < password.length() - 1; i++) {
-            if (password.charAt(i) == password.charAt(i+1)) hasADouble = true;
-            if (password.charAt(i) > password.charAt(i+1)) notDescending = false;
+            hasADouble = hasADouble || (password.charAt(i) == password.charAt(i+1));
+            descending = descending || (password.charAt(i) > password.charAt(i+1));
         }
 
-        return hasADouble && notDescending;
+        return hasADouble && !descending;
     }
 
 }
