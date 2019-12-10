@@ -1,6 +1,7 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
 import java.util.OptionalInt;
+import java.util.function.Consumer;
 
 class IntCode {
 
@@ -8,14 +9,15 @@ class IntCode {
         int ADD = 1;
         int MULTIPLY = 2;
         int STORE = 3;
+        int RETURN = 4;
         int HALT = 99;
     }
 
     static int[] runIntcode(int[] program) {
-        return runIntcode(program, 0);
+        return runIntcode(program, 0, i -> {});
     }
 
-    static int[] runIntcode(int[] program, int input) {
+    static int[] runIntcode(int[] program, int input, Consumer<Integer> output) {
 
         loop: for (int i = 0; i < program.length; i += 4) {
 
@@ -29,6 +31,9 @@ class IntCode {
 
                 case Operation.STORE:
                     program[program[i+1]] = input; break;
+
+                case Operation.RETURN:
+                    output.accept(program[program[i+1]]); break;
 
                 case Operation.HALT:
                 default:
