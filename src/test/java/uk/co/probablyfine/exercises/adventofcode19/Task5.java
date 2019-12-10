@@ -87,7 +87,7 @@ public class Task5 {
         assertThat(output.get(), is(10));
     }
 
-    private static Supplier<Integer> input(int... inputs) {
+    static Supplier<Integer> input(int... inputs) {
 
         return new Supplier<>() {
 
