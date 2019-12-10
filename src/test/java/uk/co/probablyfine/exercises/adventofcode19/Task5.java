@@ -52,5 +52,14 @@ public class Task5 {
         assertThat(output[4], is(99));
     }
 
+    @Test
+    public void testOpcodeWithPositions_addition() {
+        int[] input = {1101, 10, 10, 4, 99};
+
+        int[] output = runIntcode(input);
+
+        assertThat(output[4], is(20));
+    }
+
 
 }

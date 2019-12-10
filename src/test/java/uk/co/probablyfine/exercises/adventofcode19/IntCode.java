@@ -29,7 +29,9 @@ class IntCode {
             switch(program[i] % 100) {
 
                 case Operation.ADD:
-                    program[program[i+3]] = program[program[i+1]] + program[program[i+2]];
+                    program[program[i+3]] = lookupArgument(program, i+1, firstArgPositionMode)
+                            + lookupArgument(program, i+2, secondArgPositionMode);
+
                     i += 4;
                     break;
 
