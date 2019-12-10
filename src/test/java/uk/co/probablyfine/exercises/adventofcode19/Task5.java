@@ -2,6 +2,8 @@ package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -10,6 +12,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 
 public class Task5 {
+
+    public static void main(String... args) {
+        int[] program = {
+            // Paste instructions here
+        };
+
+        List<Integer> outputs = new ArrayList<>();
+
+        runIntcode(program, 1, outputs::add);
+
+        System.out.println(outputs);
+    }
 
     @Test
     public void testStore() {
