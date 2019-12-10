@@ -1,5 +1,6 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 class IntCode {
@@ -18,10 +19,12 @@ class IntCode {
 
     static int[] runIntcode(int[] program, int input, Consumer<Integer> output) {
 
-        int pointer = 0;
+        AtomicInteger globalPointer = new AtomicInteger(0);
 
         loop:
-        while (pointer < program.length) {
+        while (globalPointer.get() < program.length) {
+
+            int pointer = globalPointer.get();
 
             boolean firstArgMode = ((program[pointer] / 100) % 10) == 0;
             boolean secondArgMode = (program[pointer] / 1000) == 0;
@@ -33,24 +36,24 @@ class IntCode {
                     program[program[pointer + 3]] =
                             arg(program, pointer + 1, firstArgMode) + arg(program, pointer + 2, secondArgMode);
 
-                    pointer += 4;
+                    globalPointer.addAndGet(4);
                     break;
 
                 case Operation.MULTIPLY:
                     program[program[pointer + 3]] =
                             arg(program, pointer + 1, firstArgMode) * arg(program, pointer + 2, secondArgMode);
 
-                    pointer += 4;
+                    globalPointer.addAndGet(4);
                     break;
 
                 case Operation.STORE:
                     program[program[pointer + 1]] = input;
-                    pointer += 2;
+                    globalPointer.addAndGet(2);
                     break;
 
                 case Operation.RETURN:
                     output.accept(arg(program, pointer + 1, firstArgMode));
-                    pointer += 2;
+                    globalPointer.addAndGet(2);
                     break;
 
                 case Operation.HALT:
