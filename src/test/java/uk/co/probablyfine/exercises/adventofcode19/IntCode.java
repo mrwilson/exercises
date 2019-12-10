@@ -1,24 +1,34 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
+import java.util.OptionalInt;
+
 class IntCode {
 
     public interface Operation {
         int ADD = 1;
         int MULTIPLY = 2;
+        int STORE = 3;
         int HALT = 99;
     }
 
-    static int[] runIntcode(int[] input) {
+    static int[] runIntcode(int[] program) {
+        return runIntcode(program, 0);
+    }
 
-        loop: for (int i = 0; i < input.length; i += 4) {
+    static int[] runIntcode(int[] program, int input) {
 
-            switch(input[i]) {
+        loop: for (int i = 0; i < program.length; i += 4) {
+
+            switch(program[i]) {
 
                 case Operation.ADD:
-                    input[input[i+3]] = input[input[i+1]] + input[input[i+2]]; break;
+                    program[program[i+3]] = program[program[i+1]] + program[program[i+2]]; break;
 
                 case Operation.MULTIPLY:
-                    input[input[i+3]] = input[input[i+1]] * input[input[i+2]]; break;
+                    program[program[i+3]] = program[program[i+1]] * program[program[i+2]]; break;
+
+                case Operation.STORE:
+                    program[program[i+1]] = input;
 
                 case Operation.HALT:
                 default:
@@ -26,7 +36,7 @@ class IntCode {
             }
         }
 
-        return input;
+        return program;
     }
 
 
