@@ -23,7 +23,7 @@ class IntCode {
 
         loop: while (i < program.length) {
 
-            switch(program[i]) {
+            switch(program[i] % 100) {
 
                 case Operation.ADD:
                     program[program[i+3]] = program[program[i+1]] + program[program[i+2]];
