@@ -35,10 +35,8 @@ class IntCode {
 
                 case Operation.MULTIPLY:
 
-                    int firstArg = lookupArgument(program, i+1, firstArgPositionMode);
-                    int secondArg = lookupArgument(program, i+2, secondArgPositionMode);
-
-                    program[program[i+3]] = firstArg * secondArg;
+                    program[program[i+3]] = lookupArgument(program, i+1, firstArgPositionMode)
+                            * lookupArgument(program, i+2, secondArgPositionMode);
 
                     i += 4;
                     break;
