@@ -2,6 +2,8 @@ package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
@@ -19,9 +21,13 @@ public class Task5 {
 
     @Test
     public void testOutput() {
-        int[] input = {3, 0, 99};
+        int[] input = {4, 2, 99};
 
-        runIntcode(input, 10, output -> assertThat(output, is(10)));
+        AtomicInteger output = new AtomicInteger(0);
+
+        runIntcode(input, 0, output::set);
+
+        assertThat(output.get(), is(99));
     }
 
 }
