@@ -5,11 +5,13 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -42,7 +44,15 @@ public class Task3 {
         assertThat(wireCross(wire1, wire2), is(6));
     }
 
-    private Stream<int[]> streamify(String s) {
+    @Test
+    public void example2() {
+        Stream<int[]> wire1 = streamify("R75,D30,R83,U83,L12,D49,R71,U7,L72");
+        Stream<int[]> wire2 = streamify("U62,R66,U55,R34,D71,R55,D58,R83");
+
+        assertThat(wireCross(wire1, wire2), is(159));
+    }
+
+    private static Stream<int[]> streamify(String s) {
         int x = 0, y = 0;
 
         Stream.Builder<int[]> builder = Stream.builder();
@@ -73,20 +83,21 @@ public class Task3 {
         return builder.build();
     }
 
-    private int wireCross(Stream<int[]> wire1, Stream<int[]> wire2) {
-        return Stream.concat(wire1, wire2)
-            .map(this::toPair)
-            .collect(groupingBy(x -> x, counting()))
-            .entrySet()
+    private static int wireCross(Stream<int[]> wire1, Stream<int[]> wire2) {
+
+        Set<Pair> collect = wire1.map(Task3::toPair).collect(toSet());
+        Set<Pair> collect2 = wire2.map(Task3::toPair).collect(toSet());
+
+        collect.retainAll(collect2);
+
+        return collect
             .stream()
-            .filter(x -> x.getValue() > 1)
-            .map(Map.Entry::getKey)
-            .mapToInt(pair -> pair.x + pair.y)
+            .mapToInt(pair -> Math.abs(pair.x) + Math.abs(pair.y))
             .min()
             .orElse(0);
     }
 
-    private Pair toPair(int[] ints) {
+    private static Pair toPair(int[] ints) {
         return new Pair(
             ints[0],
             ints[1]
