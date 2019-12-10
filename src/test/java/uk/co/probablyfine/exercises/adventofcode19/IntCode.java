@@ -19,21 +19,31 @@ class IntCode {
 
     static int[] runIntcode(int[] program, int input, Consumer<Integer> output) {
 
-        loop: for (int i = 0; i < program.length; i += 4) {
+        int i = 0;
+
+        loop: while (i < program.length) {
 
             switch(program[i]) {
 
                 case Operation.ADD:
-                    program[program[i+3]] = program[program[i+1]] + program[program[i+2]]; break;
+                    program[program[i+3]] = program[program[i+1]] + program[program[i+2]];
+                    i += 4;
+                    break;
 
                 case Operation.MULTIPLY:
-                    program[program[i+3]] = program[program[i+1]] * program[program[i+2]]; break;
+                    program[program[i+3]] = program[program[i+1]] * program[program[i+2]];
+                    i += 4;
+                    break;
 
                 case Operation.STORE:
-                    program[program[i+1]] = input; break;
+                    program[program[i+1]] = input;
+                    i += 2;
+                    break;
 
                 case Operation.RETURN:
-                    output.accept(program[program[i+1]]); break;
+                    output.accept(program[program[i+1]]);
+                    i += 2;
+                    break;
 
                 case Operation.HALT:
                 default:
