@@ -43,5 +43,14 @@ public class Task5 {
         assertThat(output.get(), is(input));
     }
 
+    @Test
+    public void testOpcodeWithPositions() {
+        int[] input = {1002, 4, 3, 4, 33};
+
+        int[] output = runIntcode(input);
+
+        assertThat(output[4], is(99));
+    }
+
 
 }
