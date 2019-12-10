@@ -34,14 +34,16 @@ class IntCode {
             switch (operation) {
                 case Operation.ADD:
                     program[program[pointer + 3]] =
-                            arg(program, pointer + 1, firstArgMode) + arg(program, pointer + 2, secondArgMode);
+                            arg(program, pointer + 1, firstArgMode)
+                                    + arg(program, pointer + 2, secondArgMode);
 
                     globalPointer.addAndGet(4);
                     break;
 
                 case Operation.MULTIPLY:
                     program[program[pointer + 3]] =
-                            arg(program, pointer + 1, firstArgMode) * arg(program, pointer + 2, secondArgMode);
+                            arg(program, pointer + 1, firstArgMode)
+                                    * arg(program, pointer + 2, secondArgMode);
 
                     globalPointer.addAndGet(4);
                     break;

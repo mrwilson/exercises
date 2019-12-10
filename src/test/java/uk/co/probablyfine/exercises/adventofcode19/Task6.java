@@ -1,24 +1,17 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import org.junit.Test;
 
 public class Task6 {
 
-
     @Test
     public void testSingleCase() {
-        String[] input = {
-            "COM)A",
-            "A)B"
-        };
+        String[] input = {"COM)A", "A)B"};
 
         assertThat(numberOfOrbits(input), is(3));
     }
@@ -26,35 +19,45 @@ public class Task6 {
     @Test
     public void testSpec() {
         String[] input = {
-            "COM)B",
-                "B)C",
-                "C)D",
-                "D)E",
-                "E)F",
-                "B)G",
-                "G)H",
-                "D)I",
-                "E)J",
-                "J)K",
-                "K)L"
+            "COM)B", "B)C", "D)E", "E)F", "C)D", "B)G", "G)H", "D)I", "E)J", "J)K", "K)L"
         };
-
 
         assertThat(numberOfOrbits(input), is(42));
     }
 
-    private int numberOfOrbits(String[] input) {
-        Map<String, Integer> counts = new HashMap<>();
+    private static int numberOfOrbits(String[] input) {
+        // Absolute garbage but done using maps lol
 
-        counts.put("COM", 0);
+        Map<String, List<String>> counts = new HashMap<>();
 
-        for(String orbit : input) {
+        counts.put("COM", new ArrayList<>());
+
+        for (String orbit : input) {
             String[] objects = orbit.split("\\)");
 
-            counts.put(objects[1], counts.get(objects[0]) + 1);
+            counts.computeIfAbsent(objects[0], x -> new ArrayList<>()).add(objects[1]);
         }
 
-        return counts.values().stream().mapToInt(x -> x).sum();
+        int depth = 0;
 
+        Map<Integer, List<String>> nums = new HashMap<>();
+
+        nums.put(0, List.of("COM"));
+
+        while (!counts.isEmpty()) {
+            List<String> collect =
+                    nums.get(depth).stream()
+                            .map(key -> counts.getOrDefault(key, Collections.emptyList()))
+                            .flatMap(List::stream)
+                            .collect(Collectors.toList());
+
+            nums.get(depth).forEach(counts::remove);
+
+            nums.put(depth + 1, collect);
+
+            depth++;
+        }
+
+        return nums.entrySet().stream().mapToInt(x -> x.getKey() * x.getValue().size()).sum();
     }
 }
