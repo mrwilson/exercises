@@ -23,6 +23,26 @@ public class Task6 {
         assertThat(numberOfOrbits(input), is(3));
     }
 
+    @Test
+    public void testSpec() {
+        String[] input = {
+            "COM)B",
+                "B)C",
+                "C)D",
+                "D)E",
+                "E)F",
+                "B)G",
+                "G)H",
+                "D)I",
+                "E)J",
+                "J)K",
+                "K)L"
+        };
+
+
+        assertThat(numberOfOrbits(input), is(42));
+    }
+
     private int numberOfOrbits(String[] input) {
         Map<String, Integer> counts = new HashMap<>();
 
