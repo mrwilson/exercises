@@ -1,6 +1,5 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import java.util.OptionalInt;
 import java.util.function.Consumer;
 
 class IntCode {
@@ -29,16 +28,16 @@ class IntCode {
             switch(program[i] % 100) {
 
                 case Operation.ADD:
-                    program[program[i+3]] = lookupArgument(program, i+1, firstArgPositionMode)
-                            + lookupArgument(program, i+2, secondArgPositionMode);
+                    program[program[i+3]] = arg(program, i+1, firstArgPositionMode)
+                            + arg(program, i+2, secondArgPositionMode);
 
                     i += 4;
                     break;
 
                 case Operation.MULTIPLY:
 
-                    program[program[i+3]] = lookupArgument(program, i+1, firstArgPositionMode)
-                            * lookupArgument(program, i+2, secondArgPositionMode);
+                    program[program[i+3]] = arg(program, i+1, firstArgPositionMode)
+                            * arg(program, i+2, secondArgPositionMode);
 
                     i += 4;
                     break;
@@ -49,7 +48,7 @@ class IntCode {
                     break;
 
                 case Operation.RETURN:
-                    output.accept(lookupArgument(program, i+1, firstArgPositionMode));
+                    output.accept(arg(program, i+1, firstArgPositionMode));
                     i += 2;
                     break;
 
@@ -62,7 +61,7 @@ class IntCode {
         return program;
     }
 
-    private static int lookupArgument(int[] program, int index, boolean positionMode) {
+    private static int arg(int[] program, int index, boolean positionMode) {
         return positionMode ? program[program[index]] : program[index];
     }
 
