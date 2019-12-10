@@ -25,7 +25,9 @@ class IntCode {
             boolean firstArgPositionMode = ((program[i] / 100) % 10) == 0;
             boolean secondArgPositionMode = (program[i] / 1000) == 0;
 
-            switch(program[i] % 100) {
+            int operation = program[i] % 100;
+
+            switch(operation) {
 
                 case Operation.ADD:
                     program[program[i+3]] = arg(program, i+1, firstArgPositionMode)
