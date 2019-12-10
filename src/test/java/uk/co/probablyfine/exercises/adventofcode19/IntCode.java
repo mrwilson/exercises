@@ -23,6 +23,9 @@ class IntCode {
 
         loop: while (i < program.length) {
 
+            boolean firstArgPositionMode = ((program[i] / 100) % 10) == 0;
+            boolean secondArgPositionMode = (program[i] / 1000) == 0;
+
             switch(program[i] % 100) {
 
                 case Operation.ADD:
@@ -32,11 +35,8 @@ class IntCode {
 
                 case Operation.MULTIPLY:
 
-                    boolean firstArgPositionMode = ((program[i] / 100) % 10) == 0;
-                    boolean secondArgPositionMode = (program[i] / 1000) == 0;
-
-                    int firstArg = firstArgPositionMode ? program[program[i+1]] : program[i+1];
-                    int secondArg = secondArgPositionMode ? program[program[i+2]] : program[i+2];
+                    int firstArg = lookupArgument(program, i+1, firstArgPositionMode);
+                    int secondArg = lookupArgument(program, i+2, secondArgPositionMode);
 
                     program[program[i+3]] = firstArg * secondArg;
 
@@ -62,6 +62,9 @@ class IntCode {
         return program;
     }
 
+    private static int lookupArgument(int[] program, int index, boolean positionMode) {
+        return positionMode ? program[program[index]] : program[index];
+    }
 
 
 }
