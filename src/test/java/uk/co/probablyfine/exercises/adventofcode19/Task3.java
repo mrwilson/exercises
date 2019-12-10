@@ -88,10 +88,9 @@ public class Task3 {
         Set<Pair> collect = wire1.map(Task3::toPair).collect(toSet());
         Set<Pair> collect2 = wire2.map(Task3::toPair).collect(toSet());
 
-        collect.retainAll(collect2);
-
         return collect
             .stream()
+            .filter(collect2::contains)
             .mapToInt(pair -> Math.abs(pair.x) + Math.abs(pair.y))
             .min()
             .orElse(0);
