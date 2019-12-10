@@ -1,14 +1,16 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
+import java.util.function.Supplier;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 
 public class Task5 {
 
@@ -19,7 +21,7 @@ public class Task5 {
 
         List<Integer> outputs = new ArrayList<>();
 
-        runIntcode(program, 1, outputs::add);
+        runIntcode(program, input(1), outputs::add);
 
         System.out.println(outputs);
     }
@@ -28,7 +30,7 @@ public class Task5 {
     public void testStore() {
         int[] input = {3, 0, 99};
 
-        int[] output = runIntcode(input, 10, i -> {});
+        int[] output = runIntcode(input, input(10), i -> {});
 
         assertThat(output[0], is(10));
     }
@@ -39,7 +41,7 @@ public class Task5 {
 
         AtomicInteger output = new AtomicInteger(0);
 
-        runIntcode(input, 0, output::set);
+        runIntcode(input, input(0), output::set);
 
         assertThat(output.get(), is(99));
     }
@@ -47,13 +49,13 @@ public class Task5 {
     @Test
     public void testLoadAndStore() {
         int[] program = {3, 0, 4, 0, 99};
+        int randomInt = new Random().nextInt();
 
-        int input = new Random().nextInt();
         AtomicInteger output = new AtomicInteger(0);
 
-        runIntcode(program, input, output::set);
+        runIntcode(program, input(randomInt), output::set);
 
-        assertThat(output.get(), is(input));
+        assertThat(output.get(), is(randomInt));
     }
 
     @Test
@@ -80,8 +82,22 @@ public class Task5 {
 
         AtomicInteger output = new AtomicInteger(0);
 
-        runIntcode(program, 0, output::set);
+        runIntcode(program, input(0), output::set);
 
         assertThat(output.get(), is(10));
+    }
+
+    private static Supplier<Integer> input(int... inputs) {
+
+        return new Supplier<>() {
+
+            int index = 0;
+
+            @Override
+            public Integer get() {
+                return inputs[index++];
+            }
+        };
+
     }
 }

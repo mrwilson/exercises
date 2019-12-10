@@ -2,6 +2,7 @@ package uk.co.probablyfine.exercises.adventofcode19;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 class IntCode {
 
@@ -14,10 +15,10 @@ class IntCode {
     }
 
     static int[] runIntcode(int[] program) {
-        return runIntcode(program, 0, i -> {});
+        return runIntcode(program, () -> 0, i -> {});
     }
 
-    static int[] runIntcode(int[] program, int input, Consumer<Integer> output) {
+    static int[] runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
 
         AtomicInteger globalPointer = new AtomicInteger(0);
 
@@ -49,7 +50,7 @@ class IntCode {
                     break;
 
                 case Operation.STORE:
-                    program[program[pointer + 1]] = input;
+                    program[program[pointer + 1]] = input.get();
                     globalPointer.addAndGet(2);
                     break;
 
