@@ -1,17 +1,11 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Objects;
+import java.util.stream.IntStream;
+import org.junit.Test;
 
 public class Task4 {
 
@@ -20,10 +14,11 @@ public class Task4 {
         int start = 235741;
         int finish = 706948;
 
-        long numberOfValidPasswords = IntStream.range(start, finish)
-            .mapToObj(Objects::toString)
-            .filter(Task4::validPassword)
-            .count();
+        long numberOfValidPasswords =
+                IntStream.range(start, finish)
+                        .mapToObj(Objects::toString)
+                        .filter(Task4::validPassword)
+                        .count();
 
         System.out.println(numberOfValidPasswords);
     }
@@ -45,11 +40,10 @@ public class Task4 {
         boolean descending = false;
 
         for (int i = 0; i < password.length() - 1; i++) {
-            hasADouble = hasADouble || (password.charAt(i) == password.charAt(i+1));
-            descending = descending || (password.charAt(i) > password.charAt(i+1));
+            hasADouble = hasADouble || (password.charAt(i) == password.charAt(i + 1));
+            descending = descending || (password.charAt(i) > password.charAt(i + 1));
         }
 
         return hasADouble && !descending;
     }
-
 }

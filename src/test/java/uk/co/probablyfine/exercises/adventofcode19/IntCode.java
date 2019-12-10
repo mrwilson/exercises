@@ -20,37 +20,36 @@ class IntCode {
 
         int i = 0;
 
-        loop: while (i < program.length) {
+        loop:
+        while (i < program.length) {
 
             boolean firstArgMode = ((program[i] / 100) % 10) == 0;
             boolean secondArgMode = (program[i] / 1000) == 0;
 
             int operation = program[i] % 100;
 
-            switch(operation) {
-
+            switch (operation) {
                 case Operation.ADD:
-                    program[program[i+3]] = arg(program, i+1, firstArgMode)
-                            + arg(program, i+2, secondArgMode);
+                    program[program[i + 3]] =
+                            arg(program, i + 1, firstArgMode) + arg(program, i + 2, secondArgMode);
 
                     i += 4;
                     break;
 
                 case Operation.MULTIPLY:
-
-                    program[program[i+3]] = arg(program, i+1, firstArgMode)
-                            * arg(program, i+2, secondArgMode);
+                    program[program[i + 3]] =
+                            arg(program, i + 1, firstArgMode) * arg(program, i + 2, secondArgMode);
 
                     i += 4;
                     break;
 
                 case Operation.STORE:
-                    program[program[i+1]] = input;
+                    program[program[i + 1]] = input;
                     i += 2;
                     break;
 
                 case Operation.RETURN:
-                    output.accept(arg(program, i+1, firstArgMode));
+                    output.accept(arg(program, i + 1, firstArgMode));
                     i += 2;
                     break;
 
@@ -66,6 +65,4 @@ class IntCode {
     private static int arg(int[] program, int index, boolean positionMode) {
         return positionMode ? program[program[index]] : program[index];
     }
-
-
 }

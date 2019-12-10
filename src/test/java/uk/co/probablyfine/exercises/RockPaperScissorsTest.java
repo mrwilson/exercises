@@ -1,7 +1,5 @@
 package uk.co.probablyfine.exercises;
 
-import org.junit.Test;
-
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Outcome.DRAW;
@@ -11,12 +9,14 @@ import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.PAPER;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.ROCK;
 import static uk.co.probablyfine.exercises.RockPaperScissorsTest.Throw.SCISSORS;
 
+import org.junit.Test;
+
 public class RockPaperScissorsTest {
 
     private static final Outcome[][] ROCK_PAPER_SCISSORS = {
-            {DRAW, P2, P1},
-            {P1, DRAW, P2},
-            {P2, P1, DRAW}
+        {DRAW, P2, P1},
+        {P1, DRAW, P2},
+        {P2, P1, DRAW}
     };
 
     enum Throw {

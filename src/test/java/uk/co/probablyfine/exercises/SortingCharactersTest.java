@@ -1,11 +1,10 @@
 package uk.co.probablyfine.exercises;
 
-import org.junit.Test;
-
-import java.util.stream.Collectors;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+
+import java.util.stream.Collectors;
+import org.junit.Test;
 
 public class SortingCharactersTest {
 
@@ -26,15 +25,17 @@ public class SortingCharactersTest {
 
     @Test
     public void capsExample() {
-        assertThat(sort("When not studying nuclear physics, Bambi likes to play beach volleyball."), is("aaaaabbbbcccdeeeeeghhhiiiiklllllllmnnnnooopprsssstttuuvwyyyy"));
+        assertThat(
+                sort("When not studying nuclear physics, Bambi likes to play beach volleyball."),
+                is("aaaaabbbbcccdeeeeeghhhiiiiklllllllmnnnnooopprsssstttuuvwyyyy"));
     }
 
     static String sort(String input) {
         return input.toLowerCase()
-            .chars()
-            .filter(character -> 'a' <= character && character <= 'z')
-            .sorted()
-            .mapToObj(Character::toString)
-            .collect(Collectors.joining());
+                .chars()
+                .filter(character -> 'a' <= character && character <= 'z')
+                .sorted()
+                .mapToObj(Character::toString)
+                .collect(Collectors.joining());
     }
 }

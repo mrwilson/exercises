@@ -1,9 +1,9 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.Test;
 
 public class Task2 {
 
@@ -48,13 +48,7 @@ public class Task2 {
 
     @Test
     public void multipleOpcodes() {
-        int[] input = {
-            1, 9, 10, 3,
-            2, 3, 11, 0,
-            99,
-            30, 40, 50
-
-        };
+        int[] input = {1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50};
 
         int[] output = IntCode.runIntcode(input);
 
@@ -65,8 +59,7 @@ public class Task2 {
     @Test
     public void halt() {
         int[] input = {
-            99,
-            1, 0, 0, 0,
+            99, 1, 0, 0, 0,
         };
 
         int[] output = IntCode.runIntcode(input);
@@ -76,14 +69,11 @@ public class Task2 {
 
     @Test
     public void exampleFromSpec() {
-        int[] input = {
-            1,1,1,4,99,5,6,0,99
-        };
+        int[] input = {1, 1, 1, 4, 99, 5, 6, 0, 99};
 
         int[] output = IntCode.runIntcode(input);
 
         assertThat(output[0], is(30));
         assertThat(output[4], is(2));
     }
-
-    }
+}

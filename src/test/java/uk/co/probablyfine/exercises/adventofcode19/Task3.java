@@ -1,17 +1,15 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
-
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Task3 {
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import org.junit.Test;
 
+public class Task3 {
 
     @Test
     public void example() {
@@ -42,18 +40,22 @@ public class Task3 {
 
                 switch (action.charAt(0)) {
                     case 'U':
-                        y++; break;
+                        y++;
+                        break;
                     case 'D':
-                        y--; break;
+                        y--;
+                        break;
                     case 'L':
-                        x--; break;
+                        x--;
+                        break;
                     case 'R':
-                        x++; break;
+                        x++;
+                        break;
                     default:
                         break;
                 }
 
-                builder.add(new Pair(x,y));
+                builder.add(new Pair(x, y));
             }
         }
 
@@ -62,12 +64,11 @@ public class Task3 {
 
     private static int wireCross(List<Pair> wire1, List<Pair> wire2) {
 
-        return wire1
-            .stream()
-            .filter(wire2::contains)
-            .mapToInt(pair -> Math.abs(pair.x) + Math.abs(pair.y))
-            .min()
-            .orElse(0);
+        return wire1.stream()
+                .filter(wire2::contains)
+                .mapToInt(pair -> Math.abs(pair.x) + Math.abs(pair.y))
+                .min()
+                .orElse(0);
     }
 
     static class Pair {
@@ -95,5 +96,4 @@ public class Task3 {
             return y == pair.y;
         }
     }
-
 }
