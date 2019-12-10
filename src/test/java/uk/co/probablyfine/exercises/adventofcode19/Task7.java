@@ -24,6 +24,18 @@ public class Task7 {
         assertThat(runThrusters(program,0,1,2,3,4), is(54321));
     }
 
+    @Test
+    public void secondExample() {
+
+        int[] program = {
+                3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0
+        };
+
+
+        assertThat(runThrusters(program,4,3,2,1,0), is(43210));
+    }
+
+
     private static int runThrusters(int[] program, int... phaseSettings) {
         AtomicInteger returnValue = new AtomicInteger(0);
 
