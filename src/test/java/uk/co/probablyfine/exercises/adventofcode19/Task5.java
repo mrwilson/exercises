@@ -61,5 +61,16 @@ public class Task5 {
         assertThat(output[4], is(20));
     }
 
+    @Test
+    public void testOpcodeWithPositions_return() {
+        int[] program = {104, 10, 99};
+
+        AtomicInteger output = new AtomicInteger(0);
+
+        runIntcode(program, 0, output::set);
+
+        assertThat(output.get(), is(10));
+    }
+
 
 }

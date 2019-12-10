@@ -49,7 +49,7 @@ class IntCode {
                     break;
 
                 case Operation.RETURN:
-                    output.accept(program[program[i+1]]);
+                    output.accept(lookupArgument(program, i+1, firstArgPositionMode));
                     i += 2;
                     break;
 
