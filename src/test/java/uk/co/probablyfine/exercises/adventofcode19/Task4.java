@@ -15,6 +15,18 @@ import static org.junit.Assert.assertTrue;
 
 public class Task4 {
 
+    public static void main(String... args) {
+
+        int start = 235741;
+        int finish = 706948;
+
+        long numberOfValidPasswords = IntStream.range(start, finish)
+            .mapToObj(Objects::toString)
+            .filter(Task4::validPassword)
+            .count();
+
+        System.out.println(numberOfValidPasswords);
+    }
 
     @Test
     public void atLeastOnePairOfMatchingDigits() {
@@ -28,7 +40,7 @@ public class Task4 {
         assertFalse(validPassword("664321"));
     }
 
-    private boolean validPassword(String password) {
+    private static boolean validPassword(String password) {
         boolean hasADouble = false;
         boolean descending = false;
 
