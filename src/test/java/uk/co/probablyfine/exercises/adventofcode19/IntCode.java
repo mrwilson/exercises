@@ -104,12 +104,8 @@ class IntCode {
     private void mult() {
         int pointer = globalPointer.get();
 
-        boolean firstArgMode = (program[pointer] / 100) % 10 == 0;
-        boolean secondArgMode = (program[pointer] / 1000) == 0;
-
         program[program[pointer + 3]] =
-                arg(pointer + 1, firstArgMode)
-                        * arg(pointer + 2, secondArgMode);
+                firstArg() * secondArg();
 
         globalPointer.addAndGet(4);
     }
