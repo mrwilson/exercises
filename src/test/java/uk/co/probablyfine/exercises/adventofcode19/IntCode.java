@@ -40,11 +40,7 @@ class IntCode {
 
             switch (operation) {
                 case Operation.ADD:
-                    program[program[pointer + 3]] =
-                            arg(program, pointer + 1, firstArgMode)
-                                    + arg(program, pointer + 2, secondArgMode);
-
-                    globalPointer.addAndGet(4);
+                    add();
                     break;
 
                 case Operation.MULTIPLY:
@@ -107,6 +103,19 @@ class IntCode {
 
         return program;
 
+    }
+
+    private void add() {
+        int pointer = globalPointer.get();
+
+        boolean firstArgMode = ((program[pointer] / 100) % 10) == 0;
+        boolean secondArgMode = (program[pointer] / 1000) == 0;
+
+        program[program[pointer + 3]] =
+                arg(program, pointer + 1, firstArgMode)
+                        + arg(program, pointer + 2, secondArgMode);
+
+        globalPointer.addAndGet(4);
     }
 
     static int[] runIntcode(int[] program) {
