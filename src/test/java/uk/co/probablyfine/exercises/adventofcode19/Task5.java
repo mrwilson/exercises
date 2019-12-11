@@ -120,6 +120,17 @@ public class Task5 {
         assertThat(output.get(), is(1));
     }
 
+    @Test
+    public void testLessThan_false() {
+        int[] input = {1107, 2, 1, 5, 104, 33, 99};
+
+        AtomicInteger output = new AtomicInteger(1);
+
+        runIntcode(input, input(0), output::set);
+
+        assertThat(output.get(), is(0));
+    }
+
     static Supplier<Integer> input(int... inputs) {
 
         return new Supplier<>() {

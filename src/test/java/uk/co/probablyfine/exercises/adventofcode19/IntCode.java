@@ -14,6 +14,7 @@ class IntCode {
         int JMP_IF_TRUE = 5;
         int JMP_IF_FALSE = 6;
         int LESS_THAN = 7;
+        int EQ = 8;
         int HALT = 99;
     }
 
@@ -82,7 +83,7 @@ class IntCode {
                     if (arg(program, pointer + 1, firstArgMode) < arg(program, pointer + 2, secondArgMode)) {
                         program[program[pointer+3]] = 1;
                     } else {
-                        program[program[pointer+3]] = 1;
+                        program[program[pointer+3]] = 0;
                     }
                     globalPointer.addAndGet(4);
                     break;
