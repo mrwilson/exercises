@@ -88,6 +88,15 @@ class IntCode {
                     globalPointer.addAndGet(4);
                     break;
 
+                case Operation.EQ:
+                    if (arg(program, pointer + 1, firstArgMode) == arg(program, pointer + 2, secondArgMode)) {
+                        program[program[pointer+3]] = 1;
+                    } else {
+                        program[program[pointer+3]] = 0;
+                    }
+                    globalPointer.addAndGet(4);
+                    break;
+
                 case Operation.HALT:
                 default:
                     break loop;
