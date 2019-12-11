@@ -127,7 +127,7 @@ class IntCode {
 
     }
 
-    private static int arg(int[] program, int index, boolean positionMode) {
+    private int arg(int[] program, int index, boolean positionMode) {
         return positionMode ? program[program[index]] : program[index];
     }
 }
