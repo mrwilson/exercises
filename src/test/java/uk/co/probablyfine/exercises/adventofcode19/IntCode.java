@@ -68,7 +68,7 @@ class IntCode {
                     break;
 
                 case Operation.EQ:
-                    if (arg(pointer + 1, firstArgMode) == arg(pointer + 2, secondArgMode)) {
+                    if (firstArg() == secondArg()) {
                         program[program[pointer+3]] = 1;
                     } else {
                         program[program[pointer+3]] = 0;
