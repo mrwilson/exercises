@@ -45,8 +45,8 @@ class IntCode {
 
                 case Operation.MULTIPLY:
                     program[program[pointer + 3]] =
-                            arg(program, pointer + 1, firstArgMode)
-                                    * arg(program, pointer + 2, secondArgMode);
+                            arg(pointer + 1, firstArgMode)
+                                    * arg(pointer + 2, secondArgMode);
 
                     globalPointer.addAndGet(4);
                     break;
@@ -57,28 +57,28 @@ class IntCode {
                     break;
 
                 case Operation.RETURN:
-                    output.accept(arg(program, pointer + 1, firstArgMode));
+                    output.accept(arg(pointer + 1, firstArgMode));
                     globalPointer.addAndGet(2);
                     break;
 
                 case Operation.JMP_IF_TRUE:
-                    if(arg(program, pointer + 1, firstArgMode) == 0) {
-                        globalPointer.set(arg(program, pointer + 2, firstArgMode));
+                    if(arg(pointer + 1, firstArgMode) == 0) {
+                        globalPointer.set(arg(pointer + 2, firstArgMode));
                     } else {
                         globalPointer.addAndGet(2);
                     }
                     break;
 
                 case Operation.JMP_IF_FALSE:
-                    if(arg(program, pointer + 1, firstArgMode) != 0) {
-                        globalPointer.set(arg(program, pointer + 2, firstArgMode));
+                    if(arg(pointer + 1, firstArgMode) != 0) {
+                        globalPointer.set(arg(pointer + 2, firstArgMode));
                     } else {
                         globalPointer.addAndGet(2);
                     }
                     break;
 
                 case Operation.LESS_THAN:
-                    if (arg(program, pointer + 1, firstArgMode) < arg(program, pointer + 2, secondArgMode)) {
+                    if (arg(pointer + 1, firstArgMode) < arg(pointer + 2, secondArgMode)) {
                         program[program[pointer+3]] = 1;
                     } else {
                         program[program[pointer+3]] = 0;
@@ -87,7 +87,7 @@ class IntCode {
                     break;
 
                 case Operation.EQ:
-                    if (arg(program, pointer + 1, firstArgMode) == arg(program, pointer + 2, secondArgMode)) {
+                    if (arg(pointer + 1, firstArgMode) == arg(pointer + 2, secondArgMode)) {
                         program[program[pointer+3]] = 1;
                     } else {
                         program[program[pointer+3]] = 0;
@@ -108,12 +108,12 @@ class IntCode {
     private void add() {
         int pointer = globalPointer.get();
 
-        boolean firstArgMode = ((program[pointer] / 100) % 10) == 0;
+        boolean firstArgMode = (program[pointer] / 100) % 10 == 0;
         boolean secondArgMode = (program[pointer] / 1000) == 0;
 
         program[program[pointer + 3]] =
-                arg(program, pointer + 1, firstArgMode)
-                        + arg(program, pointer + 2, secondArgMode);
+                arg(pointer + 1, firstArgMode)
+                        + arg(pointer + 2, secondArgMode);
 
         globalPointer.addAndGet(4);
     }
@@ -127,7 +127,7 @@ class IntCode {
 
     }
 
-    private int arg(int[] program, int index, boolean positionMode) {
+    private int arg(int index, boolean positionMode) {
         return positionMode ? program[program[index]] : program[index];
     }
 }
