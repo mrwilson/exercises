@@ -69,9 +69,9 @@ class IntCode {
 
                 case Operation.EQ:
                     if (firstArg() == secondArg()) {
-                        program[program[pointer+3]] = 1;
+                        program[program[globalPointer.get()+3]] = 1;
                     } else {
-                        program[program[pointer+3]] = 0;
+                        program[program[globalPointer.get()+3]] = 0;
                     }
                     globalPointer.addAndGet(4);
                     break;
