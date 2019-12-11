@@ -12,6 +12,7 @@ class IntCode {
         int STORE = 3;
         int RETURN = 4;
         int JMP_IF_TRUE = 5;
+        int JMP_IF_FALSE = 6;
         int HALT = 99;
     }
 
@@ -62,6 +63,14 @@ class IntCode {
 
                 case Operation.JMP_IF_TRUE:
                     if(arg(program, pointer + 1, firstArgMode) == 0) {
+                        globalPointer.set(arg(program, pointer + 2, firstArgMode));
+                    } else {
+                        globalPointer.addAndGet(2);
+                    }
+                    break;
+
+                case Operation.JMP_IF_FALSE:
+                    if(arg(program, pointer + 1, firstArgMode) != 0) {
                         globalPointer.set(arg(program, pointer + 2, firstArgMode));
                     } else {
                         globalPointer.addAndGet(2);

@@ -95,7 +95,16 @@ public class Task5 {
 
         runIntcode(input, input(0), output::set);
 
-        System.out.println(output.get());
+        assertThat(output.get(), is(33));
+    }
+
+    @Test
+    public void testJumpIfFalse() {
+        int[] input = {106, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+
+        AtomicInteger output = new AtomicInteger(0);
+
+        runIntcode(input, input(0), output::set);
 
         assertThat(output.get(), is(33));
     }
