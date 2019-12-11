@@ -44,11 +44,7 @@ class IntCode {
                     break;
 
                 case Operation.MULTIPLY:
-                    program[program[pointer + 3]] =
-                            arg(pointer + 1, firstArgMode)
-                                    * arg(pointer + 2, secondArgMode);
-
-                    globalPointer.addAndGet(4);
+                    mult(pointer, firstArgMode, secondArgMode);
                     break;
 
                 case Operation.STORE:
@@ -103,6 +99,14 @@ class IntCode {
 
         return program;
 
+    }
+
+    private void mult(int pointer, boolean firstArgMode, boolean secondArgMode) {
+        program[program[pointer + 3]] =
+                arg(pointer + 1, firstArgMode)
+                        * arg(pointer + 2, secondArgMode);
+
+        globalPointer.addAndGet(4);
     }
 
     private void add() {
