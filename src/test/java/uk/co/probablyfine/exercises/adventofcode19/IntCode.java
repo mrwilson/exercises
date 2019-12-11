@@ -134,14 +134,12 @@ class IntCode {
     }
 
     private int firstArg() {
-        boolean firstArgMode = (program[globalPointer.get()] / 100) % 10 == 0;
-
-        return arg(globalPointer.get() + 1, firstArgMode);
+        boolean mode = (program[globalPointer.get()] / 100) % 10 == 0;
+        return arg(globalPointer.get() + 1, mode);
     }
 
     private int secondArg() {
         boolean mode = (program[globalPointer.get()] / 1000) == 0;;
-
         return arg(globalPointer.get() + 2, mode);
     }
 
