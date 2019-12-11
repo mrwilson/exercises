@@ -31,12 +31,7 @@ class IntCode {
         loop:
         while (globalPointer.get() < program.length) {
 
-            int pointer = globalPointer.get();
-
-            boolean firstArgMode = ((program[pointer] / 100) % 10) == 0;
-            boolean secondArgMode = (program[pointer] / 1000) == 0;
-
-            int operation = program[pointer] % 100;
+            int operation = program[globalPointer.get()] % 100;
 
             switch (operation) {
                 case Operation.ADD:
