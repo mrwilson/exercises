@@ -6,6 +6,8 @@ import java.util.function.Supplier;
 
 class IntCode {
 
+    private final int[] program;
+
     public interface Operation {
         int ADD = 1;
         int MULTIPLY = 2;
@@ -18,12 +20,11 @@ class IntCode {
         int HALT = 99;
     }
 
-    static int[] runIntcode(int[] program) {
-        return runIntcode(program, () -> 0, i -> {});
+    private IntCode(int[] program) {
+        this.program = program;
     }
 
-    static int[] runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
-
+    private int[] run(Supplier<Integer> input, Consumer<Integer> output) {
         AtomicInteger globalPointer = new AtomicInteger(0);
 
         loop:
@@ -104,6 +105,16 @@ class IntCode {
         }
 
         return program;
+
+    }
+
+    static int[] runIntcode(int[] program) {
+        return new IntCode(program).run(() -> 0, i -> {});
+    }
+
+    static int[] runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
+        return new IntCode(program).run(input, output);
+
     }
 
     private static int arg(int[] program, int index, boolean positionMode) {
