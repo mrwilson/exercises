@@ -68,12 +68,7 @@ class IntCode {
                     break;
 
                 case Operation.EQ:
-                    if (firstArg() == secondArg()) {
-                        program[program[globalPointer.get()+3]] = 1;
-                    } else {
-                        program[program[globalPointer.get()+3]] = 0;
-                    }
-                    globalPointer.addAndGet(4);
+                    equals();
                     break;
 
                 case Operation.HALT:
@@ -84,6 +79,15 @@ class IntCode {
 
         return program;
 
+    }
+
+    private void equals() {
+        if (firstArg() == secondArg()) {
+            program[program[globalPointer.get()+3]] = 1;
+        } else {
+            program[program[globalPointer.get()+3]] = 0;
+        }
+        globalPointer.addAndGet(4);
     }
 
     private void lessThan() {
