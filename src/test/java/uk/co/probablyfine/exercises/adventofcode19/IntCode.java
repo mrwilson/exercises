@@ -70,7 +70,6 @@ class IntCode {
                     break loop;
 
                 default:
-                    System.out.println("** WARN DEFAULT " + program[globalPointer.get()]);
                     break loop;
             }
         }
@@ -79,8 +78,6 @@ class IntCode {
     }
 
     private void equals() {
-        System.out.println("EQ[" + firstArg() + " == " + secondArg() + "]");
-
         program[program[globalPointer.get() + 3]] = (firstArg() == secondArg()) ? 1 : 0;
         globalPointer.addAndGet(4);
     }
@@ -142,7 +139,7 @@ class IntCode {
 
     private void test(boolean test) {
         if (test) {
-            globalPointer.set(program[globalPointer.get() + 2]);
+            globalPointer.set(secondArg());
         } else {
             globalPointer.addAndGet(3);
         }

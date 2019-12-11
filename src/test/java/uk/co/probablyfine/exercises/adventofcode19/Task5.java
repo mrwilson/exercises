@@ -88,7 +88,7 @@ public class Task5 {
 
     @Test
     public void testJumpIfTrue() {
-        int[] input = {105, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+        int[] input = {1105, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
         AtomicInteger output = new AtomicInteger(0);
 
@@ -99,7 +99,7 @@ public class Task5 {
 
     @Test
     public void testJumpIfFalse() {
-        int[] input = {106, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+        int[] input = {1106, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
         AtomicInteger output = new AtomicInteger(0);
 
