@@ -87,6 +87,19 @@ public class Task5 {
         assertThat(output.get(), is(10));
     }
 
+    @Test
+    public void testJumpIfTrue() {
+        int[] input = {105, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+
+        AtomicInteger output = new AtomicInteger(0);
+
+        runIntcode(input, input(0), output::set);
+
+        System.out.println(output.get());
+
+        assertThat(output.get(), is(33));
+    }
+
     static Supplier<Integer> input(int... inputs) {
 
         return new Supplier<>() {
