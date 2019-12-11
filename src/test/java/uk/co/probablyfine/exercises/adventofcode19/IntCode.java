@@ -56,7 +56,7 @@ class IntCode {
                     break;
 
                 case Operation.JMP_IF_TRUE:
-                    jumpIfTrue(pointer, firstArgMode);
+                    jumpIfTrue();
                     break;
 
                 case Operation.JMP_IF_FALSE:
@@ -95,9 +95,11 @@ class IntCode {
 
     }
 
-    private void jumpIfTrue(int pointer, boolean firstArgMode) {
+    private void jumpIfTrue() {
+        boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
+
         if(firstArg() == 0) {
-            globalPointer.set(arg(pointer + 2, firstArgMode));
+            globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
         } else {
             globalPointer.addAndGet(2);
         }
