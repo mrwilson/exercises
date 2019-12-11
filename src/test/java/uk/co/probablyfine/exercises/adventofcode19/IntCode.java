@@ -96,7 +96,7 @@ class IntCode {
     }
 
     private void jumpIfTrue(int pointer, boolean firstArgMode) {
-        if(arg(pointer + 1, firstArgMode) == 0) {
+        if(firstArg() == 0) {
             globalPointer.set(arg(pointer + 2, firstArgMode));
         } else {
             globalPointer.addAndGet(2);
