@@ -109,6 +109,17 @@ public class Task5 {
         assertThat(output.get(), is(33));
     }
 
+    @Test
+    public void testLessThan() {
+        int[] input = {1107, 1, 2, 5, 104, 33, 99};
+
+        AtomicInteger output = new AtomicInteger(0);
+
+        runIntcode(input, input(0), output::set);
+
+        assertThat(output.get(), is(1));
+    }
+
     static Supplier<Integer> input(int... inputs) {
 
         return new Supplier<>() {
