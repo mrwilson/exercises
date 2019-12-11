@@ -52,7 +52,7 @@ class IntCode {
                     break;
 
                 case Operation.RETURN:
-                    output(output, pointer, firstArgMode);
+                    output(output);
                     break;
 
                 case Operation.JMP_IF_TRUE:
@@ -99,8 +99,8 @@ class IntCode {
 
     }
 
-    private void output(Consumer<Integer> output, int pointer, boolean firstArgMode) {
-        output.accept(arg(pointer + 1, firstArgMode));
+    private void output(Consumer<Integer> output) {
+        output.accept(firstArg());
         globalPointer.addAndGet(2);
     }
 
