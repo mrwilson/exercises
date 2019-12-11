@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 class IntCode {
 
     private final int[] program;
+    private final AtomicInteger globalPointer;
 
     public interface Operation {
         int ADD = 1;
@@ -22,10 +23,10 @@ class IntCode {
 
     private IntCode(int[] program) {
         this.program = program;
+        this.globalPointer = new AtomicInteger(0);
     }
 
     private int[] run(Supplier<Integer> input, Consumer<Integer> output) {
-        AtomicInteger globalPointer = new AtomicInteger(0);
 
         loop:
         while (globalPointer.get() < program.length) {
