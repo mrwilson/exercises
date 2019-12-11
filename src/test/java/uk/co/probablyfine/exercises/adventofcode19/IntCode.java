@@ -112,16 +112,12 @@ class IntCode {
     }
 
     private void mult() {
-
         program[program[globalPointer.get() + 3]] = firstArg() * secondArg();
-
         globalPointer.addAndGet(4);
     }
 
     private void add() {
-
         program[program[globalPointer.get() + 3]] = firstArg() + secondArg();
-
         globalPointer.addAndGet(4);
     }
 
