@@ -76,11 +76,7 @@ class IntCode {
     }
 
     private void equals() {
-        if (firstArg() == secondArg()) {
-            program[program[globalPointer.get() + 3]] = 1;
-        } else {
-            program[program[globalPointer.get() + 3]] = 0;
-        }
+        program[program[globalPointer.get() + 3]] = (firstArg() == secondArg()) ? 1 : 0;
         globalPointer.addAndGet(4);
     }
 
