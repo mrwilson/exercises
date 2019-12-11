@@ -60,11 +60,7 @@ class IntCode {
                     break;
 
                 case Operation.JMP_IF_FALSE:
-                    if(arg(pointer + 1, firstArgMode) != 0) {
-                        globalPointer.set(arg(pointer + 2, firstArgMode));
-                    } else {
-                        globalPointer.addAndGet(2);
-                    }
+                    jumpIfFalse();
                     break;
 
                 case Operation.LESS_THAN:
@@ -99,6 +95,16 @@ class IntCode {
         boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
 
         if(firstArg() == 0) {
+            globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
+        } else {
+            globalPointer.addAndGet(2);
+        }
+    }
+
+    private void jumpIfFalse() {
+        boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
+
+        if(firstArg() != 0) {
             globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
         } else {
             globalPointer.addAndGet(2);
