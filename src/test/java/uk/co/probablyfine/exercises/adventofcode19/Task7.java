@@ -60,21 +60,9 @@ public class Task7 {
         AtomicInteger returnValue = new AtomicInteger(0);
 
         runIntcode(program.clone(), input(phaseSettings[0], 0), returnValue::set);
-
-        System.out.println(returnValue.get());
-
         runIntcode(program.clone(), input(phaseSettings[1], returnValue.get()), returnValue::set);
-
-        System.out.println(returnValue.get());
-
         runIntcode(program.clone(), input(phaseSettings[2], returnValue.get()), returnValue::set);
-
-        System.out.println(returnValue.get());
-
         runIntcode(program.clone(), input(phaseSettings[3], returnValue.get()), returnValue::set);
-
-        System.out.println(returnValue.get());
-
         runIntcode(program.clone(), input(phaseSettings[4], returnValue.get()), returnValue::set);
 
         return returnValue.get();
