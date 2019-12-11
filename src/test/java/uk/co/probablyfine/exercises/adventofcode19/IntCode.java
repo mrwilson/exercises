@@ -117,11 +117,10 @@ class IntCode {
     private void add() {
         int pointer = globalPointer.get();
 
-        boolean firstArgMode = (program[pointer] / 100) % 10 == 0;
         boolean secondArgMode = (program[pointer] / 1000) == 0;
 
         program[program[pointer + 3]] =
-                arg(pointer + 1, firstArgMode)
+                firstArg()
                         + arg(pointer + 2, secondArgMode);
 
         globalPointer.addAndGet(4);
@@ -134,6 +133,12 @@ class IntCode {
     static int[] runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
         return new IntCode(program).run(input, output);
 
+    }
+
+    private int firstArg() {
+        boolean firstArgMode = (program[globalPointer.get()] / 100) % 10 == 0;
+
+        return arg(globalPointer.get() + 1, firstArgMode);
     }
 
     private int arg(int index, boolean positionMode) {
