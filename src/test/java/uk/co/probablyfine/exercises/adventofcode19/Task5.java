@@ -1,16 +1,15 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
+import org.junit.Test;
 
 public class Task5 {
 
@@ -153,7 +152,6 @@ public class Task5 {
         assertThat(output.get(), is(0));
     }
 
-
     static Supplier<Integer> input(int... inputs) {
 
         return new Supplier<>() {
@@ -165,6 +163,5 @@ public class Task5 {
                 return inputs[index++];
             }
         };
-
     }
 }

@@ -73,45 +73,32 @@ class IntCode {
         }
 
         return program;
-
     }
 
     private void equals() {
         if (firstArg() == secondArg()) {
-            program[program[globalPointer.get()+3]] = 1;
+            program[program[globalPointer.get() + 3]] = 1;
         } else {
-            program[program[globalPointer.get()+3]] = 0;
+            program[program[globalPointer.get() + 3]] = 0;
         }
         globalPointer.addAndGet(4);
     }
 
     private void lessThan() {
         if (firstArg() < secondArg()) {
-            program[program[globalPointer.get()+3]] = 1;
+            program[program[globalPointer.get() + 3]] = 1;
         } else {
-            program[program[globalPointer.get()+3]] = 0;
+            program[program[globalPointer.get() + 3]] = 0;
         }
         globalPointer.addAndGet(4);
     }
 
     private void jumpIfTrue() {
-        boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
-
-        if(firstArg() == 0) {
-            globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
-        } else {
-            globalPointer.addAndGet(2);
-        }
+        test(firstArg() == 0);
     }
 
     private void jumpIfFalse() {
-        boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
-
-        if(firstArg() != 0) {
-            globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
-        } else {
-            globalPointer.addAndGet(2);
-        }
+        test(firstArg() != 0);
     }
 
     private void output(Consumer<Integer> output) {
@@ -125,20 +112,15 @@ class IntCode {
     }
 
     private void mult() {
-        int pointer = globalPointer.get();
 
-        program[program[pointer + 3]] =
-                firstArg() * secondArg();
+        program[program[globalPointer.get() + 3]] = firstArg() * secondArg();
 
         globalPointer.addAndGet(4);
     }
 
     private void add() {
-        int pointer = globalPointer.get();
 
-        program[program[pointer + 3]] =
-                firstArg()
-                        + secondArg();
+        program[program[globalPointer.get() + 3]] = firstArg() + secondArg();
 
         globalPointer.addAndGet(4);
     }
@@ -149,7 +131,6 @@ class IntCode {
 
     static int[] runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
         return new IntCode(program).run(input, output);
-
     }
 
     private int firstArg() {
@@ -164,5 +145,15 @@ class IntCode {
 
     private int arg(int index, boolean positionMode) {
         return positionMode ? program[program[index]] : program[index];
+    }
+
+    private void test(boolean test) {
+        boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
+
+        if (test) {
+            globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
+        } else {
+            globalPointer.addAndGet(2);
+        }
     }
 }
