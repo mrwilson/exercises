@@ -48,7 +48,7 @@ class IntCode {
                     break;
 
                 case Operation.STORE:
-                    store(input, pointer);
+                    store(input);
                     break;
 
                 case Operation.RETURN:
@@ -100,8 +100,8 @@ class IntCode {
 
     }
 
-    private void store(Supplier<Integer> input, int pointer) {
-        program[program[pointer + 1]] = input.get();
+    private void store(Supplier<Integer> input) {
+        program[program[globalPointer.get() + 1]] = input.get();
         globalPointer.addAndGet(2);
     }
 
@@ -139,7 +139,7 @@ class IntCode {
     }
 
     private int secondArg() {
-        boolean mode = (program[globalPointer.get()] / 1000) == 0;;
+        boolean mode = (program[globalPointer.get()] / 1000) == 0;
         return arg(globalPointer.get() + 2, mode);
     }
 
