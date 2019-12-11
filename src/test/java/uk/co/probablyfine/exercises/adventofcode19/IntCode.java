@@ -44,7 +44,7 @@ class IntCode {
                     break;
 
                 case Operation.MULTIPLY:
-                    mult(pointer, firstArgMode, secondArgMode);
+                    mult();
                     break;
 
                 case Operation.STORE:
@@ -101,7 +101,12 @@ class IntCode {
 
     }
 
-    private void mult(int pointer, boolean firstArgMode, boolean secondArgMode) {
+    private void mult() {
+        int pointer = globalPointer.get();
+
+        boolean firstArgMode = (program[pointer] / 100) % 10 == 0;
+        boolean secondArgMode = (program[pointer] / 1000) == 0;
+
         program[program[pointer + 3]] =
                 arg(pointer + 1, firstArgMode)
                         * arg(pointer + 2, secondArgMode);
