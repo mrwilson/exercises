@@ -64,12 +64,7 @@ class IntCode {
                     break;
 
                 case Operation.LESS_THAN:
-                    if (arg(pointer + 1, firstArgMode) < arg(pointer + 2, secondArgMode)) {
-                        program[program[pointer+3]] = 1;
-                    } else {
-                        program[program[pointer+3]] = 0;
-                    }
-                    globalPointer.addAndGet(4);
+                    lessThan();
                     break;
 
                 case Operation.EQ:
@@ -89,6 +84,15 @@ class IntCode {
 
         return program;
 
+    }
+
+    private void lessThan() {
+        if (firstArg() < secondArg()) {
+            program[program[globalPointer.get()+3]] = 1;
+        } else {
+            program[program[globalPointer.get()+3]] = 0;
+        }
+        globalPointer.addAndGet(4);
     }
 
     private void jumpIfTrue() {
