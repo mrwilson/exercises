@@ -48,8 +48,7 @@ class IntCode {
                     break;
 
                 case Operation.STORE:
-                    program[program[pointer + 1]] = input.get();
-                    globalPointer.addAndGet(2);
+                    store(input, pointer);
                     break;
 
                 case Operation.RETURN:
@@ -99,6 +98,11 @@ class IntCode {
 
         return program;
 
+    }
+
+    private void store(Supplier<Integer> input, int pointer) {
+        program[program[pointer + 1]] = input.get();
+        globalPointer.addAndGet(2);
     }
 
     private void mult() {
