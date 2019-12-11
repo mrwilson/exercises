@@ -67,7 +67,10 @@ class IntCode {
                     break;
 
                 case Operation.HALT:
+                    break loop;
+
                 default:
+                    System.out.println("** WARN DEFAULT " + program[globalPointer.get()]);
                     break loop;
             }
         }
@@ -76,6 +79,8 @@ class IntCode {
     }
 
     private void equals() {
+        System.out.println("EQ[" + firstArg() + " == " + secondArg() + "]");
+
         program[program[globalPointer.get() + 3]] = (firstArg() == secondArg()) ? 1 : 0;
         globalPointer.addAndGet(4);
     }
@@ -86,11 +91,11 @@ class IntCode {
     }
 
     private void jumpIfTrue() {
-        test(firstArg() == 0);
+        test(firstArg() != 0);
     }
 
     private void jumpIfFalse() {
-        test(firstArg() != 0);
+        test(firstArg() == 0);
     }
 
     private void output(Consumer<Integer> output) {
@@ -136,12 +141,10 @@ class IntCode {
     }
 
     private void test(boolean test) {
-        boolean firstArgMode = ((program[globalPointer.get()] / 100) % 10) == 0;
-
         if (test) {
-            globalPointer.set(arg(globalPointer.get() + 2, firstArgMode));
+            globalPointer.set(program[globalPointer.get() + 2]);
         } else {
-            globalPointer.addAndGet(2);
+            globalPointer.addAndGet(3);
         }
     }
 }

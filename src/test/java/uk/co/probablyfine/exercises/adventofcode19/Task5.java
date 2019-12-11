@@ -88,7 +88,7 @@ public class Task5 {
 
     @Test
     public void testJumpIfTrue() {
-        int[] input = {105, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+        int[] input = {105, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
         AtomicInteger output = new AtomicInteger(0);
 
@@ -99,7 +99,7 @@ public class Task5 {
 
     @Test
     public void testJumpIfFalse() {
-        int[] input = {106, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+        int[] input = {106, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
         AtomicInteger output = new AtomicInteger(0);
 
@@ -150,6 +150,26 @@ public class Task5 {
         runIntcode(input, input(0), output::set);
 
         assertThat(output.get(), is(0));
+    }
+
+    @Test
+    public void example() {
+        int[] program = {
+            3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31, 1106, 0, 36, 98, 0,
+            0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104, 999, 1105, 1, 46, 1101, 1000, 1, 20, 4,
+            20, 1105, 1, 46, 98, 99
+        };
+
+        AtomicInteger output = new AtomicInteger(1);
+
+        runIntcode(program, input(7), output::set);
+        assertThat(output.get(), is(999));
+
+        runIntcode(program, input(8), output::set);
+        assertThat(output.get(), is(1000));
+
+        runIntcode(program, input(9), output::set);
+        assertThat(output.get(), is(1001));
     }
 
     static Supplier<Integer> input(int... inputs) {
