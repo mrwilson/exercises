@@ -35,19 +35,47 @@ public class Task7 {
         assertThat(runThrusters(program,4,3,2,1,0), is(43210));
     }
 
+    @Test
+    public void thirdExample() {
+
+        int[] program = {
+                3,31,
+                3,32,
+                1002,32,10,32,
+                1001,31,-2,31,
+                1007,31,0,33,
+                1002,33,7,33,
+                1,33,31,31,
+                1,32,31,31,
+                4,31,
+                99,
+                0,0,0
+        };
+
+
+        assertThat(runThrusters(program,1,0,4,3,2), is(65210));
+    }
 
     private static int runThrusters(int[] program, int... phaseSettings) {
         AtomicInteger returnValue = new AtomicInteger(0);
 
-        runIntcode(program.clone(), input(phaseSettings[0], 0), outA ->
-            runIntcode(program.clone(), input(phaseSettings[1], outA), outB ->
-                runIntcode(program.clone(), input(phaseSettings[2], outB), outC ->
-                    runIntcode(program.clone(), input(phaseSettings[3], outC), outD ->
-                        runIntcode(program.clone(), input(phaseSettings[4], outD), returnValue::set)
-                    )
-                )
-            )
-        );
+        runIntcode(program.clone(), input(phaseSettings[0], 0), returnValue::set);
+
+        System.out.println(returnValue.get());
+
+        runIntcode(program.clone(), input(phaseSettings[1], returnValue.get()), returnValue::set);
+
+        System.out.println(returnValue.get());
+
+        runIntcode(program.clone(), input(phaseSettings[2], returnValue.get()), returnValue::set);
+
+        System.out.println(returnValue.get());
+
+        runIntcode(program.clone(), input(phaseSettings[3], returnValue.get()), returnValue::set);
+
+        System.out.println(returnValue.get());
+
+        runIntcode(program.clone(), input(phaseSettings[4], returnValue.get()), returnValue::set);
 
         return returnValue.get();
     }
