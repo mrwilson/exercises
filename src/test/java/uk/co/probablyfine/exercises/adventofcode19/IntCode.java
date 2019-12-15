@@ -124,17 +124,21 @@ class IntCode {
     }
 
     private int firstArg() {
-        boolean mode = (program[globalPointer.get()] / 100) % 10 == 0;
-        return arg(globalPointer.get() + 1, mode);
+        return arg(globalPointer.get() + 1, (program[globalPointer.get()] / 100) % 10);
     }
 
     private int secondArg() {
-        boolean mode = (program[globalPointer.get()] / 1000) == 0;
-        return arg(globalPointer.get() + 2, mode);
+        return arg(globalPointer.get() + 2, program[globalPointer.get()] / 1000);
     }
 
-    private int arg(int index, boolean positionMode) {
-        return positionMode ? program[program[index]] : program[index];
+    private int arg(int index, int positionMode) {
+        if (positionMode == 0) {
+            return program[program[index]];
+        } else if (positionMode == 1) {
+            return program[index];
+        } else {
+            throw new RuntimeException("Unrecognisable mode for position: "+positionMode);
+        }
     }
 
     private void test(boolean test) {
