@@ -2,8 +2,6 @@ package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
@@ -42,14 +40,14 @@ public class Task7 {
     }
 
     private static int runThrusters(int[] program, int... phaseSettings) {
-        AtomicInteger returnValue = new AtomicInteger(0);
+        IntCode.Output output = IntCode.output();
 
-        runIntcode(program.clone(), input(phaseSettings[0], 0), returnValue::set);
-        runIntcode(program.clone(), input(phaseSettings[1], returnValue.get()), returnValue::set);
-        runIntcode(program.clone(), input(phaseSettings[2], returnValue.get()), returnValue::set);
-        runIntcode(program.clone(), input(phaseSettings[3], returnValue.get()), returnValue::set);
-        runIntcode(program.clone(), input(phaseSettings[4], returnValue.get()), returnValue::set);
+        runIntcode(program.clone(), input(phaseSettings[0], 0), output::consume);
+        runIntcode(program.clone(), input(phaseSettings[1], output.retrieve()), output::consume);
+        runIntcode(program.clone(), input(phaseSettings[2], output.retrieve()), output::consume);
+        runIntcode(program.clone(), input(phaseSettings[3], output.retrieve()), output::consume);
+        runIntcode(program.clone(), input(phaseSettings[4], output.retrieve()), output::consume);
 
-        return returnValue.get();
+        return output.retrieve();
     }
 }

@@ -2,8 +2,6 @@ package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
@@ -76,10 +74,10 @@ public class Task1 {
             0,0,0,
         };
 
-        AtomicInteger output = new AtomicInteger(0);
+        IntCode.Output output = IntCode.output();
 
-        runIntcode(program, input(mass), output::set);
+        runIntcode(program, input(mass), output::consume);
 
-        return output.get();
+        return output.retrieve();
     }
 }
