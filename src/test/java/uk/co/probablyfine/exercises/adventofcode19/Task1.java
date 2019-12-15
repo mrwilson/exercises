@@ -66,7 +66,7 @@ public class Task1 {
             // Subtract 2 from [b]
             101,-2,25,25,
 
-            // Return output
+            // Return [b]
             4, 25,
 
             // Halt
