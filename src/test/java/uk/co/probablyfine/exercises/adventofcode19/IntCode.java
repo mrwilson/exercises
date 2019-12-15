@@ -87,7 +87,7 @@ class IntCode {
     }
 
     private void setBase() {
-        relativeBase.set(firstArg());
+        relativeBase.addAndGet(firstArg());
         globalPointer.addAndGet(2);
     }
 
