@@ -1,5 +1,7 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -158,6 +160,28 @@ class IntCode {
             @Override
             public Integer get() {
                 return inputs[index++];
+            }
+        };
+    }
+
+    interface Output {
+        void consume(int output);
+        int retrieve();
+    }
+
+    static Output output() {
+        return new Output() {
+
+            private final Deque<Integer> allOutputs = new ArrayDeque<>();
+
+            @Override
+            public void consume(int output) {
+                allOutputs.push(output);
+            }
+
+            @Override
+            public int retrieve() {
+                return allOutputs.pop();
             }
         };
     }

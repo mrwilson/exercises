@@ -1,11 +1,11 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
+import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,11 +39,11 @@ public class Task5 {
     public void testOutput() {
         int[] input = {4, 2, 99};
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(99));
+        assertThat(output.retrieve(), is(99));
     }
 
     @Test
@@ -51,11 +51,11 @@ public class Task5 {
         int[] program = {3, 0, 4, 0, 99};
         int randomInt = new Random().nextInt();
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(program, input(randomInt), output::set);
+        runIntcode(program, input(randomInt), output::consume);
 
-        assertThat(output.get(), is(randomInt));
+        assertThat(output.retrieve(), is(randomInt));
     }
 
     @Test
@@ -80,77 +80,77 @@ public class Task5 {
     public void testOpcodeWithPositions_return() {
         int[] program = {104, 10, 99};
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(program, input(0), output::set);
+        runIntcode(program, input(0), output::consume);
 
-        assertThat(output.get(), is(10));
+        assertThat(output.retrieve(), is(10));
     }
 
     @Test
     public void testJumpIfTrue() {
         int[] input = {1105, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(33));
+        assertThat(output.retrieve(), is(33));
     }
 
     @Test
     public void testJumpIfFalse() {
         int[] input = {1106, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(33));
+        assertThat(output.retrieve(), is(33));
     }
 
     @Test
     public void testLessThan() {
         int[] input = {1107, 1, 2, 5, 104, 33, 99};
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(1));
+        assertThat(output.retrieve(), is(1));
     }
 
     @Test
     public void testLessThan_false() {
         int[] input = {1107, 2, 1, 5, 104, 33, 99};
 
-        AtomicInteger output = new AtomicInteger(1);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(0));
+        assertThat(output.retrieve(), is(0));
     }
 
     @Test
     public void testEq() {
         int[] input = {1108, 1, 1, 5, 104, 33, 99};
 
-        AtomicInteger output = new AtomicInteger(0);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(1));
+        assertThat(output.retrieve(), is(1));
     }
 
     @Test
     public void testNE() {
         int[] input = {1108, 2, 1, 5, 104, 33, 99};
 
-        AtomicInteger output = new AtomicInteger(1);
+        Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::set);
+        runIntcode(input, input(0), output::consume);
 
-        assertThat(output.get(), is(0));
+        assertThat(output.retrieve(), is(0));
     }
 
     @Test
@@ -161,16 +161,16 @@ public class Task5 {
             20, 1105, 1, 46, 98, 99
         };
 
-        AtomicInteger output = new AtomicInteger(1);
+        Output output = IntCode.output();
 
-        runIntcode(program, input(7), output::set);
-        assertThat(output.get(), is(999));
+        runIntcode(program, input(7), output::consume);
+        assertThat(output.retrieve(), is(999));
 
-        runIntcode(program, input(8), output::set);
-        assertThat(output.get(), is(1000));
+        runIntcode(program, input(8), output::consume);
+        assertThat(output.retrieve(), is(1000));
 
-        runIntcode(program, input(9), output::set);
-        assertThat(output.get(), is(1001));
+        runIntcode(program, input(9), output::consume);
+        assertThat(output.retrieve(), is(1001));
     }
 
 }
