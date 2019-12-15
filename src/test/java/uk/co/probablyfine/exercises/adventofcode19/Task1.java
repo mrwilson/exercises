@@ -7,17 +7,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
+import static uk.co.probablyfine.exercises.adventofcode19.Task5.input;
 
 public class Task1 {
 
     @Test
     public void firstExample() {
-        assertThat(fuelRequiredUsingIntcode(12), is(2));
+        assertThat(fuelRequiredForMass(12), is(2));
     }
 
     @Test
     public void secondExample() {
-        assertThat(fuelRequiredUsingIntcode(1969), is(654));
+        assertThat(fuelRequiredForMass(1969), is(654));
     }
 
     @Test
@@ -31,7 +32,19 @@ public class Task1 {
         assertThat(totalFuelRequiredForMass(100756), is(50346));
     }
 
-    private static int fuelRequiredUsingIntcode(int mass) {
+    private static int totalFuelRequiredForMass(int mass) {
+        int extraFuel = fuelRequiredForMass(mass);
+        int totalFuel = 0;
+
+        while (extraFuel > 1) {
+            totalFuel += extraFuel;
+            extraFuel = fuelRequiredForMass(extraFuel);
+        }
+
+        return totalFuel;
+    }
+
+    private static int fuelRequiredForMass(int mass) {
 
         int[] program = {
 
@@ -65,24 +78,8 @@ public class Task1 {
 
         AtomicInteger output = new AtomicInteger(0);
 
-        runIntcode(program, () -> mass, output::set);
+        runIntcode(program, input(mass), output::set);
 
         return output.get();
-    }
-
-    private static int totalFuelRequiredForMass(int mass) {
-        int extraFuel = fuelRequiredForMass(mass);
-        int totalFuel = 0;
-
-        while (extraFuel > 1) {
-            totalFuel += extraFuel;
-            extraFuel = fuelRequiredForMass(extraFuel);
-        }
-
-        return totalFuel;
-    }
-
-    private static int fuelRequiredForMass(int mass) {
-        return fuelRequiredUsingIntcode(mass);
     }
 }
