@@ -17,6 +17,24 @@ public class Task1 {
         assertThat(fuelRequiredForMass(1969), is(654));
     }
 
+    @Test
+    public void recurseExample() {
+        assertThat(totalFuelRequiredForMass(1969), is(966));
+
+    }
+
+    private int totalFuelRequiredForMass(int mass) {
+        int extraFuel = fuelRequiredForMass(mass);
+        int totalFuel = 0;
+
+        while (extraFuel > 1) {
+            totalFuel += extraFuel;
+            extraFuel = fuelRequiredForMass(extraFuel);
+        }
+
+        return totalFuel;
+    }
+
     private int fuelRequiredForMass(int mass) {
         return (mass / 3) - 2;
     }
