@@ -23,6 +23,11 @@ public class Task1 {
 
     }
 
+    @Test
+    public void recurseExample2() {
+        assertThat(totalFuelRequiredForMass(100756), is(50346));
+    }
+
     private int totalFuelRequiredForMass(int mass) {
         int extraFuel = fuelRequiredForMass(mass);
         int totalFuel = 0;
