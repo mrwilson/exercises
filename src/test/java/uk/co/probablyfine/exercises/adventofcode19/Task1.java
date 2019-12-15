@@ -83,6 +83,6 @@ public class Task1 {
     }
 
     private static int fuelRequiredForMass(int mass) {
-        return Math.floorDiv(mass, 3) - 2;
+        return fuelRequiredUsingIntcode(mass);
     }
 }
