@@ -1,12 +1,13 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
-import static uk.co.probablyfine.exercises.adventofcode19.Task5.input;
+import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
+import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 
 public class Task7 {
 

@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
-import static uk.co.probablyfine.exercises.adventofcode19.Task5.input;
 
 public class Task1 {
 

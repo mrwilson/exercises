@@ -144,4 +144,17 @@ class IntCode {
             globalPointer.addAndGet(3);
         }
     }
+
+    static Supplier<Integer> input(int... inputs) {
+
+        return new Supplier<>() {
+
+            int index = 0;
+
+            @Override
+            public Integer get() {
+                return inputs[index++];
+            }
+        };
+    }
 }
