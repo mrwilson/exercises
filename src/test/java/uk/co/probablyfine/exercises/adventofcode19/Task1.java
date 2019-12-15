@@ -28,7 +28,7 @@ public class Task1 {
         assertThat(totalFuelRequiredForMass(100756), is(50346));
     }
 
-    private int totalFuelRequiredForMass(int mass) {
+    private static int totalFuelRequiredForMass(int mass) {
         int extraFuel = fuelRequiredForMass(mass);
         int totalFuel = 0;
 
@@ -40,7 +40,7 @@ public class Task1 {
         return totalFuel;
     }
 
-    private int fuelRequiredForMass(int mass) {
-        return (mass / 3) - 2;
+    private static int fuelRequiredForMass(int mass) {
+        return Math.floorDiv(mass, 3) - 2;
     }
 }
