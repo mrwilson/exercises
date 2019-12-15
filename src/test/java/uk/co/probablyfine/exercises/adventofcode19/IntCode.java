@@ -10,6 +10,7 @@ class IntCode {
 
     private final int[] program;
     private final AtomicInteger globalPointer;
+    private final AtomicInteger relativeBase;
 
     public interface Operation {
         int ADD = 1;
@@ -20,12 +21,14 @@ class IntCode {
         int JMP_IF_FALSE = 6;
         int LESS_THAN = 7;
         int EQ = 8;
+        int SET_BASE = 9;
         int HALT = 99;
     }
 
     private IntCode(int[] program) {
         this.program = program;
         this.globalPointer = new AtomicInteger(0);
+        this.relativeBase = new AtomicInteger(0);
     }
 
     private int[] run(Supplier<Integer> input, Consumer<Integer> output) {
@@ -68,6 +71,10 @@ class IntCode {
                     equals();
                     break;
 
+                case Operation.SET_BASE:
+                    setBase();
+                    break;
+
                 case Operation.HALT:
                     break loop;
 
@@ -77,6 +84,11 @@ class IntCode {
         }
 
         return program;
+    }
+
+    private void setBase() {
+        relativeBase.set(firstArg());
+        globalPointer.addAndGet(2);
     }
 
     private void equals() {
@@ -138,6 +150,8 @@ class IntCode {
             return program[program[index]];
         } else if (positionMode == 1) {
             return program[index];
+        } else if (positionMode == 2) {
+            return program[program[index] + relativeBase.get()];
         } else {
             throw new RuntimeException("Unrecognisable mode for position: "+positionMode);
         }
