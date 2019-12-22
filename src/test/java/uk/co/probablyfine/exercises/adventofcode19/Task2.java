@@ -9,48 +9,48 @@ public class Task2 {
 
     public static void main(String... args) {
 
-        int[] input = {
+        int[] program = {
             // PASTE INPUT FROM TEST
         };
 
-        input[1] = 12;
-        input[2] = 2;
+        program[1] = 12;
+        program[2] = 2;
 
-        int[] output = IntCode.runIntcode(input);
+        int[] output = IntCode.runIntcode(program);
 
         System.out.println(output[0]);
     }
 
     @Test
     public void noOps() {
-        int[] input = {};
+        int[] program = {};
 
-        assertThat(IntCode.runIntcode(input), is(input));
+        assertThat(IntCode.runIntcode(program), is(program));
     }
 
     @Test
     public void addition() {
-        int[] input = {1, 0, 0, 0};
+        int[] program = {1, 0, 0, 0};
 
-        int[] output = IntCode.runIntcode(input);
+        int[] output = IntCode.runIntcode(program);
 
         assertThat(output[0], is(2));
     }
 
     @Test
     public void multiplication() {
-        int[] input = {2, 3, 0, 3};
+        int[] program = {2, 3, 0, 3};
 
-        int[] output = IntCode.runIntcode(input);
+        int[] output = IntCode.runIntcode(program);
 
         assertThat(output[3], is(6));
     }
 
     @Test
     public void multipleOpcodes() {
-        int[] input = {1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50};
+        int[] program = {1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50};
 
-        int[] output = IntCode.runIntcode(input);
+        int[] output = IntCode.runIntcode(program);
 
         assertThat(output[3], is(70));
         assertThat(output[0], is(3500));
@@ -58,20 +58,20 @@ public class Task2 {
 
     @Test
     public void halt() {
-        int[] input = {
+        int[] program = {
             99, 1, 0, 0, 0,
         };
 
-        int[] output = IntCode.runIntcode(input);
+        int[] output = IntCode.runIntcode(program);
 
         assertThat(output[0], is(99));
     }
 
     @Test
     public void exampleFromSpec() {
-        int[] input = {1, 1, 1, 4, 99, 5, 6, 0, 99};
+        int[] program = {1, 1, 1, 4, 99, 5, 6, 0, 99};
 
-        int[] output = IntCode.runIntcode(input);
+        int[] output = IntCode.runIntcode(program);
 
         assertThat(output[0], is(30));
         assertThat(output[4], is(2));

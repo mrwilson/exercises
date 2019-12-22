@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id "uk.co.probablyfine.gradle.test-commit-revert" version "0.3.1"
+    id "uk.co.probablyfine.gradle.test-commit-revert" version "0.3.4"
     id "com.diffplug.gradle.spotless" version "3.26.1"
 }
 
@@ -15,7 +15,7 @@ repositories {
 }
 
 testCommitRevert {
-    commitCommand = "git commit --all --message AdventOfCode19"
+    promptForMessage = true
 }
 
 spotless {
