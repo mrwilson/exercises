@@ -28,20 +28,20 @@ public class Task5 {
 
     @Test
     public void testStore() {
-        int[] input = {3, 0, 99};
+        int[] program = {3, 0, 99};
 
-        int[] output = runIntcode(input, input(10), i -> {});
+        int[] output = runIntcode(program, input(10), i -> {});
 
         assertThat(output[0], is(10));
     }
 
     @Test
     public void testOutput() {
-        int[] input = {4, 2, 99};
+        int[] program = {4, 2, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(99));
     }
@@ -60,18 +60,18 @@ public class Task5 {
 
     @Test
     public void testOpcodeWithPositions() {
-        int[] input = {1002, 4, 3, 4, 33};
+        int[] program = {1002, 4, 3, 4, 33};
 
-        int[] output = runIntcode(input);
+        int[] output = runIntcode(program);
 
         assertThat(output[4], is(99));
     }
 
     @Test
     public void testOpcodeWithPositions_addition() {
-        int[] input = {1101, 10, 10, 4, 99};
+        int[] program = {1101, 10, 10, 4, 99};
 
-        int[] output = runIntcode(input);
+        int[] output = runIntcode(program);
 
         assertThat(output[4], is(20));
     }
@@ -89,66 +89,66 @@ public class Task5 {
 
     @Test
     public void testJumpIfTrue() {
-        int[] input = {1105, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+        int[] program = {1105, 1, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(33));
     }
 
     @Test
     public void testJumpIfFalse() {
-        int[] input = {1106, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
+        int[] program = {1106, 0, 10, 0, 0, 0, 0, 0, 0, 0, 104, 33, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(33));
     }
 
     @Test
     public void testLessThan() {
-        int[] input = {1107, 1, 2, 5, 104, 33, 99};
+        int[] program = {1107, 1, 2, 5, 104, 33, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(1));
     }
 
     @Test
     public void testLessThan_false() {
-        int[] input = {1107, 2, 1, 5, 104, 33, 99};
+        int[] program = {1107, 2, 1, 5, 104, 33, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(0));
     }
 
     @Test
     public void testEq() {
-        int[] input = {1108, 1, 1, 5, 104, 33, 99};
+        int[] program = {1108, 1, 1, 5, 104, 33, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(1));
     }
 
     @Test
     public void testNE() {
-        int[] input = {1108, 2, 1, 5, 104, 33, 99};
+        int[] program = {1108, 2, 1, 5, 104, 33, 99};
 
         Output output = IntCode.output();
 
-        runIntcode(input, input(0), output::consume);
+        runIntcode(program, input(0), output::consume);
 
         assertThat(output.retrieve(), is(0));
     }
