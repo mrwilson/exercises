@@ -102,11 +102,11 @@ class IntCode {
     }
 
     private void jumpIfTrue() {
-        test(firstArg() != 0);
+        jumpIf(firstArg() != 0);
     }
 
     private void jumpIfFalse() {
-        test(firstArg() == 0);
+        jumpIf(firstArg() == 0);
     }
 
     private void output(Consumer<Integer> output) {
@@ -157,7 +157,7 @@ class IntCode {
         }
     }
 
-    private void test(boolean test) {
+    private void jumpIf(boolean test) {
         if (test) {
             globalPointer.set(secondArg());
         } else {
