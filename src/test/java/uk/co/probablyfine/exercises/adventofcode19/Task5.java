@@ -30,9 +30,9 @@ public class Task5 {
     public void testStore() {
         int[] program = {3, 0, 99};
 
-        int[] output = runIntcode(program, input(10), i -> {});
+        runIntcode(program, input(10), i -> {});
 
-        assertThat(output[0], is(10));
+        assertThat(program[0], is(10));
     }
 
     @Test
@@ -62,18 +62,18 @@ public class Task5 {
     public void testOpcodeWithPositions() {
         int[] program = {1002, 4, 3, 4, 33};
 
-        int[] output = runIntcode(program);
+        runIntcode(program);
 
-        assertThat(output[4], is(99));
+        assertThat(program[4], is(99));
     }
 
     @Test
     public void testOpcodeWithPositions_addition() {
         int[] program = {1101, 10, 10, 4, 99};
 
-        int[] output = runIntcode(program);
+        runIntcode(program);
 
-        assertThat(output[4], is(20));
+        assertThat(program[4], is(20));
     }
 
     @Test

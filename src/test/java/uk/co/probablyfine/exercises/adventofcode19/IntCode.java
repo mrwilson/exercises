@@ -31,7 +31,7 @@ class IntCode {
         this.relativeBase = new AtomicInteger(0);
     }
 
-    private int[] run(Supplier<Integer> input, Consumer<Integer> output) {
+    private void run(Supplier<Integer> input, Consumer<Integer> output) {
 
         loop:
         while (globalPointer.get() < program.length) {
@@ -82,8 +82,6 @@ class IntCode {
                     break loop;
             }
         }
-
-        return program;
     }
 
     private int read(int index) {
@@ -137,12 +135,12 @@ class IntCode {
         globalPointer.addAndGet(4);
     }
 
-    static int[] runIntcode(int[] program) {
-        return new IntCode(program).run(() -> 0, i -> {});
+    static void runIntcode(int[] program) {
+        new IntCode(program).run(() -> 0, i -> {});
     }
 
-    static int[] runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
-        return new IntCode(program).run(input, output);
+    static void runIntcode(int[] program, Supplier<Integer> input, Consumer<Integer> output) {
+        new IntCode(program).run(input, output);
     }
 
     private int firstArg() {
