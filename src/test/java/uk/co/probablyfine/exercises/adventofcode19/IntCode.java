@@ -96,12 +96,16 @@ class IntCode {
     }
 
     private void equals() {
-        program[read(globalPointer.get() + 3, program)] = (firstArg() == secondArg()) ? 1 : 0;
+        write(read(globalPointer.get() + 3, program), (firstArg() == secondArg()) ? 1 : 0);
         globalPointer.addAndGet(4);
     }
 
+    private void write(int index, int value) {
+        program[index] = value;
+    }
+
     private void lessThan() {
-        program[read(globalPointer.get() + 3, program)] = (firstArg() < secondArg()) ? 1 : 0;
+        write(read(globalPointer.get() + 3, program), (firstArg() < secondArg()) ? 1 : 0);
         globalPointer.addAndGet(4);
     }
 
@@ -119,17 +123,17 @@ class IntCode {
     }
 
     private void store(Supplier<Integer> input) {
-        program[read(globalPointer.get() + 1, program)] = input.get();
+        write(read(globalPointer.get() + 1, program), input.get());
         globalPointer.addAndGet(2);
     }
 
     private void mult() {
-        program[read(globalPointer.get() + 3, program)] = firstArg() * secondArg();
+        write(read(globalPointer.get() + 3, program), firstArg() * secondArg());
         globalPointer.addAndGet(4);
     }
 
     private void add() {
-        program[read(globalPointer.get() + 3, program)] = firstArg() + secondArg();
+        write(read(globalPointer.get() + 3, program), firstArg() + secondArg());
         globalPointer.addAndGet(4);
     }
 
