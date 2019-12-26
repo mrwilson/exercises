@@ -187,6 +187,7 @@ class IntCode {
     interface Output {
         void consume(int output);
         int retrieve();
+        int size();
     }
 
     static Output output() {
@@ -203,6 +204,13 @@ class IntCode {
             public int retrieve() {
                 return allOutputs.pop();
             }
+
+            @Override
+            public int size() {
+                return allOutputs.size();
+            }
+
+
         };
     }
 }

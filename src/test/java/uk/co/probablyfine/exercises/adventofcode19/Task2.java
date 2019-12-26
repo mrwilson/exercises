@@ -66,21 +66,22 @@ public class Task2 {
     @Test
     public void halt() {
         int[] program = {
-            99, 1, 0, 0, 0,
+            99, 4, 0,
         };
 
-        IntCode.runIntcode(program);
+        IntCode.runIntcode(program, input(), output::consume);
 
-        assertThat(program[0], is(99));
+        assertThat(output.size(), is(0));
     }
 
     @Test
     public void exampleFromSpec() {
-        int[] program = {1, 1, 1, 4, 99, 5, 6, 0, 99};
+        int[] program = {1, 1, 1, 4, 99, 5, 6, 0, 4, 0, 4, 4, 99};
 
-        IntCode.runIntcode(program);
+        IntCode.runIntcode(program, input(), output::consume);
 
-        assertThat(program[0], is(30));
-        assertThat(program[4], is(2));
+        assertThat(output.retrieve(), is(2));
+        assertThat(output.retrieve(), is(30));
+
     }
 }
