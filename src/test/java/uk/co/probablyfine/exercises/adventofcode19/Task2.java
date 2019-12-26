@@ -1,9 +1,11 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
 import org.junit.Test;
+import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 
 public class Task2 {
 
@@ -32,11 +34,13 @@ public class Task2 {
 
     @Test
     public void addition() {
-        int[] program = {1, 0, 0, 0};
+        int[] program = {1, 0, 0, 0, 4, 0, 99};
 
-        IntCode.runIntcode(program);
+        Output output = IntCode.output();
 
-        assertThat(program[0], is(2));
+        IntCode.runIntcode(program, input(), output::consume);
+
+        assertThat(output.retrieve(), is(2));
     }
 
     @Test
