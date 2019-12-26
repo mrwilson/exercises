@@ -1,16 +1,17 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 class IntCode {
 
-    private final int[] program;
-    private final AtomicInteger globalPointer;
-    private final AtomicInteger relativeBase;
+    private final long[] program;
+    private final AtomicLong globalPointer;
+    private final AtomicLong relativeBase;
 
     public interface Operation {
         int ADD = 1;
@@ -26,9 +27,9 @@ class IntCode {
     }
 
     private IntCode(int[] program) {
-        this.program = program;
-        this.globalPointer = new AtomicInteger(0);
-        this.relativeBase = new AtomicInteger(0);
+        this.program = Arrays.stream(program).asLongStream().toArray();
+        this.globalPointer = new AtomicLong(0);
+        this.relativeBase = new AtomicLong(0);
     }
 
     private void run(Supplier<Integer> input, Consumer<Integer> output) {
@@ -36,7 +37,7 @@ class IntCode {
         loop:
         while (globalPointer.get() < program.length) {
 
-            int operation = read(globalPointer.get()) % 100;
+            int operation = (int) read(globalPointer.get()) % 100;
 
             switch (operation) {
                 case Operation.ADD:
@@ -84,12 +85,12 @@ class IntCode {
         }
     }
 
-    private int read(int index) {
-        return program[index];
+    private long read(long index) {
+        return program[(int) index];
     }
 
-    private void write(int index, int value) {
-        program[index] = value;
+    private void write(long index, long value) {
+        program[(int) index] = value;
     }
 
     private void setBase() {
@@ -116,7 +117,7 @@ class IntCode {
     }
 
     private void output(Consumer<Integer> output) {
-        output.accept(firstArg());
+        output.accept((int) firstArg());
         globalPointer.addAndGet(2);
     }
 
@@ -143,15 +144,15 @@ class IntCode {
         new IntCode(program).run(input, output);
     }
 
-    private int firstArg() {
+    private long firstArg() {
         return arg(globalPointer.get() + 1, (read(globalPointer.get()) / 100) % 10);
     }
 
-    private int secondArg() {
+    private long secondArg() {
         return arg(globalPointer.get() + 2, read(globalPointer.get()) / 1000);
     }
 
-    private int arg(int index, int positionMode) {
+    private long arg(long index, long positionMode) {
         if (positionMode == 0) {
             return read(read(index));
         } else if (positionMode == 1) {
