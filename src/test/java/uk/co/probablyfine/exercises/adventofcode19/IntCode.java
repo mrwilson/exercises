@@ -36,7 +36,7 @@ class IntCode {
         loop:
         while (globalPointer.get() < program.length) {
 
-            int operation = program[globalPointer.get()] % 100;
+            int operation = read(globalPointer.get(), program) % 100;
 
             switch (operation) {
                 case Operation.ADD:
@@ -86,18 +86,22 @@ class IntCode {
         return program;
     }
 
+    private int read(int index, int[] program) {
+        return program[index];
+    }
+
     private void setBase() {
         relativeBase.addAndGet(firstArg());
         globalPointer.addAndGet(2);
     }
 
     private void equals() {
-        program[program[globalPointer.get() + 3]] = (firstArg() == secondArg()) ? 1 : 0;
+        program[read(globalPointer.get() + 3, program)] = (firstArg() == secondArg()) ? 1 : 0;
         globalPointer.addAndGet(4);
     }
 
     private void lessThan() {
-        program[program[globalPointer.get() + 3]] = (firstArg() < secondArg()) ? 1 : 0;
+        program[read(globalPointer.get() + 3, program)] = (firstArg() < secondArg()) ? 1 : 0;
         globalPointer.addAndGet(4);
     }
 
@@ -115,17 +119,17 @@ class IntCode {
     }
 
     private void store(Supplier<Integer> input) {
-        program[program[globalPointer.get() + 1]] = input.get();
+        program[read(globalPointer.get() + 1, program)] = input.get();
         globalPointer.addAndGet(2);
     }
 
     private void mult() {
-        program[program[globalPointer.get() + 3]] = firstArg() * secondArg();
+        program[read(globalPointer.get() + 3, program)] = firstArg() * secondArg();
         globalPointer.addAndGet(4);
     }
 
     private void add() {
-        program[program[globalPointer.get() + 3]] = firstArg() + secondArg();
+        program[read(globalPointer.get() + 3, program)] = firstArg() + secondArg();
         globalPointer.addAndGet(4);
     }
 
@@ -138,20 +142,20 @@ class IntCode {
     }
 
     private int firstArg() {
-        return arg(globalPointer.get() + 1, (program[globalPointer.get()] / 100) % 10);
+        return arg(globalPointer.get() + 1, (read(globalPointer.get(), program) / 100) % 10);
     }
 
     private int secondArg() {
-        return arg(globalPointer.get() + 2, program[globalPointer.get()] / 1000);
+        return arg(globalPointer.get() + 2, read(globalPointer.get(), program) / 1000);
     }
 
     private int arg(int index, int positionMode) {
         if (positionMode == 0) {
-            return program[program[index]];
+            return read(program[index], program);
         } else if (positionMode == 1) {
-            return program[index];
+            return read(index, program);
         } else if (positionMode == 2) {
-            return program[program[index] + relativeBase.get()];
+            return read(program[index] + relativeBase.get(), program);
         } else {
             throw new RuntimeException("Unrecognisable mode for position: "+positionMode);
         }
