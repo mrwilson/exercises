@@ -31,11 +31,11 @@ public class Task5 {
 
     @Test
     public void testStore() {
-        int[] program = {3, 0, 99};
+        int[] program = {3, 0, 4, 0, 99};
 
-        runIntcode(program, input(10), i -> {});
+        runIntcode(program, input(10), output::consume);
 
-        assertThat(program[0], is(10));
+        assertThat(output.retrieve(), is(10));
     }
 
     @Test
