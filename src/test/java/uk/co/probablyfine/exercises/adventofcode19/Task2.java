@@ -9,6 +9,7 @@ import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 
 public class Task2 {
 
+
     public static void main(String... args) {
 
         int[] program = {
@@ -23,6 +24,8 @@ public class Task2 {
         System.out.println(program[0]);
     }
 
+    private final Output output = IntCode.output();
+
     @Test
     public void noOps() {
         int[] program = {};
@@ -36,8 +39,6 @@ public class Task2 {
     public void addition() {
         int[] program = {1, 0, 0, 0, 4, 0, 99};
 
-        Output output = IntCode.output();
-
         IntCode.runIntcode(program, input(), output::consume);
 
         assertThat(output.retrieve(), is(2));
@@ -45,21 +46,21 @@ public class Task2 {
 
     @Test
     public void multiplication() {
-        int[] program = {2, 3, 0, 3};
+        int[] program = {2, 3, 0, 3, 4, 3, 99};
 
-        IntCode.runIntcode(program);
+        IntCode.runIntcode(program, input(), output::consume);
 
-        assertThat(program[3], is(6));
+        assertThat(output.retrieve(), is(6));
     }
 
     @Test
     public void multipleOpcodes() {
-        int[] program = {1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50};
+        int[] program = {1, 13, 14, 3, 2, 3, 15, 0, 4, 3, 4, 0, 99, 30, 40, 50};
 
-        IntCode.runIntcode(program);
+        IntCode.runIntcode(program, input(), output::consume);
 
-        assertThat(program[3], is(70));
-        assertThat(program[0], is(3500));
+        assertThat(output.retrieve(), is(3500));
+        assertThat(output.retrieve(), is(70));
     }
 
     @Test
