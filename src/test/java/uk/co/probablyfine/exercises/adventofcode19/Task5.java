@@ -26,6 +26,9 @@ public class Task5 {
         System.out.println(outputs);
     }
 
+    private final Output output = IntCode.output();
+
+
     @Test
     public void testStore() {
         int[] program = {3, 0, 99};
@@ -60,20 +63,20 @@ public class Task5 {
 
     @Test
     public void testOpcodeWithPositions() {
-        int[] program = {1002, 4, 3, 4, 33};
+        int[] program = {1002, 6, 3, 6, 4, 6, 33};
 
-        runIntcode(program);
+        runIntcode(program, input(), output::consume);
 
-        assertThat(program[4], is(99));
+        assertThat(output.retrieve(), is(99));
     }
 
     @Test
     public void testOpcodeWithPositions_addition() {
-        int[] program = {1101, 10, 10, 4, 99};
+        int[] program = {1101, 10, 10, 0, 4, 0, 99};
 
-        runIntcode(program);
+        runIntcode(program, input(), output::consume);
 
-        assertThat(program[4], is(20));
+        assertThat(output.retrieve(), is(20));
     }
 
     @Test
