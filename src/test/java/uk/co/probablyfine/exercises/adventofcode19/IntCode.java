@@ -155,11 +155,11 @@ class IntCode {
 
     private int arg(int index, int positionMode) {
         if (positionMode == 0) {
-            return read(program[index]);
+            return read(read(index));
         } else if (positionMode == 1) {
             return read(index);
         } else if (positionMode == 2) {
-            return read(program[index] + relativeBase.get());
+            return read(read(index) + relativeBase.get());
         } else {
             throw new RuntimeException("Unrecognisable mode for position: "+positionMode);
         }
