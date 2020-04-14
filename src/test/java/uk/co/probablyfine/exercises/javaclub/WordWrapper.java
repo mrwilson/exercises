@@ -36,6 +36,11 @@ public class WordWrapper {
         assertThat(wrap("abcdefgh", 3), is("ab-\ncd-\nef-\ngh"));
     }
 
+    @Test
+    public void breakOnTwoSpaces() {
+        assertThat(wrap("a b c d", 3), is("a b\nc d"));
+    }
+
     private static String wrap(String input, int columns) {
 
         if (input.length() <= columns || columns == 0) return input;
@@ -48,11 +53,11 @@ public class WordWrapper {
             return input.substring(0, columns-1) + "-\n" + wrap(input.substring(columns-1), columns);
         }
 
-        if (line.indexOf(" ") <= columns) {
-            return line.replaceFirst(" ", "\n") + wrap(rest, columns);
-        } else {
-            return input;
-        }
+        var stringBuilder = new StringBuilder(line);
+        stringBuilder.setCharAt(line.lastIndexOf(" "), '\n');
+
+        return stringBuilder.toString() + wrap(rest, columns);
+
     }
 
 }
