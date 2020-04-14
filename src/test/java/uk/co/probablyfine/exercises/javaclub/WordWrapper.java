@@ -29,6 +29,11 @@ public class WordWrapper {
         assertThat(wrap("abc", 2), is("a-\nbc"));
     }
 
+    @Test
+    public void moreBreaksWithoutSpaces() {
+        assertThat(wrap("abcd", 2), is("a-\nb-\ncd"));
+    }
+
     private static String wrap(String input, int columns) {
 
         if (input.length() <= columns || columns == 0) return input;
