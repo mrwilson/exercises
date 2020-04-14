@@ -24,17 +24,26 @@ public class WordWrapper {
         assertThat(wrap("a b c", 1), is("a\nb\nc"));
     }
 
+    @Test
+    public void breakWithoutSpace() {
+        assertThat(wrap("abc", 2), is("a-\nbc"));
+    }
+
     private static String wrap(String input, int columns) {
 
-        if (input.length() <= columns) return input;
+        if (input.length() <= columns || columns == 0) return input;
 
-        String line = input.substring(0, columns+1);
+        String line = input.substring(0, columns + 1);
         String rest = input.substring(columns+1);
 
-        if(line.contains(" ") && line.indexOf(" ") <= columns) {
-            return line.replaceFirst(" ","\n") + wrap(rest, columns);
+        if (line.contains(" ")) {
+            if (line.indexOf(" ") <= columns) {
+                return line.replaceFirst(" ", "\n") + wrap(rest, columns);
+            } else {
+                return input;
+            }
         } else {
-            return input;
+            return input.substring(0, columns-1) + "-\n" + wrap(input.substring(columns-1), columns);
         }
     }
 
