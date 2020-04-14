@@ -19,9 +19,20 @@ public class WordWrapper {
 
     }
 
+    @Test
+    public void replaceTwoOccurrencesOfSpacesWithNewline() {
+        assertThat(wrap("a b c", 1), is("a\nb\nc"));
+    }
+
     private static String wrap(String input, int columns) {
-        if(input.indexOf(" ") <= columns) {
-            return input.replaceFirst(" ","\n");
+
+        if (input.length() <= columns) return input;
+
+        String column = input.substring(0, columns+1);
+        String rest = input.substring(columns+1);
+
+        if(column.contains(" ") && column.indexOf(" ") <= columns) {
+            return column.replaceFirst(" ","\n") + wrap(rest, columns);
         } else {
             return input;
         }
