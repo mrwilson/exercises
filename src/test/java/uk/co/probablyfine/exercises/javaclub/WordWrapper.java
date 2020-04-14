@@ -28,11 +28,11 @@ public class WordWrapper {
 
         if (input.length() <= columns) return input;
 
-        String column = input.substring(0, columns+1);
+        String line = input.substring(0, columns+1);
         String rest = input.substring(columns+1);
 
-        if(column.contains(" ") && column.indexOf(" ") <= columns) {
-            return column.replaceFirst(" ","\n") + wrap(rest, columns);
+        if(line.contains(" ") && line.indexOf(" ") <= columns) {
+            return line.replaceFirst(" ","\n") + wrap(rest, columns);
         } else {
             return input;
         }
