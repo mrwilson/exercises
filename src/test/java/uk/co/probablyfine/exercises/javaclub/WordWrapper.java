@@ -43,14 +43,15 @@ public class WordWrapper {
         String line = input.substring(0, columns + 1);
         String rest = input.substring(columns+1);
 
-        if (line.contains(" ")) {
-            if (line.indexOf(" ") <= columns) {
-                return line.replaceFirst(" ", "\n") + wrap(rest, columns);
-            } else {
-                return input;
-            }
-        } else {
+
+        if (!line.contains(" ")) {
             return input.substring(0, columns-1) + "-\n" + wrap(input.substring(columns-1), columns);
+        }
+
+        if (line.indexOf(" ") <= columns) {
+            return line.replaceFirst(" ", "\n") + wrap(rest, columns);
+        } else {
+            return input;
         }
     }
 
