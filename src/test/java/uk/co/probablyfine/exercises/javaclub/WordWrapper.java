@@ -13,8 +13,18 @@ public class WordWrapper {
 
     }
 
+    @Test
+    public void replaceOneSpaceWithNewline() {
+        assertThat(wrap("a b", 1), is("a\nb"));
+
+    }
+
     private static String wrap(String input, int columns) {
-        return input;
+        if(input.indexOf(" ") <= columns) {
+            return input.replaceFirst(" ","\n");
+        } else {
+            return input;
+        }
     }
 
 }
