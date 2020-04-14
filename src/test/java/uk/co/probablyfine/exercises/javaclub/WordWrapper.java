@@ -45,19 +45,13 @@ public class WordWrapper {
 
         if (input.length() <= columns || columns == 0) return input;
 
-        String line = input.substring(0, columns + 1);
-        String rest = input.substring(columns+1);
+        int lastSpaceBeforeBreak = input.substring(0, columns + 1).lastIndexOf(' ');
 
-
-        if (!line.contains(" ")) {
+        if (lastSpaceBeforeBreak < 0) {
             return input.substring(0, columns-1) + "-\n" + wrap(input.substring(columns-1), columns);
+        } else {
+            return input.substring(0, lastSpaceBeforeBreak) + "\n" + wrap(input.substring(lastSpaceBeforeBreak+1), columns);
         }
-
-        var stringBuilder = new StringBuilder(line);
-        stringBuilder.setCharAt(line.lastIndexOf(" "), '\n');
-
-        return stringBuilder.toString() + wrap(rest, columns);
-
     }
 
 }
