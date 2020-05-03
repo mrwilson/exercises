@@ -3,7 +3,6 @@ package uk.co.probablyfine.exercises;
 import org.junit.Test;
 
 import java.util.Random;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.DoubleStream;
@@ -28,14 +27,14 @@ public class DiceRollerTest {
         assertThat(roll("3d2", DoubleStream.of(0.0d, 0.9d, 0.1d)), is(4));
     }
 
-    private int roll(String dice) {
-        return roll(dice, new Random().doubles(0.0d, 1.0d));
-    }
-
     @Test
     public void doubleDigitSidesAndNumberOfRolls() {
         assertThat(roll("10d10", DoubleStream.iterate(0.0d, i -> i)), is(10));
         assertThat(roll("10d10", DoubleStream.iterate(0.9d, i -> i)), is(100));
+    }
+
+    private int roll(String dice) {
+        return roll(dice, new Random().doubles(0.0d, 1.0d));
     }
 
     private int roll(String dice, DoubleStream randomness) {
