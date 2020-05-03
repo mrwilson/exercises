@@ -2,13 +2,9 @@ package uk.co.probablyfine.exercises;
 
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 import static java.util.stream.Collectors.toList;
@@ -59,47 +55,61 @@ public class DiceRollerTest {
         roll("1d1/3");
     }
 
+    static class RollDice {
+
+        private final Supplier<DoubleStream> randomness;
+
+        RollDice(Supplier<DoubleStream> randomness) {
+            this.randomness = randomness;
+        }
+
+        public int roll(String dice) {
+            var diceRolls = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?(\\w((\\d+)d(\\d+)(([+-\\\\*])(\\d+))?))*")
+                    .matcher(dice)
+                    .results()
+                    .collect(toList());
+
+            if (diceRolls.isEmpty()) {
+                throw new InvalidDiceRollException("["+dice+"] is not a valid dice-roll pattern");
+            }
+
+            return diceRolls
+                    .stream()
+                    .mapToInt(match -> {
+
+                        int numberOfRolls = Integer.parseInt(match.group(1));
+                        int numberOfSides = Integer.parseInt(match.group(2));
+
+                        int sum = randomness
+                                .get()
+                                .limit(numberOfRolls)
+                                .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
+                                .sum();
+
+                        if (match.group(3) != null) {
+                            switch (match.group(4)) {
+                                case "+": return sum + Integer.parseInt(match.group(5));
+                                case "-": return sum - Integer.parseInt(match.group(5));
+                                case "*": return sum * Integer.parseInt(match.group(5));
+                                default:
+                                    throw new InvalidDiceRollException("["+match.group(0)+"] is not a valid dice-roll operation");
+                            }
+
+                        } else {
+                            return sum;
+                        }
+                    })
+                    .sum();
+        }
+
+    }
+
     private int roll(String dice) {
-        return roll(dice, () -> new Random().doubles(0.0d, 1.0d));
+        return new RollDice(() -> new Random().doubles(0.0d, 1.0d)).roll(dice);
     }
 
     private int roll(String dice, Supplier<DoubleStream> randomness) {
-        var diceRolls = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?(\\w((\\d+)d(\\d+)(([+-\\\\*])(\\d+))?))*")
-                .matcher(dice)
-                .results()
-                .collect(toList());
-
-        if (diceRolls.isEmpty()) {
-            throw new InvalidDiceRollException("["+dice+"] is not a valid dice-roll pattern");
-        }
-
-        return diceRolls
-            .stream()
-            .mapToInt(match -> {
-
-                int numberOfRolls = Integer.parseInt(match.group(1));
-                int numberOfSides = Integer.parseInt(match.group(2));
-
-                int sum = randomness
-                        .get()
-                        .limit(numberOfRolls)
-                        .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
-                        .sum();
-
-                if (match.group(3) != null) {
-                    switch (match.group(4)) {
-                        case "+": return sum + Integer.parseInt(match.group(5));
-                        case "-": return sum - Integer.parseInt(match.group(5));
-                        case "*": return sum * Integer.parseInt(match.group(5));
-                        default:
-                            throw new InvalidDiceRollException("["+match.group(0)+"] is not a valid dice-roll operation");
-                    }
-
-                } else {
-                    return sum;
-                }
-            })
-                .sum();
+       return new RollDice(randomness).roll(dice);
     }
 
     private Supplier<DoubleStream> repeatDoubles(double value) {
