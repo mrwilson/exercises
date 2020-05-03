@@ -44,6 +44,8 @@ public class DiceRollerTest {
     @Test
     public void addMultipleRollsTogether() {
         assertThat(roll("1d1 1d1"), is(2));
+
+        assertThat(roll("1d1*3 1d1+1"), is(5));
     }
 
     @Test(expected = InvalidDiceRollException.class)
