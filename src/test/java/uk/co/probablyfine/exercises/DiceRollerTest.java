@@ -45,6 +45,11 @@ public class DiceRollerTest {
         roll("not a dice roll");
     }
 
+    @Test(expected = InvalidDiceRollException.class)
+    public void throwWhenOperationSyntaxIsInvalid() {
+        roll("1d1/3");
+    }
+
     private int roll(String dice) {
         return roll(dice, new Random().doubles(0.0d, 1.0d));
     }
@@ -69,7 +74,8 @@ public class DiceRollerTest {
                 case "+": return sum + Integer.parseInt(matcher.group(5));
                 case "-": return sum - Integer.parseInt(matcher.group(5));
                 case "*": return sum * Integer.parseInt(matcher.group(5));
-                default: return sum;
+                default:
+                    throw new InvalidDiceRollException("["+matcher.group(3)+"] is not a valid dice-roll operation");
             }
 
         } else {
