@@ -28,8 +28,8 @@ public class DiceRollerTest {
 
     @Test
     public void doubleDigitSidesAndNumberOfRolls() {
-        assertThat(roll("10d10", DoubleStream.iterate(0.0d, i -> i)), is(10));
-        assertThat(roll("10d10", DoubleStream.iterate(0.9d, i -> i)), is(100));
+        assertThat(roll("10d10", repeat(0.0d)), is(10));
+        assertThat(roll("10d10", repeat(0.9d)), is(100));
     }
 
     @Test
@@ -81,6 +81,10 @@ public class DiceRollerTest {
             return sum;
         }
 
+    }
+
+    private DoubleStream repeat(double v) {
+        return DoubleStream.iterate(v, i -> i);
     }
 
     private static class InvalidDiceRollException extends RuntimeException {
