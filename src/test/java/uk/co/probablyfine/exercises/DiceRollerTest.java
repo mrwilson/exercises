@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Random;
 import java.util.function.Supplier;
+import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.DoubleStream;
 
@@ -74,34 +75,33 @@ public class DiceRollerTest {
             }
 
             return diceRolls
-                    .stream()
-                    .mapToInt(match -> {
-
-                        int numberOfRolls = Integer.parseInt(match.group(1));
-                        int numberOfSides = Integer.parseInt(match.group(2));
-
-                        int sum = randomness
-                                .get()
-                                .limit(numberOfRolls)
-                                .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
-                                .sum();
-
-                        if (match.group(3) != null) {
-                            switch (match.group(4)) {
-                                case "+": return sum + Integer.parseInt(match.group(5));
-                                case "-": return sum - Integer.parseInt(match.group(5));
-                                case "*": return sum * Integer.parseInt(match.group(5));
-                                default:
-                                    throw new InvalidDiceRollException("["+match.group(0)+"] is not a valid dice-roll operation");
-                            }
-
-                        } else {
-                            return sum;
-                        }
-                    })
-                    .sum();
+                .stream()
+                .mapToInt(this::rollSingleDiceExpression)
+                .sum();
         }
 
+        private int rollSingleDiceExpression(MatchResult match) {
+            int numberOfRolls = Integer.parseInt(match.group(1));
+            int numberOfSides = Integer.parseInt(match.group(2));
+
+            int sum = randomness
+                    .get()
+                    .limit(numberOfRolls)
+                    .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
+                    .sum();
+
+            if (match.group(3) != null) {
+                switch (match.group(4)) {
+                    case "+": return sum + Integer.parseInt(match.group(5));
+                    case "-": return sum - Integer.parseInt(match.group(5));
+                    case "*": return sum * Integer.parseInt(match.group(5));
+                    default:
+                        throw new InvalidDiceRollException("["+match.group(0)+"] is not a valid dice-roll operation");
+                }
+            } else {
+                return sum;
+            }
+        }
     }
 
     private int roll(String dice) {
