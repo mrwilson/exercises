@@ -33,6 +33,11 @@ public class DiceRollerTest {
         assertThat(roll("10d10", DoubleStream.iterate(0.9d, i -> i)), is(100));
     }
 
+    @Test
+    public void abilityToPerformOperationsOnRolls() {
+        assertThat(roll("1d1+1", DoubleStream.of(0.0d)), is(2));
+    }
+
     @Test(expected = InvalidDiceRollException.class)
     public void throwWhenInputIsInvalid() {
         roll("not a dice roll");
@@ -43,7 +48,7 @@ public class DiceRollerTest {
     }
 
     private int roll(String dice, DoubleStream randomness) {
-        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)").matcher(dice);
+        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)(\\+(\\d+))?").matcher(dice);
 
         if (!matcher.find()) {
             throw new InvalidDiceRollException("["+dice+"] is not a valid dice-roll pattern");
@@ -52,10 +57,17 @@ public class DiceRollerTest {
         int numberOfRolls = Integer.parseInt(matcher.group(1));
         int numberOfSides = Integer.parseInt(matcher.group(2));
 
-        return randomness
+        int sum = randomness
                 .limit(numberOfRolls)
                 .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
                 .sum();
+
+        if (matcher.group(4) != null) {
+            return sum + Integer.parseInt(matcher.group(3));
+        } else {
+            return sum;
+        }
+
     }
 
     private static class InvalidDiceRollException extends RuntimeException {
