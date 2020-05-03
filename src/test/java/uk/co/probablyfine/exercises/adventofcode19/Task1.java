@@ -1,11 +1,11 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
+
+import org.junit.Test;
 
 public class Task1 {
 
@@ -22,7 +22,6 @@ public class Task1 {
     @Test
     public void recurseExample() {
         assertThat(totalFuelRequiredForMass(1969), is(966));
-
     }
 
     @Test
@@ -47,31 +46,49 @@ public class Task1 {
         int[] program = {
 
             // Store input in [a]
-            3, 24,
+            3,
+            24,
 
             // Subtract 3 from [a]
-            101,-3,24,24,
+            101,
+            -3,
+            24,
+            24,
 
             // Add 1 to [b]
-            101,1,25,25,
+            101,
+            1,
+            25,
+            25,
 
             // Save to [c] whether [a] > 3
-            1007,24,3,26,
+            1007,
+            24,
+            3,
+            26,
 
             // If [a] > 3, go to loop above
-            1006,26,2,
+            1006,
+            26,
+            2,
 
             // Subtract 2 from [b]
-            101,-2,25,25,
+            101,
+            -2,
+            25,
+            25,
 
             // Return [b]
-            4, 25,
+            4,
+            25,
 
             // Halt
             99,
 
             // Registers: 24[a], 25[b], 26[c]
-            0,0,0,
+            0,
+            0,
+            0,
         };
 
         IntCode.Output output = IntCode.output();

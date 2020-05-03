@@ -160,7 +160,7 @@ class IntCode {
         } else if (positionMode == 2) {
             return read(read(index) + relativeBase.get());
         } else {
-            throw new RuntimeException("Unrecognisable mode for position: "+positionMode);
+            throw new RuntimeException("Unrecognisable mode for position: " + positionMode);
         }
     }
 
@@ -187,7 +187,9 @@ class IntCode {
 
     interface Output {
         void consume(int output);
+
         int retrieve();
+
         int size();
     }
 
@@ -210,8 +212,6 @@ class IntCode {
             public int size() {
                 return allOutputs.size();
             }
-
-
         };
     }
 }

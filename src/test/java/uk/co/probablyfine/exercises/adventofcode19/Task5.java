@@ -1,16 +1,15 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import org.junit.Test;
+import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
 public class Task5 {
 
@@ -27,7 +26,6 @@ public class Task5 {
     }
 
     private final Output output = IntCode.output();
-
 
     @Test
     public void testStore() {
@@ -155,5 +153,4 @@ public class Task5 {
         runIntcode(program, input(9), output::consume);
         assertThat(output.retrieve(), is(1001));
     }
-
 }

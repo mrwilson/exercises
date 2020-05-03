@@ -1,14 +1,13 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import org.junit.Test;
-import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 
-public class Task2 {
+import org.junit.Test;
+import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
+public class Task2 {
 
     public static void main(String... args) {
 
@@ -82,6 +81,5 @@ public class Task2 {
 
         assertThat(output.retrieve(), is(2));
         assertThat(output.retrieve(), is(30));
-
     }
 }

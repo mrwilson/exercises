@@ -2,10 +2,13 @@ package uk.co.probablyfine.exercises;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,6 +43,11 @@ public class DiceRollerTest {
         assertThat(roll("1d1*3"), is(3));
     }
 
+    @Test
+    public void addMultipleRollsTogether() {
+        assertThat(roll("1d1 1d1"), is(2));
+    }
+
     @Test(expected = InvalidDiceRollException.class)
     public void throwWhenInputIsInvalid() {
         roll("not a dice roll");
@@ -55,34 +63,41 @@ public class DiceRollerTest {
     }
 
     private int roll(String dice, Supplier<DoubleStream> randomness) {
-        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?").matcher(dice);
+        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?(\\w((\\d+)d(\\d+)(([+-\\\\*])(\\d+))?))*").matcher(dice);
 
-        if (!matcher.find()) {
+        List<MatchResult> matchResults = matcher.results().collect(Collectors.toList());
+
+        if (matchResults.isEmpty()) {
             throw new InvalidDiceRollException("["+dice+"] is not a valid dice-roll pattern");
         }
 
-        int numberOfRolls = Integer.parseInt(matcher.group(1));
-        int numberOfSides = Integer.parseInt(matcher.group(2));
+        return matchResults
+            .stream()
+            .mapToInt(match -> {
 
-        int sum = randomness
-                .get()
-                .limit(numberOfRolls)
-                .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
+                int numberOfRolls = Integer.parseInt(match.group(1));
+                int numberOfSides = Integer.parseInt(match.group(2));
+
+                int sum = randomness
+                        .get()
+                        .limit(numberOfRolls)
+                        .mapToInt(i -> (int) Math.round(Math.floor(i * numberOfSides)) + 1)
+                        .sum();
+
+                if (match.group(3) != null) {
+                    switch (match.group(4)) {
+                        case "+": return sum + Integer.parseInt(match.group(5));
+                        case "-": return sum - Integer.parseInt(match.group(5));
+                        case "*": return sum * Integer.parseInt(match.group(5));
+                        default:
+                            throw new InvalidDiceRollException("["+match.group(0)+"] is not a valid dice-roll operation");
+                    }
+
+                } else {
+                    return sum;
+                }
+            })
                 .sum();
-
-        if (matcher.group(3) != null) {
-            switch (matcher.group(4)) {
-                case "+": return sum + Integer.parseInt(matcher.group(5));
-                case "-": return sum - Integer.parseInt(matcher.group(5));
-                case "*": return sum * Integer.parseInt(matcher.group(5));
-                default:
-                    throw new InvalidDiceRollException("["+matcher.group(3)+"] is not a valid dice-roll operation");
-            }
-
-        } else {
-            return sum;
-        }
-
     }
 
     private Supplier<DoubleStream> repeatDoubles(double value) {

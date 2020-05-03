@@ -1,22 +1,20 @@
 package uk.co.probablyfine.exercises.javaclub;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.Test;
 
 public class WordWrapper {
 
     @Test
     public void zeroWidthColumnIsNoBreaks() {
         assertThat(wrap("a b", 0), is("a b"));
-
     }
 
     @Test
     public void replaceOneSpaceWithNewline() {
         assertThat(wrap("a b", 1), is("a\nb"));
-
     }
 
     @Test
@@ -48,10 +46,13 @@ public class WordWrapper {
         int lastSpaceBeforeBreak = input.substring(0, columns + 1).lastIndexOf(' ');
 
         if (lastSpaceBeforeBreak < 0) {
-            return input.substring(0, columns-1) + "-\n" + wrap(input.substring(columns-1), columns);
+            return input.substring(0, columns - 1)
+                    + "-\n"
+                    + wrap(input.substring(columns - 1), columns);
         } else {
-            return input.substring(0, lastSpaceBeforeBreak) + "\n" + wrap(input.substring(lastSpaceBeforeBreak+1), columns);
+            return input.substring(0, lastSpaceBeforeBreak)
+                    + "\n"
+                    + wrap(input.substring(lastSpaceBeforeBreak + 1), columns);
         }
     }
-
 }

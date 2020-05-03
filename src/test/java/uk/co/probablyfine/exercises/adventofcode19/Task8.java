@@ -1,8 +1,8 @@
 package uk.co.probablyfine.exercises.adventofcode19;
 
-import java.util.Arrays;
-
 import static java.util.Comparator.comparingLong;
+
+import java.util.Arrays;
 
 public class Task8 {
 
@@ -12,10 +12,9 @@ public class Task8 {
         String[] split = "".split("(?<=\\G.{150})");
 
         Arrays.stream(split)
-            .min(comparingLong(layer -> countCharacters(layer, '0')))
-            .map(s -> countCharacters(s, '1') * countCharacters(s, '2'))
-            .ifPresent(System.out::println);
-
+                .min(comparingLong(layer -> countCharacters(layer, '0')))
+                .map(s -> countCharacters(s, '1') * countCharacters(s, '2'))
+                .ifPresent(System.out::println);
     }
 
     private static long countCharacters(String s, char c) {
