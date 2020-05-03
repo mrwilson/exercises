@@ -37,6 +37,7 @@ public class DiceRollerTest {
     public void abilityToPerformOperationsOnRolls() {
         assertThat(roll("1d1+1"), is(2));
         assertThat(roll("1d1-1"), is(0));
+        assertThat(roll("1d1*3"), is(3));
     }
 
     @Test(expected = InvalidDiceRollException.class)
@@ -49,7 +50,7 @@ public class DiceRollerTest {
     }
 
     private int roll(String dice, DoubleStream randomness) {
-        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)(([+-])(\\d+))?").matcher(dice);
+        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?").matcher(dice);
 
         if (!matcher.find()) {
             throw new InvalidDiceRollException("["+dice+"] is not a valid dice-roll pattern");
@@ -67,6 +68,7 @@ public class DiceRollerTest {
             switch (matcher.group(4)) {
                 case "+": return sum + Integer.parseInt(matcher.group(5));
                 case "-": return sum - Integer.parseInt(matcher.group(5));
+                case "*": return sum * Integer.parseInt(matcher.group(5));
                 default: return sum;
             }
 
