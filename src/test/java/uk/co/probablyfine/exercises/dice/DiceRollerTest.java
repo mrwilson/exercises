@@ -1,4 +1,4 @@
-package uk.co.probablyfine.exercises;
+package uk.co.probablyfine.exercises.dice;
 
 import org.junit.Test;
 
@@ -122,9 +122,4 @@ public class DiceRollerTest {
         return () -> DoubleStream.of(values);
     }
 
-    private static class InvalidDiceRollException extends RuntimeException {
-        public InvalidDiceRollException(String message) {
-            super(message);
-        }
-    }
 }
