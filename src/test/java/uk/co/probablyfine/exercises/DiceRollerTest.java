@@ -11,10 +11,13 @@ public class DiceRollerTest {
     public void oneSidedDiceReturnsSameValue() {
 
         assertThat(roll("1d1"), is(1));
-
+        assertThat(roll("2d1"), is(2));
+        assertThat(roll("3d1"), is(3));
     }
 
     private int roll(String dice) {
-        return 1;
+        String[] arguments = dice.split("");
+
+        return Integer.parseInt(arguments[0]);
     }
 }
