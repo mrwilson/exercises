@@ -2,13 +2,11 @@ package uk.co.probablyfine.exercises;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.Random;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -35,11 +33,12 @@ public class DiceRollerTest {
     }
 
     private int roll(String dice, DoubleStream randomness) {
-        String[] arguments = dice.split("");
+        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)").matcher(dice);
 
+        matcher.find();
 
-        int numberOfRolls = Integer.parseInt(arguments[0]);
-        int numberOfSides = Integer.parseInt(arguments[2]);
+        int numberOfRolls = Integer.parseInt(matcher.group(1));
+        int numberOfSides = Integer.parseInt(matcher.group(2));
 
         return randomness
                 .limit(numberOfRolls)
