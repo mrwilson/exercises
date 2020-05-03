@@ -32,6 +32,12 @@ public class DiceRollerTest {
         return roll(dice, new Random().doubles(0.0d, 1.0d));
     }
 
+    @Test
+    public void doubleDigitSidesAndNumberOfRolls() {
+        assertThat(roll("10d10", DoubleStream.iterate(0.0d, i -> i)), is(10));
+        assertThat(roll("10d10", DoubleStream.iterate(0.9d, i -> i)), is(100));
+    }
+
     private int roll(String dice, DoubleStream randomness) {
         Matcher matcher = Pattern.compile("(\\d+)d(\\d+)").matcher(dice);
 
