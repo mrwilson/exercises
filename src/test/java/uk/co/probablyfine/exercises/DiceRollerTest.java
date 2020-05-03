@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -63,15 +64,16 @@ public class DiceRollerTest {
     }
 
     private int roll(String dice, Supplier<DoubleStream> randomness) {
-        Matcher matcher = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?(\\w((\\d+)d(\\d+)(([+-\\\\*])(\\d+))?))*").matcher(dice);
+        var diceRolls = Pattern.compile("(\\d+)d(\\d+)(([+-\\\\*])(\\d+))?(\\w((\\d+)d(\\d+)(([+-\\\\*])(\\d+))?))*")
+                .matcher(dice)
+                .results()
+                .collect(toList());
 
-        List<MatchResult> matchResults = matcher.results().collect(Collectors.toList());
-
-        if (matchResults.isEmpty()) {
+        if (diceRolls.isEmpty()) {
             throw new InvalidDiceRollException("["+dice+"] is not a valid dice-roll pattern");
         }
 
-        return matchResults
+        return diceRolls
             .stream()
             .mapToInt(match -> {
 
