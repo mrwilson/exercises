@@ -1,7 +1,12 @@
 package uk.co.probablyfine.exercises.trivia;
 
+import uk.co.probablyfine.exercises.trivia.GameRunner.BoundedRandomness;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class GameTest {
 
@@ -14,6 +19,20 @@ public class GameTest {
             new PrintStream(new FileOutputStream(fixedOutput))
         );
 
-        GameRunner.runGame(new Random()::nextInt);
+        List<Integer> rolls = new ArrayList<>();
+
+        BoundedRandomness recorder = maximum -> {
+            int value = new Random().nextInt(maximum);
+            rolls.add(value);
+            return value;
+        };
+
+        GameRunner.runGame(recorder);
+
+        String collect = rolls.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+
+        System.out.println(collect);
     }
 }
