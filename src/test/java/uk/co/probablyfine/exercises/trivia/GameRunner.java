@@ -15,7 +15,7 @@ public class GameRunner {
 		runGame(new Random()::nextInt);
 	}
 
-	private static void runGame(BoundedRandomness provider) {
+	public static void runGame(BoundedRandomness provider) {
 		Game aGame = new Game();
 
 		aGame.add("Chet");
