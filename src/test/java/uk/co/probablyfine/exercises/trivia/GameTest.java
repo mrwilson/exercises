@@ -1,18 +1,21 @@
 package uk.co.probablyfine.exercises.trivia;
 
+import org.junit.Test;
 import uk.co.probablyfine.exercises.trivia.GameRunner.BoundedRandomness;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.nio.file.Files;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class GameTest {
 
-    public static void main(String... args) throws FileNotFoundException {
-        File fixedOutput = new File("fixed-output.txt");
+    private static final File fixedOutput = new File("fixed-output.txt");
 
+    public static void main(String... args) throws FileNotFoundException {
         if (fixedOutput.exists()) return;
 
         System.setOut(
@@ -34,5 +37,35 @@ public class GameTest {
                 .collect(Collectors.joining(","));
 
         System.out.println(collect);
+    }
+
+    @Test
+    public void runFixedOutput() throws IOException {
+        List<String> fixedRun = Files.readAllLines(fixedOutput.toPath());
+
+        ListIterator<Integer> inputs = Arrays.stream(fixedRun
+                .get(fixedRun.size() - 1)
+                .split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList())
+                .listIterator();
+
+        BoundedRandomness randomness = (i) -> {
+            if (inputs.hasNext()) {
+                return inputs.next();
+            } else {
+                throw new RuntimeException("OOPS");
+            }
+        };
+
+        File tempFile = File.createTempFile("test-run", "txt");
+
+        System.setOut(new PrintStream(tempFile));
+
+        GameRunner.runGame(randomness);
+
+        List<String> actualRun = Files.readAllLines(tempFile.toPath());
+
+        assertThat(actualRun, is(fixedRun.subList(0, fixedRun.size()-1)));
     }
 }
