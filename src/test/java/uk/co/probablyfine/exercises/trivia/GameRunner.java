@@ -1,16 +1,21 @@
 
 package uk.co.probablyfine.exercises.trivia;
+
 import java.util.Random;
 
 public class GameRunner {
 
 	private static boolean notAWinner;
 
-	public static void main(String[] args) {
-		runGame(new Random());
+	public interface BoundedRandomness {
+		int randomWithMax(int maximum);
 	}
 
-	private static void runGame(Random rand) {
+	public static void main(String[] args) {
+		runGame(new Random()::nextInt);
+	}
+
+	private static void runGame(BoundedRandomness provider) {
 		Game aGame = new Game();
 
 		aGame.add("Chet");
@@ -18,9 +23,9 @@ public class GameRunner {
 		aGame.add("Sue");
 
 		do {
-			aGame.roll(rand.nextInt(5) + 1);
+			aGame.roll(provider.randomWithMax(5) + 1);
 
-			if (rand.nextInt(9) == 7) {
+			if (provider.randomWithMax(9) == 7) {
 				notAWinner = aGame.wrongAnswer();
 			} else {
 				notAWinner = aGame.wasCorrectlyAnswered();
