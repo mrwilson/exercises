@@ -15,4 +15,8 @@ public record Player(String name, int place, int coins, boolean inPenaltyBox) {
         System.out.println(name + " now has " + (coins + 1) + " Gold Coins.");
         return new Player(name, place, coins + 1, inPenaltyBox);
     }
+
+    public Player sendToPenaltyBox() {
+        return new Player(name, place, coins, true);
+    }
 }
