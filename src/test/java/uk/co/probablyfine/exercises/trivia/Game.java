@@ -28,10 +28,6 @@ public class Game {
     	}
     }
 
-	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
-	}
-
 	public boolean add(String playerName) {
 		
 		
