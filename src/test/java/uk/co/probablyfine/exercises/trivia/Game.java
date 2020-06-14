@@ -79,33 +79,18 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (currentPlayer().inPenaltyBox()){
-			if (isGettingOutOfPenaltyBox) {
-				System.out.println("Answer was correct!!!!");
-
-				updatePlayer(currentPlayer().addCoin());
-
-				boolean winner = didPlayerWin();
-				nextPlayer();
-
-				return winner;
-			} else {
-				nextPlayer();
-				return true;
-			}
-			
-			
-			
-		} else {
-		
-			System.out.println("Answer was correct!!!!");
-			updatePlayer(currentPlayer().addCoin());
-
-			boolean winner = didPlayerWin();
+    	if(currentPlayer().inPenaltyBox() && !isGettingOutOfPenaltyBox) {
 			nextPlayer();
-
-			return winner;
+			return true;
 		}
+
+		System.out.println("Answer was correct!!!!");
+		updatePlayer(currentPlayer().addCoin());
+
+		boolean winner = didPlayerWin();
+		nextPlayer();
+
+		return winner;
 	}
 
 	public boolean wrongAnswer(){
