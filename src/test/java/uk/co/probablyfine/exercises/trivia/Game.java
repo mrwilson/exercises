@@ -8,19 +8,19 @@ public class Game {
 
 	List<Player> newPlayers = new ArrayList<>();
 
-    LinkedList<String> popQuestions = new LinkedList<>();
-    LinkedList<String> scienceQuestions = new LinkedList<>();
-    LinkedList<String> sportsQuestions = new LinkedList<>();
-    LinkedList<String> rockQuestions = new LinkedList<>();
+    LinkedList<String> popQuestions;
+    LinkedList<String> scienceQuestions;
+    LinkedList<String> sportsQuestions;
+    LinkedList<String> rockQuestions;
     
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
     
     public Game(){
-		popQuestions = addQuestions(popQuestions, "Pop");
-		scienceQuestions = addQuestions(scienceQuestions, "Science");
-		sportsQuestions = addQuestions(sportsQuestions, "Sports");
-		rockQuestions = addQuestions(rockQuestions, "Rock");
+		popQuestions = addQuestions(new LinkedList<>(), "Pop");
+		scienceQuestions = addQuestions(new LinkedList<>(), "Science");
+		sportsQuestions = addQuestions(new LinkedList<>(), "Sports");
+		rockQuestions = addQuestions(new LinkedList<>(), "Rock");
 	}
 
 	private LinkedList<String> addQuestions(LinkedList<String> questions, String s) {
