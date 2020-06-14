@@ -17,6 +17,7 @@ public record Player(String name, int place, int coins, boolean inPenaltyBox) {
     }
 
     public Player sendToPenaltyBox() {
+        System.out.println(name + " was sent to the penalty box");
         return new Player(name, place, coins, true);
     }
 }
