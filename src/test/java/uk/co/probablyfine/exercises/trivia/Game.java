@@ -32,10 +32,6 @@ public class Game {
 	    System.out.println("They are player number " + newPlayers.size());
 		return true;
 	}
-	
-	public int howManyPlayers() {
-		return newPlayers.size();
-	}
 
 	public void roll(int roll) {
 
