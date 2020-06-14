@@ -68,4 +68,14 @@ public class GameTest {
 
         assertThat(actualRun, is(fixedRun.subList(0, fixedRun.size()-1)));
     }
+
+    @Test
+    public void questionCategoryIsPopWhenPlayerPlaceIs0Modulo4() {
+        Game game = new Game();
+
+        List.of(0, 4, 8).forEach(place -> {
+            Player one = new Player("player", place);
+            assertThat(game.currentCategory(one), is("Pop"));
+        });
+    }
 }
