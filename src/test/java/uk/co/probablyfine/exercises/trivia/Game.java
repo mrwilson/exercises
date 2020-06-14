@@ -54,7 +54,7 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 				
 				System.out.println(currentPlayer().name() + " is getting out of the penalty box");
-				newPlayers.set(currentPlayer, currentPlayer().moveForward(roll));
+				updatePlayer(currentPlayer().moveForward(roll));
 
 				System.out.println(currentPlayer().name()
 						+ "'s new location is "
@@ -67,7 +67,7 @@ public class Game {
 				}
 
 		} else {
-			newPlayers.set(currentPlayer, currentPlayer().moveForward(roll));
+			updatePlayer(currentPlayer().moveForward(roll));
 
 			System.out.println(currentPlayer().name()
 					+ "'s new location is "
@@ -104,7 +104,7 @@ public class Game {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 
-				newPlayers.set(currentPlayer, currentPlayer().addCoin());
+				updatePlayer(currentPlayer().addCoin());
 
 				System.out.println(currentPlayer().name()
 						+ " now has "
@@ -127,7 +127,7 @@ public class Game {
 		} else {
 		
 			System.out.println("Answer was corrent!!!!");
-			newPlayers.set(currentPlayer, currentPlayer().addCoin());
+			updatePlayer(currentPlayer().addCoin());
 			System.out.println(currentPlayer().name()
 					+ " now has "
 					+ currentPlayer().coins()
@@ -149,6 +149,10 @@ public class Game {
 		currentPlayer++;
 		if (currentPlayer == players.size()) currentPlayer = 0;
 		return true;
+	}
+
+	private void updatePlayer(Player player) {
+    	newPlayers.set(currentPlayer, player);
 	}
 
 	private Player currentPlayer() {
