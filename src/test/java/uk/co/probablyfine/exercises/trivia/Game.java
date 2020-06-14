@@ -3,17 +3,14 @@ package uk.co.probablyfine.exercises.trivia;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Game {
 
-	List<Player> newPlayers = new ArrayList<>();
-
-    LinkedList<String> popQuestions;
-    LinkedList<String> scienceQuestions;
-    LinkedList<String> sportsQuestions;
-    LinkedList<String> rockQuestions;
+	final List<Player> newPlayers;
+	final LinkedList<String> popQuestions;
+	final LinkedList<String> scienceQuestions;
+	final LinkedList<String> sportsQuestions;
+	final LinkedList<String> rockQuestions;
     
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
@@ -23,6 +20,7 @@ public class Game {
 		scienceQuestions = addQuestions("Science");
 		sportsQuestions = addQuestions("Sports");
 		rockQuestions = addQuestions("Rock");
+		newPlayers = new ArrayList<>();
 	}
 
 	private LinkedList<String> addQuestions(String category) {
