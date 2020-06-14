@@ -16,20 +16,18 @@ public class Game {
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
     
-    public  Game(){
-    	for (int i = 0; i < 50; i++) {
-			popQuestions.addLast("Pop Question " + i);
-    	}
+    public Game(){
+		addQuestions(popQuestions, "Pop");
+		addQuestions(scienceQuestions, "Science");
+		addQuestions(sportsQuestions, "Sports");
+		addQuestions(rockQuestions, "Rock");
+	}
+
+	private void addQuestions(LinkedList<String> questions, String s) {
 		for (int i = 0; i < 50; i++) {
-			scienceQuestions.addLast("Science Question " + i);
+			questions.addLast(s + " Question " + i);
 		}
-		for (int i = 0; i < 50; i++) {
-			sportsQuestions.addLast("Sports Question " + i);
-		}
-		for (int i = 0; i < 50; i++) {
-			rockQuestions.addLast("Rock Question " + i);
-		}
-    }
+	}
 
 	public void add(String playerName) {
 	    newPlayers.add(new Player(playerName));
