@@ -78,4 +78,14 @@ public class GameTest {
             assertThat(game.currentCategory(one), is("Pop"));
         });
     }
+
+    @Test
+    public void questionCategoryIsScienceWhenPlayerPlaceIs1Modulo4() {
+        Game game = new Game();
+
+        List.of(1, 5, 9).forEach(place -> {
+            Player one = new Player("player", place);
+            assertThat(game.currentCategory(one), is("Science"));
+        });
+    }
 }
