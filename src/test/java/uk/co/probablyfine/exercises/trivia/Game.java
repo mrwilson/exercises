@@ -107,7 +107,7 @@ public class Game {
 			System.out.println(rockQuestions.removeFirst());		
 	}
 	
-	private String currentCategory(Player player) {
+	public String currentCategory(Player player) {
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
 		if (places[currentPlayer] == 8) return "Pop";
