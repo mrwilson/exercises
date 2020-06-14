@@ -2,12 +2,13 @@ package uk.co.probablyfine.exercises.trivia;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
 
-	record Player() {}
-
     ArrayList players = new ArrayList();
+	List<Player> newPlayers = new ArrayList<>();
+
     int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
@@ -41,6 +42,7 @@ public class Game {
 		
 		
 	    players.add(playerName);
+	    newPlayers.add(new Player(playerName));
 	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
