@@ -1,4 +1,4 @@
 package uk.co.probablyfine.exercises.trivia;
 
-public record Player(String name) {
+public record Player(String name, int place) {
 }
