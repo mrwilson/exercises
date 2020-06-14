@@ -45,18 +45,15 @@ public class Game {
 
 			if (gettingOutOfPenaltyBox) {
 				System.out.println(currentPlayer().name() + " is getting out of the penalty box");
-				updatePlayer(currentPlayer().moveForward(roll));
-
-				askQuestion();
 			} else {
 				System.out.println(currentPlayer().name() + " is not getting out of the penalty box");
+				return;
 			}
 
-		} else {
-			updatePlayer(currentPlayer().moveForward(roll));
-			askQuestion();
 		}
-		
+
+		updatePlayer(currentPlayer().moveForward(roll));
+		askQuestion();
 	}
 
 	private void askQuestion() {
