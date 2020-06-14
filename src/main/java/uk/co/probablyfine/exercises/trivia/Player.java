@@ -12,6 +12,7 @@ public record Player(String name, int place, int coins) {
     }
 
     public Player addCoin() {
+        System.out.println(name + " now has " + (coins + 1) + " Gold Coins.");
         return new Player(name, place, coins + 1);
     }
 }
