@@ -124,6 +124,7 @@ public class Game {
 		System.out.println("Question was incorrectly answered");
 		System.out.println(currentPlayer().name() + " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
+		updatePlayer(currentPlayer().sendToPenaltyBox());
 
 		nextPlayer();
 		return true;
