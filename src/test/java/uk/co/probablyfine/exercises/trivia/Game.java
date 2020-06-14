@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Game {
 
-    ArrayList players = new ArrayList();
 	List<Player> newPlayers = new ArrayList<>();
 
     boolean[] inPenaltyBox  = new boolean[6];
@@ -29,19 +28,16 @@ public class Game {
     }
 
 	public boolean add(String playerName) {
-		
-		
-	    players.add(playerName);
 	    newPlayers.add(new Player(playerName));
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
 	    System.out.println(playerName + " was added");
-	    System.out.println("They are player number " + players.size());
+	    System.out.println("They are player number " + newPlayers.size());
 		return true;
 	}
 	
 	public int howManyPlayers() {
-		return players.size();
+		return newPlayers.size();
 	}
 
 	public void roll(int roll) {
@@ -126,7 +122,7 @@ public class Game {
 
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
-		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
+		System.out.println(currentPlayer().name() + " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
 
 		nextPlayer();
