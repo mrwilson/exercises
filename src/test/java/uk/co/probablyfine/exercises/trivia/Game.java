@@ -9,7 +9,6 @@ public class Game {
     ArrayList players = new ArrayList();
 	List<Player> newPlayers = new ArrayList<>();
 
-    int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
     
     LinkedList popQuestions = new LinkedList();
@@ -42,7 +41,6 @@ public class Game {
 		
 	    players.add(playerName);
 	    newPlayers.add(new Player(playerName));
-	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
 	    System.out.println(playerName + " was added");
@@ -113,7 +111,6 @@ public class Game {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
-				purses[currentPlayer]++;
 
 				newPlayers.set(currentPlayer, currentPlayer().addCoin());
 
@@ -138,7 +135,6 @@ public class Game {
 		} else {
 		
 			System.out.println("Answer was corrent!!!!");
-			purses[currentPlayer]++;
 			newPlayers.set(currentPlayer, currentPlayer().addCoin());
 			System.out.println(currentPlayer().name()
 					+ " now has "
