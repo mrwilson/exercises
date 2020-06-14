@@ -101,11 +101,6 @@ public class Game {
 
 				updatePlayer(currentPlayer().addCoin());
 
-				System.out.println(currentPlayer().name()
-						+ " now has "
-						+ currentPlayer().coins()
-						+ " Gold Coins.");
-				
 				boolean winner = didPlayerWin();
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
@@ -123,11 +118,7 @@ public class Game {
 		
 			System.out.println("Answer was corrent!!!!");
 			updatePlayer(currentPlayer().addCoin());
-			System.out.println(currentPlayer().name()
-					+ " now has "
-					+ currentPlayer().coins()
-					+ " Gold Coins.");
-			
+
 			boolean winner = didPlayerWin();
 			currentPlayer++;
 			if (currentPlayer == players.size()) currentPlayer = 0;
