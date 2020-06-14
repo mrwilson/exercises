@@ -42,7 +42,7 @@ public class Game {
 		
 		
 	    players.add(playerName);
-	    newPlayers.add(new Player(playerName));
+	    newPlayers.add(new Player(playerName, 0));
 	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
