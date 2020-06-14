@@ -8,4 +8,8 @@ public record Player(String name, int place, int coins) {
     public Player(String name) {
         this(name, 0, 0);
     }
+
+    public Player addCoin() {
+        return new Player(name, place, coins + 1);
+    }
 }
