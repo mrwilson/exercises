@@ -73,23 +73,23 @@ public class Game {
 				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 				
 				System.out.println(player.name()
-						+ "'s new location is " 
-						+ places[currentPlayer]);
+						+ "'s new location is "
+						+ newPlayers.get(currentPlayer).place());
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
 				System.out.println(player.name() + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 				}
-			
+
 		} else {
 			newPlayers.set(currentPlayer, player.moveForward(roll));
 			places[currentPlayer] = places[currentPlayer] + roll;
 			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 			
 			System.out.println(player.name()
-					+ "'s new location is " 
-					+ places[currentPlayer]);
+					+ "'s new location is "
+					+ newPlayers.get(currentPlayer).place());
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
