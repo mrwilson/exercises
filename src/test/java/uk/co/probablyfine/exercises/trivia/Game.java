@@ -119,7 +119,7 @@ public class Game {
 
 				System.out.println(currentPlayer().name()
 						+ " now has "
-						+ purses[currentPlayer]
+						+ currentPlayer().coins()
 						+ " Gold Coins.");
 				
 				boolean winner = didPlayerWin();
@@ -142,7 +142,7 @@ public class Game {
 			newPlayers.set(currentPlayer, currentPlayer().addCoin());
 			System.out.println(currentPlayer().name()
 					+ " now has "
-					+ purses[currentPlayer]
+					+ currentPlayer().coins()
 					+ " Gold Coins.");
 			
 			boolean winner = didPlayerWin();
@@ -168,6 +168,6 @@ public class Game {
 	}
 
 	private boolean didPlayerWin() {
-		return !(purses[currentPlayer] == 6);
+		return !(currentPlayer().coins() == 6);
 	}
 }
