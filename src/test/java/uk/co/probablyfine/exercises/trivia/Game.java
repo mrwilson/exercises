@@ -59,24 +59,24 @@ public class Game {
 	public void roll(int roll) {
 		Player player = newPlayers.get(currentPlayer);
 
-		System.out.println(player.playerName() + " is the current player");
+		System.out.println(player.name() + " is the current player");
 		System.out.println("They have rolled a " + roll);
 		
 		if (inPenaltyBox[currentPlayer]) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 				
-				System.out.println(player.playerName() + " is getting out of the penalty box");
+				System.out.println(player.name() + " is getting out of the penalty box");
 				places[currentPlayer] = places[currentPlayer] + roll;
 				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 				
-				System.out.println(player.playerName()
+				System.out.println(player.name()
 						+ "'s new location is " 
 						+ places[currentPlayer]);
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
-				System.out.println(player.playerName() + " is not getting out of the penalty box");
+				System.out.println(player.name() + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 				}
 			
@@ -85,7 +85,7 @@ public class Game {
 			places[currentPlayer] = places[currentPlayer] + roll;
 			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 			
-			System.out.println(player.playerName()
+			System.out.println(player.name()
 					+ "'s new location is " 
 					+ places[currentPlayer]);
 			System.out.println("The category is " + currentCategory());
@@ -125,7 +125,7 @@ public class Game {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				purses[currentPlayer]++;
-				System.out.println(player.playerName()
+				System.out.println(player.name()
 						+ " now has "
 						+ purses[currentPlayer]
 						+ " Gold Coins.");
@@ -147,7 +147,7 @@ public class Game {
 		
 			System.out.println("Answer was corrent!!!!");
 			purses[currentPlayer]++;
-			System.out.println(player.playerName()
+			System.out.println(player.name()
 					+ " now has "
 					+ purses[currentPlayer]
 					+ " Gold Coins.");
