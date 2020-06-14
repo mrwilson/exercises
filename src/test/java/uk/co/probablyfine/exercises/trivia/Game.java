@@ -56,9 +56,7 @@ public class Game {
 				System.out.println(currentPlayer().name() + " is getting out of the penalty box");
 				updatePlayer(currentPlayer().moveForward(roll));
 
-				System.out.println(currentPlayer().name()
-						+ "'s new location is "
-						+ currentPlayer().place());
+
 				System.out.println("The category is " + currentCategory(currentPlayer()));
 				askQuestion();
 			} else {
@@ -69,9 +67,6 @@ public class Game {
 		} else {
 			updatePlayer(currentPlayer().moveForward(roll));
 
-			System.out.println(currentPlayer().name()
-					+ "'s new location is "
-					+ currentPlayer().place());
 			System.out.println("The category is " + currentCategory(currentPlayer()));
 			askQuestion();
 		}
