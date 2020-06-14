@@ -104,11 +104,9 @@ public class GameTest {
     public void questionCategoryDefaultIsRock() {
         Game game = new Game();
 
-        IntStream.range(0, 10_000)
-            .filter(x -> !List.of(0,1,2,4,5,6,8,9,10).contains(x))
-            .forEach(place -> {
-                Player one = new Player("player", place);
-                assertThat(game.currentCategory(one), is("Rock"));
-            });
+        List.of(3, 7, 11).forEach(place -> {
+            Player one = new Player("player", place);
+            assertThat(game.currentCategory(one), is("Rock"));
+        });
     }
 }
