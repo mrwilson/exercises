@@ -3,6 +3,8 @@ package uk.co.probablyfine.exercises.trivia;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Game {
 
@@ -23,11 +25,11 @@ public class Game {
 		rockQuestions = addQuestions("Rock");
 	}
 
-	private LinkedList<String> addQuestions(String s) {
+	private LinkedList<String> addQuestions(String category) {
     	LinkedList<String> questions = new LinkedList<>();
 
-		for (int i = 0; i < 50; i++) {
-			questions.addLast(s + " Question " + i);
+		for (int questionNumber = 0; questionNumber < 50; questionNumber++) {
+			questions.addLast(category + " Question " + questionNumber);
 		}
 		return questions;
 	}
