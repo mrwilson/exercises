@@ -45,8 +45,6 @@ public class Game {
 				System.out.println(currentPlayer().name() + " is getting out of the penalty box");
 				updatePlayer(currentPlayer().moveForward(roll));
 
-
-				System.out.println("The category is " + currentCategory(currentPlayer()));
 				askQuestion();
 			} else {
 				System.out.println(currentPlayer().name() + " is not getting out of the penalty box");
@@ -55,14 +53,14 @@ public class Game {
 
 		} else {
 			updatePlayer(currentPlayer().moveForward(roll));
-
-			System.out.println("The category is " + currentCategory(currentPlayer()));
 			askQuestion();
 		}
 		
 	}
 
 	private void askQuestion() {
+		System.out.println("The category is " + currentCategory(currentPlayer()));
+
 		String question = switch(currentCategory(currentPlayer())) {
 			case "Pop" -> popQuestions.removeFirst();
 			case "Science" -> scienceQuestions.removeFirst();
