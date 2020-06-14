@@ -75,7 +75,7 @@ public class GameTest {
         Game game = new Game();
 
         List.of(0, 4, 8).forEach(place -> {
-            Player one = new Player("player", place);
+            Player one = new Player("player", place, 0);
             assertThat(game.currentCategory(one), is("Pop"));
         });
     }
@@ -85,7 +85,7 @@ public class GameTest {
         Game game = new Game();
 
         List.of(1, 5, 9).forEach(place -> {
-            Player one = new Player("player", place);
+            Player one = new Player("player", place, 0);
             assertThat(game.currentCategory(one), is("Science"));
         });
     }
@@ -95,7 +95,7 @@ public class GameTest {
         Game game = new Game();
 
         List.of(2, 6, 10).forEach(place -> {
-            Player one = new Player("player", place);
+            Player one = new Player("player", place, 0);
             assertThat(game.currentCategory(one), is("Sports"));
         });
     }
@@ -105,7 +105,7 @@ public class GameTest {
         Game game = new Game();
 
         List.of(3, 7, 11).forEach(place -> {
-            Player one = new Player("player", place);
+            Player one = new Player("player", place, 0);
             assertThat(game.currentCategory(one), is("Rock"));
         });
     }
