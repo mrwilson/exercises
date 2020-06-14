@@ -63,15 +63,14 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		String category = currentCategory(currentPlayer());
-		if (category == "Pop")
-			System.out.println(popQuestions.removeFirst());
-		if (category == "Science")
-			System.out.println(scienceQuestions.removeFirst());
-		if (category == "Sports")
-			System.out.println(sportsQuestions.removeFirst());
-		if (category == "Rock")
-			System.out.println(rockQuestions.removeFirst());		
+		String question = switch(currentCategory(currentPlayer())) {
+			case "Pop" -> popQuestions.removeFirst();
+			case "Science" -> scienceQuestions.removeFirst();
+			case "Sports" -> sportsQuestions.removeFirst();
+			default -> rockQuestions.removeFirst();
+		};
+
+		System.out.println(question);
 	}
 	
 	public String currentCategory(Player player) {
