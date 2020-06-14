@@ -108,18 +108,12 @@ public class Game {
 	}
 	
 	public String currentCategory(Player player) {
-		int currentPlace = player.place();
-
-		if (currentPlace == 0) return "Pop";
-		if (currentPlace == 4) return "Pop";
-		if (currentPlace == 8) return "Pop";
-		if (currentPlace == 1) return "Science";
-		if (currentPlace == 5) return "Science";
-		if (currentPlace == 9) return "Science";
-		if (currentPlace == 2) return "Sports";
-		if (currentPlace == 6) return "Sports";
-		if (currentPlace == 10) return "Sports";
-		return "Rock";
+		return switch (player.place() % 4) {
+			case 0 -> "Pop";
+			case 1 -> "Science";
+			case 2 -> "Sports";
+			default -> "Rock";
+		};
 	}
 
 	public boolean wasCorrectlyAnswered() {
