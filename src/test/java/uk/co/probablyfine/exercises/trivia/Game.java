@@ -9,7 +9,6 @@ public class Game {
     ArrayList players = new ArrayList();
 	List<Player> newPlayers = new ArrayList<>();
 
-    int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
     
@@ -43,7 +42,6 @@ public class Game {
 		
 	    players.add(playerName);
 	    newPlayers.add(new Player(playerName, 0));
-	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
@@ -68,9 +66,6 @@ public class Game {
 				System.out.println(currentPlayer().name() + " is getting out of the penalty box");
 				newPlayers.set(currentPlayer, currentPlayer().moveForward(roll));
 
-				places[currentPlayer] = places[currentPlayer] + roll;
-				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-				
 				System.out.println(currentPlayer().name()
 						+ "'s new location is "
 						+ currentPlayer().place());
@@ -83,9 +78,7 @@ public class Game {
 
 		} else {
 			newPlayers.set(currentPlayer, currentPlayer().moveForward(roll));
-			places[currentPlayer] = places[currentPlayer] + roll;
-			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-			
+
 			System.out.println(currentPlayer().name()
 					+ "'s new location is "
 					+ currentPlayer().place());
