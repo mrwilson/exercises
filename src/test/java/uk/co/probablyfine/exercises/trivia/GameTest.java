@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -97,5 +98,17 @@ public class GameTest {
             Player one = new Player("player", place);
             assertThat(game.currentCategory(one), is("Sports"));
         });
+    }
+
+    @Test
+    public void questionCategoryDefaultIsRock() {
+        Game game = new Game();
+
+        IntStream.range(0, 10_000)
+            .filter(x -> !List.of(0,1,2,4,5,6,8,9,10).contains(x))
+            .forEach(place -> {
+                Player one = new Player("player", place);
+                assertThat(game.currentCategory(one), is("Rock"));
+            });
     }
 }
