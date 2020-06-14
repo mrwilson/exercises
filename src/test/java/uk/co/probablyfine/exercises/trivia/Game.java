@@ -57,7 +57,7 @@ public class Game {
 	}
 
 	public void roll(int roll) {
-		Player player = newPlayers.get(currentPlayer);
+		Player player = currentPlayer();
 
 		System.out.println(player.name() + " is the current player");
 		System.out.println("They have rolled a " + roll);
@@ -74,7 +74,7 @@ public class Game {
 				
 				System.out.println(player.name()
 						+ "'s new location is "
-						+ newPlayers.get(currentPlayer).place());
+						+ currentPlayer().place());
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
@@ -89,7 +89,7 @@ public class Game {
 			
 			System.out.println(player.name()
 					+ "'s new location is "
-					+ newPlayers.get(currentPlayer).place());
+					+ currentPlayer().place());
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
@@ -122,7 +122,7 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		Player player = newPlayers.get(currentPlayer);
+		Player player = currentPlayer();
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
@@ -172,6 +172,9 @@ public class Game {
 		return true;
 	}
 
+	private Player currentPlayer() {
+		return newPlayers.get(currentPlayer);
+	}
 
 	private boolean didPlayerWin() {
 		return !(purses[currentPlayer] == 6);
