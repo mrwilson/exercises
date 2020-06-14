@@ -102,13 +102,11 @@ public class Game {
 				updatePlayer(currentPlayer().addCoin());
 
 				boolean winner = didPlayerWin();
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
-				
+				nextPlayer();
+
 				return winner;
 			} else {
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				nextPlayer();
 				return true;
 			}
 			
@@ -120,21 +118,23 @@ public class Game {
 			updatePlayer(currentPlayer().addCoin());
 
 			boolean winner = didPlayerWin();
-			currentPlayer++;
-			if (currentPlayer == players.size()) currentPlayer = 0;
-			
+			nextPlayer();
+
 			return winner;
 		}
 	}
-	
+
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
 		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
-		
-		currentPlayer++;
-		if (currentPlayer == players.size()) currentPlayer = 0;
+
+		nextPlayer();
 		return true;
+	}
+
+	private void nextPlayer() {
+		currentPlayer = (currentPlayer + 1) % newPlayers.size();
 	}
 
 	private void updatePlayer(Player player) {
