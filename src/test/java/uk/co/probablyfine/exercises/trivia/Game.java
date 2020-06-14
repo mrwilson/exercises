@@ -17,13 +17,15 @@ public class Game {
     boolean isGettingOutOfPenaltyBox;
     
     public Game(){
-		popQuestions = addQuestions(new LinkedList<>(), "Pop");
-		scienceQuestions = addQuestions(new LinkedList<>(), "Science");
-		sportsQuestions = addQuestions(new LinkedList<>(), "Sports");
-		rockQuestions = addQuestions(new LinkedList<>(), "Rock");
+		popQuestions = addQuestions("Pop");
+		scienceQuestions = addQuestions("Science");
+		sportsQuestions = addQuestions("Sports");
+		rockQuestions = addQuestions("Rock");
 	}
 
-	private LinkedList<String> addQuestions(LinkedList<String> questions, String s) {
+	private LinkedList<String> addQuestions(String s) {
+    	LinkedList<String> questions = new LinkedList<>();
+
 		for (int i = 0; i < 50; i++) {
 			questions.addLast(s + " Question " + i);
 		}
