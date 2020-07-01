@@ -36,7 +36,7 @@ public class StopwatchTest {
         private State state;
 
         public void lap() {
-            var previousTotalLaps = this.laps.stream().mapToLong(x -> x).sum();
+            var previousTotalLaps = this.laps.stream().reduce(0L, Long::sum);
 
             this.laps.add(secondsElapsed() - previousTotalLaps);
         }
