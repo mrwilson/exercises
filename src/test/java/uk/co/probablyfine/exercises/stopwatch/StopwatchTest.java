@@ -26,13 +26,15 @@ public class StopwatchTest {
 
     public static class Stopwatch {
         private final TimeProvider clock;
-        private final Map<String, Long> laps;
+        private final Map<Integer, Long> laps;
         private long startTime;
         private long timeElapsed;
         private State state;
 
         public void lap() {
-            this.laps.put("1", secondsElapsed());
+            var previousTotalLaps = this.laps.values().stream().mapToLong(x -> x).sum();
+
+            this.laps.put(this.laps.size() + 1, secondsElapsed() - previousTotalLaps);
         }
 
         private enum State {
@@ -186,11 +188,15 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
-
         stopwatch.lap();
 
         clock.advanceSeconds(1L);
         assertThat(stopwatch.display(), is("Current Time: 00:02\nLap 1: 00:01"));
+
+        clock.advanceSeconds(1L);
+        stopwatch.lap();
+
+        assertThat(stopwatch.display(), is("Current Time: 00:03\nLap 1: 00:01\nLap 2: 00:02"));
+
     }
 }
