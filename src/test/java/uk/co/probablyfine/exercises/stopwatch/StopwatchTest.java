@@ -23,7 +23,6 @@ public class StopwatchTest {
         private final TimeProvider clock;
         private long startTime;
         private long timeElapsed;
-
         private State state;
 
         private enum State {
@@ -60,6 +59,11 @@ public class StopwatchTest {
         public void stop() {
             this.state = State.STOPPED;
             this.timeElapsed = (clock.time() - startTime);
+        }
+
+        public void reset() {
+            this.state = State.NEW;
+            this.timeElapsed = 0;
         }
     }
 
@@ -142,5 +146,17 @@ public class StopwatchTest {
 
         clock.advanceSeconds(1L);
         assertThat(stopwatch.display(), is("Current Time: 00:02"));
+    }
+
+    @Test
+    public void shouldBeAbleToReset() {
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+
+        stopwatch.reset();
+
+        assertThat(stopwatch.display(), is("Current Time: 00:00"));
     }
 }
