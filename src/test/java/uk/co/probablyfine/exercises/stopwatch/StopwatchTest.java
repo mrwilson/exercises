@@ -51,9 +51,23 @@ public class StopwatchTest {
         var stopwatch = new Stopwatch(clock);
 
         stopwatch.start();
-
         clock.advance(1L);
 
         assertThat(stopwatch.display(), is("Current Time: 00:01"));
+    }
+
+    @Test
+    public void displayAfterTakingMultipleMeasurementsAfter1Second() {
+        var clock = new TimeProvider();
+
+        var stopwatch = new Stopwatch(clock);
+
+        stopwatch.start();
+
+        clock.advance(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+
+        clock.advance(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:02"));
     }
 }
