@@ -23,22 +23,27 @@ public class StopwatchTest {
         private final TimeProvider clock;
         private long startTime;
         private long lastTime;
+        private long timeElapsed;
+
         private State state;
 
         private enum State {
+            NEW,
             RUNNING,
-            STOPPED;
+            STOPPED
         }
 
         public Stopwatch(TimeProvider clock) {
-            this.state = State.STOPPED;
+            this.state = State.NEW;
             this.clock = clock;
+            this.timeElapsed = 0;
         }
 
         public String display() {
             var secondsElapsed = switch(this.state) {
-                case RUNNING -> (clock.time() - startTime);
-                case STOPPED -> (lastTime - startTime);
+                case RUNNING -> this.timeElapsed + (clock.time() - startTime);
+                case STOPPED -> this.timeElapsed;
+                case NEW     -> 0;
             };
 
             return "Current Time: "+ formatMinutesAndSeconds(secondsElapsed);
@@ -56,6 +61,8 @@ public class StopwatchTest {
         public void stop() {
             this.state = State.STOPPED;
             this.lastTime = clock.time();
+
+            this.timeElapsed = (this.lastTime - startTime);
         }
     }
 
@@ -120,5 +127,23 @@ public class StopwatchTest {
 
         clock.advanceSeconds(-1L);
         assertThat(stopwatch.display(), is("Current Time: 00:01"));
+    }
+
+    @Test
+    public void shouldResumeCountingIfStartedAgain() {
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+
+        stopwatch.stop();
+
+        clock.advanceSeconds(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:02"));
     }
 }
