@@ -32,13 +32,7 @@ public class StopwatchTest {
         private State state;
 
         public void lap() {
-            var secondsElapsed = switch(this.state) {
-                case RUNNING -> this.timeElapsed + (clock.time() - startTime);
-                case STOPPED -> this.timeElapsed;
-                case NEW     -> 0;
-            };
-
-            this.laps.put("1", secondsElapsed);
+            this.laps.put("1", secondsElapsed());
         }
 
         private enum State {
@@ -55,13 +49,7 @@ public class StopwatchTest {
         }
 
         public String display() {
-            var secondsElapsed = switch(this.state) {
-                case RUNNING -> this.timeElapsed + (clock.time() - startTime);
-                case STOPPED -> this.timeElapsed;
-                case NEW     -> 0;
-            };
-
-            var currentTime = "Current Time: " + formatMinutesAndSeconds(secondsElapsed);
+            var currentTime = "Current Time: " + formatMinutesAndSeconds(secondsElapsed());
 
             if (this.laps.isEmpty()) {
                 return currentTime;
@@ -89,6 +77,14 @@ public class StopwatchTest {
         public void reset() {
             this.state = State.NEW;
             this.timeElapsed = 0;
+        }
+
+        private long secondsElapsed() {
+            return switch (this.state) {
+                case RUNNING -> this.timeElapsed + (clock.time() - startTime);
+                case STOPPED -> this.timeElapsed;
+                case NEW -> 0;
+            };
         }
     }
 
