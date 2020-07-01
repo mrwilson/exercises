@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id "uk.co.probablyfine.gradle.test-commit-revert" version "0.3.5"
-    id "com.diffplug.gradle.spotless" version "3.26.1"
+    id "com.diffplug.gradle.spotless" version "4.4.0"
 }
 
 group 'uk.co.probablyfine'
@@ -20,7 +20,7 @@ testCommitRevert {
 
 spotless {
     java {
-        googleJavaFormat('1.7').aosp()
+        googleJavaFormat('1.8').aosp()
     }
 }
 

@@ -1,13 +1,12 @@
 package uk.co.probablyfine.exercises.dice;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.DoubleStream;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import org.junit.Test;
 
 public class DiceRollerTest {
 
@@ -60,7 +59,7 @@ public class DiceRollerTest {
     }
 
     private int roll(String dice, Supplier<DoubleStream> randomness) {
-       return new RollDice(randomness).roll(dice);
+        return new RollDice(randomness).roll(dice);
     }
 
     private Supplier<DoubleStream> repeatDoubles(double value) {
@@ -70,5 +69,4 @@ public class DiceRollerTest {
     private Supplier<DoubleStream> supplyDoubles(double... values) {
         return () -> DoubleStream.of(values);
     }
-
 }
