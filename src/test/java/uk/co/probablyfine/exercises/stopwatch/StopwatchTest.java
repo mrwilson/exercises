@@ -202,23 +202,21 @@ public class StopwatchTest {
         stopwatch.lap();
 
         clock.advanceSeconds(1L);
-        assertThat(
-                stopwatch,
-                allOf(hasCurrentTime("00:02"), hasLineInDisplay("Lap 1: 00:01")));
+        assertThat(stopwatch, allOf(hasCurrentTime("00:02"), hasLap(1, "00:01")));
 
         clock.advanceSeconds(1L);
         stopwatch.lap();
 
         assertThat(
-                stopwatch,
-                allOf(
-                        hasCurrentTime("00:03"),
-                        hasLineInDisplay("Lap 1: 00:01"),
-                        hasLineInDisplay("Lap 2: 00:02")));
+                stopwatch, allOf(hasCurrentTime("00:03"), hasLap(1, "00:01"), hasLap(2, "00:02")));
+    }
+
+    private static Matcher<Stopwatch> hasLap(int lap, String time) {
+        return hasLineInDisplay("Lap " + lap + ": " + time);
     }
 
     private static Matcher<Stopwatch> hasCurrentTime(String currentTime) {
-        return hasLineInDisplay("Current Time: "+currentTime);
+        return hasLineInDisplay("Current Time: " + currentTime);
     }
 
     private static Matcher<Stopwatch> hasLineInDisplay(String line) {
