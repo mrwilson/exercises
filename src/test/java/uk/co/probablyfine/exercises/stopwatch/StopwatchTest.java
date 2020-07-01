@@ -29,7 +29,12 @@ public class StopwatchTest {
         }
 
         public String display() {
-            return "Current Time: 00:0" + (clock.time() - startTime);
+            var secondsElapsed = (clock.time() - startTime);
+
+            var minutes = secondsElapsed / 60;
+            var seconds = secondsElapsed % 60;
+
+            return "Current Time: "+String.format("%02d:%02d", minutes, seconds);
         }
 
         public void start() {
@@ -69,5 +74,16 @@ public class StopwatchTest {
 
         clock.advance(1L);
         assertThat(stopwatch.display(), is("Current Time: 00:02"));
+    }
+
+    @Test
+    public void displayAfterTakingMultipleMeasurementsAfter1Minute() {
+        var clock = new TimeProvider();
+        var stopwatch = new Stopwatch(clock);
+
+        stopwatch.start();
+
+        clock.advance(60L);
+        assertThat(stopwatch.display(), is("Current Time: 01:00"));
     }
 }
