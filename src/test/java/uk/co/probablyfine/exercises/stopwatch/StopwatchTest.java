@@ -7,8 +7,7 @@ import static org.hamcrest.core.Is.is;
 
 public class StopwatchTest {
 
-    public static record Stopwatch() {
-
+    public static class Stopwatch {
         public String display() {
             return "Current Time: 00:00";
         }
