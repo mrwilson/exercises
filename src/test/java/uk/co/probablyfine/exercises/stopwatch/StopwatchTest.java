@@ -54,20 +54,19 @@ public class StopwatchTest {
         }
     }
 
+    private final TimeProvider clock = new TimeProvider();
+    private final Stopwatch stopwatch = new Stopwatch(clock);
+
     @Test
     public void displayWithoutRunning() {
-        var stopwatch = new Stopwatch(new TimeProvider());
-
         assertThat(stopwatch.display(), is("Current Time: 00:00"));
     }
 
     @Test
     public void displayAfterRunningFor1Second() {
-        var clock = new TimeProvider();
-
-        var stopwatch = new Stopwatch(clock);
 
         stopwatch.start();
+
         clock.advanceSeconds(1L);
 
         assertThat(stopwatch.display(), is("Current Time: 00:01"));
@@ -75,9 +74,6 @@ public class StopwatchTest {
 
     @Test
     public void displayAfterTakingMultipleMeasurementsAfter1Second() {
-        var clock = new TimeProvider();
-
-        var stopwatch = new Stopwatch(clock);
 
         stopwatch.start();
 
@@ -90,9 +86,6 @@ public class StopwatchTest {
 
     @Test
     public void displayAfterTakingMultipleMeasurementsAfter1Minute() {
-        var clock = new TimeProvider();
-        var stopwatch = new Stopwatch(clock);
-
         stopwatch.start();
 
         clock.advanceSeconds(60L);
@@ -101,9 +94,6 @@ public class StopwatchTest {
 
     @Test
     public void displayAfterTakingMultipleMeasurementsFromAStoppedStopwatch() {
-        var clock = new TimeProvider();
-
-        var stopwatch = new Stopwatch(clock);
 
         stopwatch.start();
 
