@@ -86,7 +86,7 @@ public class StopwatchTest {
         }
 
         public void stop() {
-            if (this.state != State.STOPPED) {
+            if (this.state == State.RUNNING) {
                 this.timeElapsed += (clock.time() - startTime);
             }
 
@@ -275,6 +275,15 @@ public class StopwatchTest {
         stopwatch.stop();
 
         assertThat(stopwatch, hasCurrentTime("00:01"));
+    }
+
+    @Test
+    public void shouldDoNothingWhenStopIsCalledBeforeStart() {
+        clock.advanceSeconds(1L);
+
+        stopwatch.stop();
+
+        assertThat(stopwatch, hasCurrentTime("00:00"));
     }
 
     private static Matcher<Stopwatch> hasLap(int lap, String time) {
