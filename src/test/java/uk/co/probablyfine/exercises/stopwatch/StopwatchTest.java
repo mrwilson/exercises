@@ -41,10 +41,11 @@ public class StopwatchTest {
                 case STOPPED -> (lastTime - startTime);
             };
 
-            var minutes = secondsElapsed / 60;
-            var seconds = secondsElapsed % 60;
+            return "Current Time: "+ formatMinutesAndSeconds(secondsElapsed);
+        }
 
-            return "Current Time: "+String.format("%02d:%02d", minutes, seconds);
+        private String formatMinutesAndSeconds(long secondsElapsed) {
+            return String.format("%02d:%02d", secondsElapsed / 60, secondsElapsed % 60);
         }
 
         public void start() {
