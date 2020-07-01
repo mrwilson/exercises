@@ -22,7 +22,6 @@ public class StopwatchTest {
     public static class Stopwatch {
         private final TimeProvider clock;
         private long startTime;
-        private long lastTime;
         private long timeElapsed;
 
         private State state;
@@ -60,9 +59,7 @@ public class StopwatchTest {
 
         public void stop() {
             this.state = State.STOPPED;
-            this.lastTime = clock.time();
-
-            this.timeElapsed = (this.lastTime - startTime);
+            this.timeElapsed = (clock.time() - startTime);
         }
     }
 
