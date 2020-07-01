@@ -10,7 +10,7 @@ public class StopwatchTest {
     public static class TimeProvider {
         private long duration;
 
-        public void advance(long seconds) {
+        public void advanceSeconds(long seconds) {
             this.duration += seconds;
         }
 
@@ -56,7 +56,7 @@ public class StopwatchTest {
         var stopwatch = new Stopwatch(clock);
 
         stopwatch.start();
-        clock.advance(1L);
+        clock.advanceSeconds(1L);
 
         assertThat(stopwatch.display(), is("Current Time: 00:01"));
     }
@@ -69,10 +69,10 @@ public class StopwatchTest {
 
         stopwatch.start();
 
-        clock.advance(1L);
+        clock.advanceSeconds(1L);
         assertThat(stopwatch.display(), is("Current Time: 00:01"));
 
-        clock.advance(1L);
+        clock.advanceSeconds(1L);
         assertThat(stopwatch.display(), is("Current Time: 00:02"));
     }
 
@@ -83,7 +83,7 @@ public class StopwatchTest {
 
         stopwatch.start();
 
-        clock.advance(60L);
+        clock.advanceSeconds(60L);
         assertThat(stopwatch.display(), is("Current Time: 01:00"));
     }
 }
