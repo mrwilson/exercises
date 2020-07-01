@@ -1,5 +1,6 @@
 package uk.co.probablyfine.exercises.stopwatch;
 
+import static java.lang.String.format;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -65,16 +66,17 @@ public class StopwatchTest {
 
         private String lapTimes() {
             return IntStream.range(0, this.laps.size())
-                    .mapToObj(
-                            i ->
-                                    String.format(
-                                            "Lap %d: %s",
-                                            (i + 1), formatMinutesAndSeconds(laps.get(i))))
+                    .mapToObj(this::formatLapTime)
                     .collect(Collectors.joining("\n"));
         }
 
+        private String formatLapTime(int lapNumber) {
+            return format(
+                    "Lap %d: %s", (lapNumber + 1), formatMinutesAndSeconds(laps.get(lapNumber)));
+        }
+
         private String formatMinutesAndSeconds(long secondsElapsed) {
-            return String.format("%02d:%02d", secondsElapsed / 60, secondsElapsed % 60);
+            return format("%02d:%02d", secondsElapsed / 60, secondsElapsed % 60);
         }
 
         public void start() {
