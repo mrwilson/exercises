@@ -21,15 +21,22 @@ public class StopwatchTest {
 
     public static class Stopwatch {
         private final TimeProvider clock;
-
         private long startTime;
+        private long lastTime;
+        private State state;
+
+        private enum State {
+            STOPPED;
+        }
 
         public Stopwatch(TimeProvider clock) {
             this.clock = clock;
         }
 
         public String display() {
-            var secondsElapsed = (clock.time() - startTime);
+            var secondsElapsed = this.state == State.STOPPED
+                ? lastTime - startTime
+                : (clock.time() - startTime);
 
             var minutes = secondsElapsed / 60;
             var seconds = secondsElapsed % 60;
@@ -39,6 +46,11 @@ public class StopwatchTest {
 
         public void start() {
             this.startTime = clock.time();
+        }
+
+        public void stop() {
+            this.state = State.STOPPED;
+            this.lastTime = clock.time();
         }
     }
 
@@ -85,5 +97,22 @@ public class StopwatchTest {
 
         clock.advanceSeconds(60L);
         assertThat(stopwatch.display(), is("Current Time: 01:00"));
+    }
+
+    @Test
+    public void displayAfterTakingMultipleMeasurementsFromAStoppedStopwatch() {
+        var clock = new TimeProvider();
+
+        var stopwatch = new Stopwatch(clock);
+
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+
+        stopwatch.stop();
+
+        clock.advanceSeconds(1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
     }
 }
