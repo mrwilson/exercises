@@ -106,7 +106,7 @@ public class StopwatchTest {
 
     @Test
     public void displayWithoutRunning() {
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:00"));
+        assertThat(stopwatch, hasCurrentTime("00:00"));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class StopwatchTest {
 
         clock.advanceSeconds(1L);
 
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
     }
 
     @Test
@@ -125,10 +125,10 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:02"));
+        assertThat(stopwatch, hasCurrentTime("00:02"));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(60L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 01:00"));
+        assertThat(stopwatch, hasCurrentTime("01:00"));
     }
 
     @Test
@@ -145,12 +145,12 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
 
         stopwatch.stop();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
     }
 
     @Test
@@ -158,10 +158,10 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(2L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:02"));
+        assertThat(stopwatch, hasCurrentTime("00:02"));
 
         clock.advanceSeconds(-1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
     }
 
     @Test
@@ -169,17 +169,17 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
 
         stopwatch.stop();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
 
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:02"));
+        assertThat(stopwatch, hasCurrentTime("00:02"));
     }
 
     @Test
@@ -187,11 +187,11 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
+        assertThat(stopwatch, hasCurrentTime("00:01"));
 
         stopwatch.reset();
 
-        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:00"));
+        assertThat(stopwatch, hasCurrentTime("00:00"));
     }
 
     @Test
@@ -204,7 +204,7 @@ public class StopwatchTest {
         clock.advanceSeconds(1L);
         assertThat(
                 stopwatch,
-                allOf(hasLineInDisplay("Current Time: 00:02"), hasLineInDisplay("Lap 1: 00:01")));
+                allOf(hasCurrentTime("00:02"), hasLineInDisplay("Lap 1: 00:01")));
 
         clock.advanceSeconds(1L);
         stopwatch.lap();
@@ -212,9 +212,13 @@ public class StopwatchTest {
         assertThat(
                 stopwatch,
                 allOf(
-                        hasLineInDisplay("Current Time: 00:03"),
+                        hasCurrentTime("00:03"),
                         hasLineInDisplay("Lap 1: 00:01"),
                         hasLineInDisplay("Lap 2: 00:02")));
+    }
+
+    private static Matcher<Stopwatch> hasCurrentTime(String currentTime) {
+        return hasLineInDisplay("Current Time: "+currentTime);
     }
 
     private static Matcher<Stopwatch> hasLineInDisplay(String line) {
