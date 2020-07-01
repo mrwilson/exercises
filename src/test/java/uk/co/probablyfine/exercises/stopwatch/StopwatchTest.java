@@ -2,6 +2,7 @@ package uk.co.probablyfine.exercises.stopwatch;
 
 import static java.lang.String.format;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.ArrayList;
@@ -92,6 +93,7 @@ public class StopwatchTest {
         public void reset() {
             this.state = State.NEW;
             this.timeElapsed = 0;
+            this.laps.clear();
         }
 
         private long secondsElapsed() {
@@ -240,6 +242,21 @@ public class StopwatchTest {
                         hasLap(1, "00:01"),
                         hasLap(2, "00:01"),
                         hasLap(3, "00:01")));
+    }
+
+    @Test
+    public void shouldClearLapsWhenResetIsCalled() {
+
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+        stopwatch.lap();
+
+        assertThat(stopwatch, allOf(hasCurrentTime("00:01"), hasLap(1, "00:01")));
+
+        stopwatch.reset();
+
+        assertThat(stopwatch, allOf(hasCurrentTime("00:00"), not(hasLap(1, "00:01"))));
     }
 
     private static Matcher<Stopwatch> hasLap(int lap, String time) {
