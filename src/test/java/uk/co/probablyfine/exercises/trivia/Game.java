@@ -6,120 +6,121 @@ import java.util.List;
 
 public class Game {
 
-	final List<Player> newPlayers;
-	final LinkedList<String> popQuestions;
-	final LinkedList<String> scienceQuestions;
-	final LinkedList<String> sportsQuestions;
-	final LinkedList<String> rockQuestions;
-    
+    final List<Player> newPlayers;
+    final LinkedList<String> popQuestions;
+    final LinkedList<String> scienceQuestions;
+    final LinkedList<String> sportsQuestions;
+    final LinkedList<String> rockQuestions;
+
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
-    
-    public Game(){
-		popQuestions = addQuestions("Pop");
-		scienceQuestions = addQuestions("Science");
-		sportsQuestions = addQuestions("Sports");
-		rockQuestions = addQuestions("Rock");
-		newPlayers = new ArrayList<>();
-	}
 
-	private LinkedList<String> addQuestions(String category) {
-    	LinkedList<String> questions = new LinkedList<>();
+    public Game() {
+        popQuestions = addQuestions("Pop");
+        scienceQuestions = addQuestions("Science");
+        sportsQuestions = addQuestions("Sports");
+        rockQuestions = addQuestions("Rock");
+        newPlayers = new ArrayList<>();
+    }
 
-		for (int questionNumber = 0; questionNumber < 50; questionNumber++) {
-			questions.addLast(category + " Question " + questionNumber);
-		}
-		return questions;
-	}
+    private LinkedList<String> addQuestions(String category) {
+        LinkedList<String> questions = new LinkedList<>();
 
-	public void add(String playerName) {
-	    newPlayers.add(new Player(playerName));
+        for (int questionNumber = 0; questionNumber < 50; questionNumber++) {
+            questions.addLast(category + " Question " + questionNumber);
+        }
+        return questions;
+    }
 
-	    System.out.println(playerName + " was added");
-	    System.out.println("They are player number " + newPlayers.size());
-	}
+    public void add(String playerName) {
+        newPlayers.add(new Player(playerName));
 
-	public void roll(int roll) {
+        System.out.println(playerName + " was added");
+        System.out.println("They are player number " + newPlayers.size());
+    }
 
-		System.out.println(currentPlayer().name() + " is the current player");
-		System.out.println("They have rolled a " + roll);
-		
-		if (currentPlayer().inPenaltyBox()) {
-			boolean gettingOutOfPenaltyBox = roll % 2 != 0;
+    public void roll(int roll) {
 
-			isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
+        System.out.println(currentPlayer().name() + " is the current player");
+        System.out.println("They have rolled a " + roll);
 
-			if (gettingOutOfPenaltyBox) {
-				System.out.println(currentPlayer().name() + " is getting out of the penalty box");
-			} else {
-				System.out.println(currentPlayer().name() + " is not getting out of the penalty box");
-				return;
-			}
+        if (currentPlayer().inPenaltyBox()) {
+            boolean gettingOutOfPenaltyBox = roll % 2 != 0;
 
-		}
+            isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
 
-		updatePlayer(currentPlayer().moveForward(roll));
-		askQuestion();
-	}
+            if (gettingOutOfPenaltyBox) {
+                System.out.println(currentPlayer().name() + " is getting out of the penalty box");
+            } else {
+                System.out.println(
+                        currentPlayer().name() + " is not getting out of the penalty box");
+                return;
+            }
+        }
 
-	private void askQuestion() {
-		System.out.println("The category is " + currentCategory(currentPlayer()));
+        updatePlayer(currentPlayer().moveForward(roll));
+        askQuestion();
+    }
 
-		String question = switch(currentCategory(currentPlayer())) {
-			case "Pop" -> popQuestions.removeFirst();
-			case "Science" -> scienceQuestions.removeFirst();
-			case "Sports" -> sportsQuestions.removeFirst();
-			default -> rockQuestions.removeFirst();
-		};
+    private void askQuestion() {
+        System.out.println("The category is " + currentCategory(currentPlayer()));
 
-		System.out.println(question);
-	}
-	
-	public String currentCategory(Player player) {
-		return switch (player.place() % 4) {
-			case 0 -> "Pop";
-			case 1 -> "Science";
-			case 2 -> "Sports";
-			default -> "Rock";
-		};
-	}
+        String question =
+                switch (currentCategory(currentPlayer())) {
+                    case "Pop" -> popQuestions.removeFirst();
+                    case "Science" -> scienceQuestions.removeFirst();
+                    case "Sports" -> sportsQuestions.removeFirst();
+                    default -> rockQuestions.removeFirst();
+                };
 
-	public boolean wasCorrectlyAnswered() {
-    	if(currentPlayer().inPenaltyBox() && !isGettingOutOfPenaltyBox) {
-			nextPlayer();
-			return true;
-		}
+        System.out.println(question);
+    }
 
-		System.out.println("Answer was correct!!!!");
-		updatePlayer(currentPlayer().addCoin());
+    public String currentCategory(Player player) {
+        return switch (player.place() % 4) {
+            case 0 -> "Pop";
+            case 1 -> "Science";
+            case 2 -> "Sports";
+            default -> "Rock";
+        };
+    }
 
-		boolean winner = didPlayerWin();
-		nextPlayer();
+    public boolean wasCorrectlyAnswered() {
+        if (currentPlayer().inPenaltyBox() && !isGettingOutOfPenaltyBox) {
+            nextPlayer();
+            return true;
+        }
 
-		return winner;
-	}
+        System.out.println("Answer was correct!!!!");
+        updatePlayer(currentPlayer().addCoin());
 
-	public boolean wrongAnswer(){
-		System.out.println("Question was incorrectly answered");
-		updatePlayer(currentPlayer().sendToPenaltyBox());
+        boolean winner = didPlayerWin();
+        nextPlayer();
 
-		nextPlayer();
-		return true;
-	}
+        return winner;
+    }
 
-	private void nextPlayer() {
-		currentPlayer = (currentPlayer + 1) % newPlayers.size();
-	}
+    public boolean wrongAnswer() {
+        System.out.println("Question was incorrectly answered");
+        updatePlayer(currentPlayer().sendToPenaltyBox());
 
-	private void updatePlayer(Player player) {
-    	newPlayers.set(currentPlayer, player);
-	}
+        nextPlayer();
+        return true;
+    }
 
-	private Player currentPlayer() {
-		return newPlayers.get(currentPlayer);
-	}
+    private void nextPlayer() {
+        currentPlayer = (currentPlayer + 1) % newPlayers.size();
+    }
 
-	private boolean didPlayerWin() {
-		return !(currentPlayer().coins() == 6);
-	}
+    private void updatePlayer(Player player) {
+        newPlayers.set(currentPlayer, player);
+    }
+
+    private Player currentPlayer() {
+        return newPlayers.get(currentPlayer);
+    }
+
+    private boolean didPlayerWin() {
+        return !(currentPlayer().coins() == 6);
+    }
 }

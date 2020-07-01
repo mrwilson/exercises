@@ -1,17 +1,13 @@
 package uk.co.probablyfine.exercises.stopwatch;
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.junit.Test;
 
 public class StopwatchTest {
 
@@ -65,8 +61,12 @@ public class StopwatchTest {
 
         private String lapTimes() {
             return IntStream.range(0, this.laps.size())
-                .mapToObj(i -> String.format("Lap %d: %s", (i+1), formatMinutesAndSeconds(laps.get(i))))
-                .collect(Collectors.joining("\n"));
+                    .mapToObj(
+                            i ->
+                                    String.format(
+                                            "Lap %d: %s",
+                                            (i + 1), formatMinutesAndSeconds(laps.get(i))))
+                    .collect(Collectors.joining("\n"));
         }
 
         private String formatMinutesAndSeconds(long secondsElapsed) {
@@ -204,6 +204,5 @@ public class StopwatchTest {
         stopwatch.lap();
 
         assertThat(stopwatch.display(), is("Current Time: 00:03\nLap 1: 00:01\nLap 2: 00:02"));
-
     }
 }
