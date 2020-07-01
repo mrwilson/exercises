@@ -86,7 +86,7 @@ public class StopwatchTest {
 
         public void stop() {
             this.state = State.STOPPED;
-            this.timeElapsed = (clock.time() - startTime);
+            this.timeElapsed += (clock.time() - startTime);
         }
 
         public void reset() {
@@ -211,6 +211,35 @@ public class StopwatchTest {
 
         assertThat(
                 stopwatch, allOf(hasCurrentTime("00:03"), hasLap(1, "00:01"), hasLap(2, "00:02")));
+    }
+
+    @Test
+    public void shouldAccumulateCurrentTimeOnStop_NotReset() {
+
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+        stopwatch.lap();
+
+        clock.advanceSeconds(1L);
+        stopwatch.lap();
+
+        stopwatch.stop();
+
+        clock.advanceSeconds(2L);
+        stopwatch.start();
+        clock.advanceSeconds(1);
+
+        stopwatch.lap();
+        stopwatch.stop();
+
+        assertThat(
+                stopwatch,
+                allOf(
+                        hasCurrentTime("00:03"),
+                        hasLap(1, "00:01"),
+                        hasLap(2, "00:01"),
+                        hasLap(3, "00:01")));
     }
 
     private static Matcher<Stopwatch> hasLap(int lap, String time) {
