@@ -2,10 +2,13 @@ package uk.co.probablyfine.exercises.stopwatch;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -26,15 +29,15 @@ public class StopwatchTest {
 
     public static class Stopwatch {
         private final TimeProvider clock;
-        private final Map<Integer, Long> laps;
+        private final List<Long> laps;
         private long startTime;
         private long timeElapsed;
         private State state;
 
         public void lap() {
-            var previousTotalLaps = this.laps.values().stream().mapToLong(x -> x).sum();
+            var previousTotalLaps = this.laps.stream().mapToLong(x -> x).sum();
 
-            this.laps.put(this.laps.size() + 1, secondsElapsed() - previousTotalLaps);
+            this.laps.add(secondsElapsed() - previousTotalLaps);
         }
 
         private enum State {
@@ -47,7 +50,7 @@ public class StopwatchTest {
             this.state = State.NEW;
             this.clock = clock;
             this.timeElapsed = 0;
-            this.laps = new TreeMap<>();
+            this.laps = new ArrayList<>();
         }
 
         public String display() {
@@ -56,10 +59,14 @@ public class StopwatchTest {
             if (this.laps.isEmpty()) {
                 return currentTime;
             } else {
-                return currentTime + "\n" + this.laps.entrySet().stream().map((e) ->
-                        "Lap " + e.getKey() + ": " + formatMinutesAndSeconds(e.getValue())
-                ).collect(Collectors.joining("\n"));
+                return currentTime + "\n" + lapTimes();
             }
+        }
+
+        private String lapTimes() {
+            return IntStream.range(0, this.laps.size())
+                .mapToObj(i -> String.format("Lap %d: %s", (i+1), formatMinutesAndSeconds(laps.get(i))))
+                .collect(Collectors.joining("\n"));
         }
 
         private String formatMinutesAndSeconds(long secondsElapsed) {
