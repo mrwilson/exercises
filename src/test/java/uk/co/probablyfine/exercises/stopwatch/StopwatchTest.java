@@ -1,12 +1,16 @@
 package uk.co.probablyfine.exercises.stopwatch;
 
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.junit.Test;
 
 public class StopwatchTest {
@@ -102,7 +106,7 @@ public class StopwatchTest {
 
     @Test
     public void displayWithoutRunning() {
-        assertThat(stopwatch.display(), is("Current Time: 00:00"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:00"));
     }
 
     @Test
@@ -112,7 +116,7 @@ public class StopwatchTest {
 
         clock.advanceSeconds(1L);
 
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
     }
 
     @Test
@@ -121,10 +125,10 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:02"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:02"));
     }
 
     @Test
@@ -132,7 +136,7 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(60L);
-        assertThat(stopwatch.display(), is("Current Time: 01:00"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 01:00"));
     }
 
     @Test
@@ -141,12 +145,12 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
 
         stopwatch.stop();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
     }
 
     @Test
@@ -154,10 +158,10 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(2L);
-        assertThat(stopwatch.display(), is("Current Time: 00:02"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:02"));
 
         clock.advanceSeconds(-1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
     }
 
     @Test
@@ -165,17 +169,17 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
 
         stopwatch.stop();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
 
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:02"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:02"));
     }
 
     @Test
@@ -183,11 +187,11 @@ public class StopwatchTest {
         stopwatch.start();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:01"));
 
         stopwatch.reset();
 
-        assertThat(stopwatch.display(), is("Current Time: 00:00"));
+        assertThat(stopwatch, hasLineInDisplay("Current Time: 00:00"));
     }
 
     @Test
@@ -198,11 +202,33 @@ public class StopwatchTest {
         stopwatch.lap();
 
         clock.advanceSeconds(1L);
-        assertThat(stopwatch.display(), is("Current Time: 00:02\nLap 1: 00:01"));
+        assertThat(
+                stopwatch,
+                allOf(hasLineInDisplay("Current Time: 00:02"), hasLineInDisplay("Lap 1: 00:01")));
 
         clock.advanceSeconds(1L);
         stopwatch.lap();
 
-        assertThat(stopwatch.display(), is("Current Time: 00:03\nLap 1: 00:01\nLap 2: 00:02"));
+        assertThat(
+                stopwatch,
+                allOf(
+                        hasLineInDisplay("Current Time: 00:03"),
+                        hasLineInDisplay("Lap 1: 00:01"),
+                        hasLineInDisplay("Lap 2: 00:02")));
+    }
+
+    private static Matcher<Stopwatch> hasLineInDisplay(String line) {
+        return new TypeSafeDiagnosingMatcher<>() {
+            @Override
+            protected boolean matchesSafely(Stopwatch item, Description mismatchDescription) {
+                return Arrays.asList(item.display().split("\n")).contains(line);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(
+                        " a Stopwatch with display containing the line [" + line + "]");
+            }
+        };
     }
 }
