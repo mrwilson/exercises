@@ -109,4 +109,15 @@ public class StopwatchTest {
         clock.advanceSeconds(1L);
         assertThat(stopwatch.display(), is("Current Time: 00:01"));
     }
+
+    @Test
+    public void displayAfterGoingBackInTime() {
+        stopwatch.start();
+
+        clock.advanceSeconds(2L);
+        assertThat(stopwatch.display(), is("Current Time: 00:02"));
+
+        clock.advanceSeconds(-1L);
+        assertThat(stopwatch.display(), is("Current Time: 00:01"));
+    }
 }
