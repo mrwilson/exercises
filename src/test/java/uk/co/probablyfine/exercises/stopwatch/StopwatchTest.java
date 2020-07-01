@@ -26,17 +26,20 @@ public class StopwatchTest {
         private State state;
 
         private enum State {
+            RUNNING,
             STOPPED;
         }
 
         public Stopwatch(TimeProvider clock) {
+            this.state = State.STOPPED;
             this.clock = clock;
         }
 
         public String display() {
-            var secondsElapsed = this.state == State.STOPPED
-                ? lastTime - startTime
-                : (clock.time() - startTime);
+            var secondsElapsed = switch(this.state) {
+                case RUNNING -> (clock.time() - startTime);
+                case STOPPED -> (lastTime - startTime);
+            };
 
             var minutes = secondsElapsed / 60;
             var seconds = secondsElapsed % 60;
@@ -45,6 +48,7 @@ public class StopwatchTest {
         }
 
         public void start() {
+            this.state = State.RUNNING;
             this.startTime = clock.time();
         }
 
