@@ -86,8 +86,11 @@ public class StopwatchTest {
         }
 
         public void stop() {
+            if (this.state != State.STOPPED) {
+                this.timeElapsed += (clock.time() - startTime);
+            }
+
             this.state = State.STOPPED;
-            this.timeElapsed += (clock.time() - startTime);
         }
 
         public void reset() {
@@ -259,6 +262,21 @@ public class StopwatchTest {
         assertThat(stopwatch, allOf(hasCurrentTime("00:00"), not(hasLap(1, "00:01"))));
     }
 
+    @Test
+    public void shouldDoNothingWhenStopIsCalledMultipleTimes() {
+        stopwatch.start();
+
+        clock.advanceSeconds(1L);
+
+        stopwatch.stop();
+
+        assertThat(stopwatch, hasCurrentTime("00:01"));
+
+        stopwatch.stop();
+
+        assertThat(stopwatch, hasCurrentTime("00:01"));
+    }
+
     private static Matcher<Stopwatch> hasLap(int lap, String time) {
         return hasLineInDisplay("Lap " + lap + ": " + time);
     }
@@ -271,7 +289,13 @@ public class StopwatchTest {
         return new TypeSafeDiagnosingMatcher<>() {
             @Override
             protected boolean matchesSafely(Stopwatch item, Description mismatchDescription) {
-                return Arrays.asList(item.display().split("\n")).contains(line);
+                var matches = Arrays.asList(item.display().split("\n")).contains(line);
+
+                if (!matches) {
+                    mismatchDescription.appendText("is a Stopwatch with display ["+item.display()+"]");
+                }
+
+                return matches;
             }
 
             @Override
