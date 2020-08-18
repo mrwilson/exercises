@@ -7,18 +7,30 @@ public record BowlingGame(int score, int numberOfRolls, int lookBackOne, int loo
     }
 
     public BowlingGame roll(int roll) {
-        if (lookBackOne < 10 && (lookBackTwo + lookBackOne) == 10 && numberOfRolls % 2 == 1) {
-            return new BowlingGame(score + roll + roll, numberOfRolls + 1, roll, lookBackOne);
+        if (previousFrameWasASpare()) {
+            return new BowlingGame(score + 2*roll , numberOfRolls + 1, roll, lookBackOne);
         }
 
-        if (lookBackTwo == 10 && numberOfRolls % 2 == 0) {
+        if (previousFrameWasAStrike()) {
             return new BowlingGame(score + lookBackOne + 2*roll, numberOfRolls + 1, roll, lookBackOne);
         }
 
-        if (roll == 10 && numberOfRolls % 2 == 1) {
+        if (isAStrike(roll)) {
             return new BowlingGame(score + roll, numberOfRolls + 2, roll, lookBackOne);
         }
 
         return new BowlingGame(score + roll, numberOfRolls + 1, roll, lookBackOne);
+    }
+
+    private boolean previousFrameWasASpare() {
+        return lookBackOne < 10 && (lookBackTwo + lookBackOne) == 10 && numberOfRolls % 2 == 1;
+    }
+
+    private boolean isAStrike(int roll) {
+        return roll == 10 && numberOfRolls % 2 == 1;
+    }
+
+    private boolean previousFrameWasAStrike() {
+        return lookBackTwo == 10 && numberOfRolls % 2 == 0;
     }
 }
