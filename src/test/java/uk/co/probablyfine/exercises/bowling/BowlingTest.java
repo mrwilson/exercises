@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BowlingTest {
 
-    private final BowlingGame game = new BowlingGame(0, 0, 0);
+    private final BowlingGame game = new BowlingGame();
 
     @Test
     public void simpleFrameScoreIsTotalOfRolls() {
