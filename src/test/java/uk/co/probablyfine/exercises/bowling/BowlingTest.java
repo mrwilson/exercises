@@ -19,4 +19,9 @@ public class BowlingTest {
         assertThat(game.roll(6).roll(4).roll(5).score(), is(10 + 5 + 5));
     }
 
+    @Test
+    public void strikesAddExtra10ToTotal() {
+        assertThat(game.roll(10).roll(5).roll(4).score(), is(10 + 9 + 9));
+    }
+
 }
