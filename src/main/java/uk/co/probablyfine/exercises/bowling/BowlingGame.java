@@ -8,11 +8,12 @@ public record BowlingGame(int score, int numberOfRolls, int lookBackOne, int loo
 
     public BowlingGame roll(int roll) {
         if (previousFrameWasASpare()) {
-            return new BowlingGame(score + 2*roll , numberOfRolls + 1, roll, lookBackOne);
+            return new BowlingGame(score + 2 * roll, numberOfRolls + 1, roll, lookBackOne);
         }
 
         if (previousFrameWasAStrike()) {
-            return new BowlingGame(score + lookBackOne + 2*roll, numberOfRolls + 1, roll, lookBackOne);
+            return new BowlingGame(
+                    score + lookBackOne + 2 * roll, numberOfRolls + 1, roll, lookBackOne);
         }
 
         if (isAStrike(roll)) {

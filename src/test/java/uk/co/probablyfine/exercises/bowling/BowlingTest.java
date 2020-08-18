@@ -1,27 +1,32 @@
 package uk.co.probablyfine.exercises.bowling;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BowlingTest {
+import java.util.Arrays;
+import org.junit.Test;
 
-    private final BowlingGame game = new BowlingGame();
+public class BowlingTest {
 
     @Test
     public void simpleFrameScoreIsTotalOfRolls() {
-        assertThat(game.roll(6).roll(3).score(), is(9));
+        assertThat(roll(6, 3), is(9));
     }
 
     @Test
     public void sparesAddNextRollToTotal() {
-        assertThat(game.roll(6).roll(4).roll(5).score(), is(10 + 5 + 5));
+        assertThat(roll(6, 4, 5), is(10 + 5 + 5));
     }
 
     @Test
     public void strikesAddExtra10ToTotal() {
-        assertThat(game.roll(10).roll(5).roll(4).score(), is(10 + 9 + 9));
+        assertThat(roll(10, 5, 4), is(10 + 9 + 9));
     }
 
+    public int roll(int... rolls) {
+        return Arrays.stream(rolls)
+                .boxed()
+                .reduce(new BowlingGame(), BowlingGame::roll, (l, r) -> l)
+                .score();
+    }
 }
