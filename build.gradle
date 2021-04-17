@@ -1,14 +1,13 @@
 plugins {
     id 'java'
     id "uk.co.probablyfine.gradle.test-commit-revert" version "0.3.5"
-    id "com.diffplug.gradle.spotless" version "4.4.0"
 }
 
 group 'uk.co.probablyfine'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 14
-targetCompatibility = 14
+sourceCompatibility = 16
+targetCompatibility = 16
 
 repositories {
     mavenCentral()
@@ -18,31 +17,15 @@ testCommitRevert {
     promptForMessage = true
 }
 
-spotless {
-    java {
-        googleJavaFormat('1.8').aosp()
-    }
-}
-
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'junit:junit:4.12'
 
-    testCompile 'org.openjdk.jmh:jmh-core:1.19'
-    testCompile 'org.openjdk.jmh:jmh-generator-annprocess:1.19'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.19'
+    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.19'
 }
 
 test {
     testLogging {
         showStandardStreams = true
     }
-    jvmArgs(['--enable-preview'])
-
-}
-
-compileTestJava {
-    options.compilerArgs += ["--enable-preview"]
-}
-
-compileJava {
-    options.compilerArgs += ["--enable-preview"]
 }
