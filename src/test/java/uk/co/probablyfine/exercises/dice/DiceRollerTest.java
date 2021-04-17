@@ -2,11 +2,12 @@ package uk.co.probablyfine.exercises.dice;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.DoubleStream;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DiceRollerTest {
 
@@ -44,14 +45,14 @@ public class DiceRollerTest {
         assertThat(roll("1d1*3 1d1+1"), is(5));
     }
 
-    @Test(expected = InvalidDiceRollException.class)
+    @Test
     public void throwWhenInputIsInvalid() {
-        roll("not a dice roll");
+        assertThrows(InvalidDiceRollException.class, () -> roll("not a dice roll"));
     }
 
-    @Test(expected = InvalidDiceRollException.class)
+    @Test
     public void throwWhenOperationSyntaxIsInvalid() {
-        roll("1d1/3");
+        assertThrows(InvalidDiceRollException.class, () -> roll("1d1/3"));
     }
 
     private int roll(String dice) {

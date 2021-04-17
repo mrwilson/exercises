@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
 public class Task9 {

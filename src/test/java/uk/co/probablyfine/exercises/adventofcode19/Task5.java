@@ -8,7 +8,7 @@ import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
 public class Task5 {

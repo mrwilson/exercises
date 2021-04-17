@@ -7,7 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import uk.co.probablyfine.exercises.trivia.GameRunner.BoundedRandomness;
 
 public class GameTest {
