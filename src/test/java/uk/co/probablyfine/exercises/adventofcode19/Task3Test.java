@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
-public class Task3 {
+public class Task3Test {
 
     @Test
     public void example() {

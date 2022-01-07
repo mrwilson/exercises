@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class WordWrapper {
+public class WordWrapperTest {
 
     @Test
     public void zeroWidthColumnIsNoBreaks() {

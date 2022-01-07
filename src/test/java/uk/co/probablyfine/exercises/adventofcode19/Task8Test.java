@@ -4,7 +4,7 @@ import static java.util.Comparator.comparingLong;
 
 import java.util.Arrays;
 
-public class Task8 {
+public class Task8Test {
 
     public static void main(String... args) {
 

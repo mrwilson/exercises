@@ -11,7 +11,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
-public class Task5 {
+public class Task5Test {
 
     public static void main(String... args) {
         int[] program = {

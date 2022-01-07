@@ -8,7 +8,7 @@ import static uk.co.probablyfine.exercises.adventofcode19.IntCode.runIntcode;
 import org.junit.jupiter.api.Test;
 import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
-public class Task9 {
+public class Task9Test {
 
     @Test
     public void testRelativeBase() {
