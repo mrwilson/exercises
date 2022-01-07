@@ -5,6 +5,8 @@ import static org.hamcrest.core.Is.is;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,7 @@ import uk.co.probablyfine.exercises.trivia.GameRunner.BoundedRandomness;
 
 public class GameTest {
 
-    private static final File fixedOutput = new File("fixed-output.txt");
+    private static final File fixedOutput = new File("src/test/resources/fixed-output.txt");
 
     public static void main(String... args) throws FileNotFoundException {
         if (fixedOutput.exists()) return;
