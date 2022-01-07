@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class Task4 {
+public class Task4Test {
 
     public static void main(String... args) {
 
@@ -17,7 +17,7 @@ public class Task4 {
         long numberOfValidPasswords =
                 IntStream.range(start, finish)
                         .mapToObj(Objects::toString)
-                        .filter(Task4::validPassword)
+                        .filter(Task4Test::validPassword)
                         .count();
 
         System.out.println(numberOfValidPasswords);

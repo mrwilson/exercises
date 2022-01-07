@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
-public class Task6 {
+public class Task6Test {
 
     @Test
     public void testSingleCase() {

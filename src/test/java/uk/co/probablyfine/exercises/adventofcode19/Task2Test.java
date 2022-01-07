@@ -7,7 +7,7 @@ import static uk.co.probablyfine.exercises.adventofcode19.IntCode.input;
 import org.junit.jupiter.api.Test;
 import uk.co.probablyfine.exercises.adventofcode19.IntCode.Output;
 
-public class Task2 {
+public class Task2Test {
 
     public static void main(String... args) {
 
