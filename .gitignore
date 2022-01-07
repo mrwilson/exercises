@@ -1,5 +1,2 @@
-gradle/
 .idea/
-gradlew*
-build/
-.gradle/
+bazel-*
