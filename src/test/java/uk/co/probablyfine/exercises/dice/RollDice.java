@@ -42,17 +42,13 @@ public class RollDice {
                         .sum();
 
         if (match.group(3) != null) {
-            switch (match.group(4)) {
-                case "+":
-                    return sum + Integer.parseInt(match.group(5));
-                case "-":
-                    return sum - Integer.parseInt(match.group(5));
-                case "*":
-                    return sum * Integer.parseInt(match.group(5));
-                default:
-                    throw new InvalidDiceRollException(
-                            "[" + match.group(0) + "] is not a valid dice-roll operation");
-            }
+            return switch (match.group(4)) {
+                case "+" -> sum + Integer.parseInt(match.group(5));
+                case "-" -> sum - Integer.parseInt(match.group(5));
+                case "*" -> sum * Integer.parseInt(match.group(5));
+                default -> throw new InvalidDiceRollException(
+                        "[" + match.group(0) + "] is not a valid dice-roll operation");
+            };
         } else {
             return sum;
         }
