@@ -7,7 +7,12 @@
     <groupId>uk.co.probablyfine</groupId>
     <artifactId>exercises</artifactId>
     <version>0.0.0</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>advent-of-code</module>
+        <module>kata</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
