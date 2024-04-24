@@ -104,16 +104,7 @@ public class JigsawTest {
 
         for (int i = 0; i < height; i++) {
             if (i % 2 == 0) {
-                builder.append(" _|");
-                builder.append("     _|".repeat(Math.max(0, width)));
-                builder.append("\n");
-
-                builder.append("(_");
-                builder.append("   _ (_".repeat(Math.max(0, width)));
-                builder.append("\n");
-
-                builder.append(" |");
-                builder.append("__( )_|".repeat(Math.max(0, width)));
+                builder.append(evenRow(width));
             } else {
                 builder.append(" |_");
                 builder.append("     |_".repeat(Math.max(0, width)));
@@ -134,6 +125,12 @@ public class JigsawTest {
         }
 
         return builder.toString();
+    }
+
+    private static String evenRow(int width) {
+        return " _|" + "     _|".repeat(Math.max(0, width)) + "\n"
+                + "(_" + "   _ (_".repeat(Math.max(0, width)) + "\n"
+                + " |" + "__( )_|".repeat(Math.max(0, width));
     }
 
     private static String topLine(int width) {
