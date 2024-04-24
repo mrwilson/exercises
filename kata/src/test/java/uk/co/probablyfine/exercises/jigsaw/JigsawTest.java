@@ -18,7 +18,8 @@ public class JigsawTest {
            _( )__  
          _|     _|
         (_   _ (_ 
-         |__( )_|"""));
+         |__( )_|
+         """));
     }
 
     @Test
@@ -27,7 +28,8 @@ public class JigsawTest {
            _( )__ _( )__ 
          _|     _|     _|
         (_   _ (_   _ (_
-         |__( )_|__( )_|"""));
+         |__( )_|__( )_|
+         """));
     }
 
     @Test
@@ -36,7 +38,8 @@ public class JigsawTest {
            _( )__ _( )__ _( )__ _( )__ 
          _|     _|     _|     _|     _|
         (_   _ (_   _ (_   _ (_   _ (_ 
-         |__( )_|__( )_|__( )_|__( )_|"""));
+         |__( )_|__( )_|__( )_|__( )_|
+         """));
     }
 
     @Test
@@ -48,7 +51,8 @@ public class JigsawTest {
          |__( )_|
          |_     |_
           _) _   _)
-         |__( )_|"""));
+         |__( )_|
+         """));
     }
 
     @Test
@@ -60,7 +64,8 @@ public class JigsawTest {
         |__( )_|__( )_|
         |_     |_     |_ 
          _) _   _) _   _)
-        |__( )_|__( )_|"""));
+        |__( )_|__( )_|
+        """));
     }
 
     @Test
@@ -75,7 +80,8 @@ public class JigsawTest {
          |__( )_|
          _|     _|
         (_   _ (_
-         |__( )_|"""));
+         |__( )_|
+         """));
     }
 
     @Test
@@ -90,7 +96,8 @@ public class JigsawTest {
          |__( )_|__( )_|__( )_|__( )_|
          _|     _|     _|     _|     _|
         (_   _ (_   _ (_   _ (_   _ (_
-         |__( )_|__( )_|__( )_|__( )_|"""));
+         |__( )_|__( )_|__( )_|__( )_|
+         """));
     }
 
     private static String jigsaw(int width, int height) {
@@ -104,11 +111,6 @@ public class JigsawTest {
 
         for (int i = 0; i < height; i++) {
             builder.append(i % 2 == 0 ? evenRow(width) : oddRow(width));
-
-            if (i < height-1) {
-                builder.append("\n");
-            }
-
         }
 
         return builder.toString();
@@ -117,13 +119,13 @@ public class JigsawTest {
     private static String oddRow(int width) {
         return " |_" + "     |_".repeat(Math.max(0, width)) + "\n"
                 + "  _)" + " _   _)".repeat(Math.max(0, width)) + "\n"
-                + " |" + "__( )_|".repeat(Math.max(0, width));
+                + " |" + "__( )_|".repeat(Math.max(0, width)) + "\n";
     }
 
     private static String evenRow(int width) {
         return " _|" + "     _|".repeat(Math.max(0, width)) + "\n"
                 + "(_" + "   _ (_".repeat(Math.max(0, width)) + "\n"
-                + " |" + "__( )_|".repeat(Math.max(0, width));
+                + " |" + "__( )_|".repeat(Math.max(0, width)) + "\n";
     }
 
     private static String topLine(int width) {
