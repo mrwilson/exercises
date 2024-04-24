@@ -100,10 +100,7 @@ public class JigsawTest {
 
         var builder = new StringBuilder();
 
-        // Width
-        builder.append("  ");
-        builder.append(" _( )__".repeat(Math.max(0, width)));
-        builder.append("\n");
+        builder.append(topLine(width));
 
         for (int i = 0; i < height; i++) {
             if (i % 2 == 0) {
@@ -137,5 +134,9 @@ public class JigsawTest {
         }
 
         return builder.toString();
+    }
+
+    private static String topLine(int width) {
+        return "  " + " _( )__".repeat(Math.max(0, width)) + "\n";
     }
 }
