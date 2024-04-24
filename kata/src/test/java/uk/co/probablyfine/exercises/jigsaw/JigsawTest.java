@@ -78,6 +78,21 @@ public class JigsawTest {
          |__( )_|"""));
     }
 
+    @Test
+    void shouldReturn4x3Pieces() {
+        assertThat(jigsaw(4, 3), is("""
+           _( )__ _( )__ _( )__ _( )__ 
+         _|     _|     _|     _|     _|
+        (_   _ (_   _ (_   _ (_   _ (_ 
+         |__( )_|__( )_|__( )_|__( )_|
+         |_     |_     |_     |_     |_
+          _) _   _) _   _) _   _) _   _)
+         |__( )_|__( )_|__( )_|__( )_|
+         _|     _|     _|     _|     _|
+        (_   _ (_   _ (_   _ (_   _ (_
+         |__( )_|__( )_|__( )_|__( )_|"""));
+    }
+
     private static String jigsaw(int width, int height) {
         if (width == 0 || height == 0) {
             return "";
