@@ -117,18 +117,18 @@ public class JigsawTest {
     }
 
     private static String oddRow(int width) {
-        return " |_" + "     |_".repeat(Math.max(0, width)) + "\n"
-                + "  _)" + " _   _)".repeat(Math.max(0, width)) + "\n"
-                + " |" + "__( )_|".repeat(Math.max(0, width)) + "\n";
+        return " |_" + "     |_".repeat(width) + "\n"
+                + "  _)" + " _   _)".repeat(width) + "\n"
+                + " |" + "__( )_|".repeat(width) + "\n";
     }
 
     private static String evenRow(int width) {
-        return " _|" + "     _|".repeat(Math.max(0, width)) + "\n"
-                + "(_" + "   _ (_".repeat(Math.max(0, width)) + "\n"
-                + " |" + "__( )_|".repeat(Math.max(0, width)) + "\n";
+        return " _|" + "     _|".repeat(width) + "\n"
+                + "(_" + "   _ (_".repeat(width) + "\n"
+                + " |" + "__( )_|".repeat(width) + "\n";
     }
 
     private static String topLine(int width) {
-        return "  " + " _( )__".repeat(Math.max(0, width)) + "\n";
+        return "  " + " _( )__".repeat(width) + "\n";
     }
 }
