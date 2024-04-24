@@ -39,6 +39,18 @@ public class JigsawTest {
          |__( )_|__( )_|__( )_|__( )_|"""));
     }
 
+    @Test
+    void shouldReturn1x2Pieces() {
+        assertThat(jigsaw(1, 2), is("""
+           _( )__ 
+         _|     _|
+        (_   _ (_ 
+         |__( )_|
+         |_     |_
+          _) _   _)
+         |__( )_|"""));
+    }
+
 
     private static String jigsaw(int width, int height) {
         if (width == 0 || height == 0) {
@@ -46,6 +58,8 @@ public class JigsawTest {
         }
 
         var builder = new StringBuilder();
+
+        // Width
 
         builder.append("  ");
         builder.append(" _( )__".repeat(Math.max(0, width)));
@@ -61,6 +75,22 @@ public class JigsawTest {
 
         builder.append(" |");
         builder.append("__( )_|".repeat(Math.max(0, width)));
+
+        if (height > 1) {
+            builder.append("\n");
+        }
+        if (height > 1) {
+            builder.append(" |_");
+            builder.append("     |_".repeat(Math.max(0, width)));
+            builder.append("\n");
+
+            builder.append("  _)");
+            builder.append(" _   _)".repeat(Math.max(0, width)));
+            builder.append("\n");
+
+            builder.append(" |");
+            builder.append("__( )_|".repeat(Math.max(0, width)));
+        }
 
         return builder.toString();
     }
