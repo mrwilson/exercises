@@ -30,15 +30,38 @@ public class JigsawTest {
          |__( )_|__( )_|"""));
     }
 
+    @Test
+    void shouldReturnFourHorizontalPieces() {
+        assertThat(jigsaw(4, 1), is("""
+           _( )__ _( )__ _( )__ _( )__ 
+         _|     _|     _|     _|     _|
+        (_   _ (_   _ (_   _ (_   _ (_ 
+         |__( )_|__( )_|__( )_|__( )_|"""));
+    }
+
 
     private static String jigsaw(int width, int height) {
-        if (width == 1) {
-            return "   _( )__\n _|     _|\n(_   _ (_\n |__( )_|";
+        if (width == 0 || height == 0) {
+            return "";
         }
 
-        if (width == 2) {
-            return "   _( )__ _( )__\n _|     _|     _|\n(_   _ (_   _ (_\n |__( )_|__( )_|";
-        }
-        return "";
+        var builder = new StringBuilder();
+
+        builder.append("  ");
+        builder.append(" _( )__".repeat(Math.max(0, width)));
+        builder.append("\n");
+
+        builder.append(" _|");
+        builder.append("     _|".repeat(Math.max(0, width)));
+        builder.append("\n");
+
+        builder.append("(_");
+        builder.append("   _ (_".repeat(Math.max(0, width)));
+        builder.append("\n");
+
+        builder.append(" |");
+        builder.append("__( )_|".repeat(Math.max(0, width)));
+
+        return builder.toString();
     }
 }
