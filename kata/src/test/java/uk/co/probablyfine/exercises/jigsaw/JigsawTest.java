@@ -63,6 +63,20 @@ public class JigsawTest {
         |__( )_|__( )_|"""));
     }
 
+    @Test
+    void shouldReturn1x3Pieces() {
+        assertThat(jigsaw(1, 3), is("""
+           _( )__ 
+         _|     _|
+        (_   _ (_
+         |__( )_|
+         |_     |_
+          _) _   _)
+         |__( )_|
+         _|     _|
+        (_   _ (_
+         |__( )_|"""));
+    }
 
     private static String jigsaw(int width, int height) {
         if (width == 0 || height == 0) {
@@ -72,36 +86,39 @@ public class JigsawTest {
         var builder = new StringBuilder();
 
         // Width
-
         builder.append("  ");
         builder.append(" _( )__".repeat(Math.max(0, width)));
         builder.append("\n");
 
-        builder.append(" _|");
-        builder.append("     _|".repeat(Math.max(0, width)));
-        builder.append("\n");
+        for (int i = 0; i < height; i++) {
+            if (i % 2 == 0) {
+                builder.append(" _|");
+                builder.append("     _|".repeat(Math.max(0, width)));
+                builder.append("\n");
 
-        builder.append("(_");
-        builder.append("   _ (_".repeat(Math.max(0, width)));
-        builder.append("\n");
+                builder.append("(_");
+                builder.append("   _ (_".repeat(Math.max(0, width)));
+                builder.append("\n");
 
-        builder.append(" |");
-        builder.append("__( )_|".repeat(Math.max(0, width)));
+                builder.append(" |");
+                builder.append("__( )_|".repeat(Math.max(0, width)));
+            } else {
+                builder.append(" |_");
+                builder.append("     |_".repeat(Math.max(0, width)));
+                builder.append("\n");
 
-        if (height > 1) {
-            builder.append("\n");
-        }
-        if (height > 1) {
-            builder.append(" |_");
-            builder.append("     |_".repeat(Math.max(0, width)));
-            builder.append("\n");
+                builder.append("  _)");
+                builder.append(" _   _)".repeat(Math.max(0, width)));
+                builder.append("\n");
 
-            builder.append("  _)");
-            builder.append(" _   _)".repeat(Math.max(0, width)));
-            builder.append("\n");
+                builder.append(" |");
+                builder.append("__( )_|".repeat(Math.max(0, width)));
+            }
 
-            builder.append(" |");
-            builder.append("__( )_|".repeat(Math.max(0, width)));
+            if (i < height-1) {
+                builder.append("\n");
+            }
+
         }
 
         return builder.toString();
