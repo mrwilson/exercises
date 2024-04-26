@@ -14,18 +14,24 @@ public class JigsawTest {
 
     @Test
     void shouldReturnSinglePiece() {
-        assertThat(jigsaw(1, 1), is("""
-           _( )__  
+        assertThat(
+                jigsaw(1, 1),
+                is(
+                        """
+           _( )__
          _|     _|
-        (_   _ (_ 
+        (_   _ (_
          |__( )_|
          """));
     }
 
     @Test
     void shouldReturnTwoPieces() {
-        assertThat(jigsaw(2, 1), is("""
-           _( )__ _( )__ 
+        assertThat(
+                jigsaw(2, 1),
+                is(
+                        """
+           _( )__ _( )__
          _|     _|     _|
         (_   _ (_   _ (_
          |__( )_|__( )_|
@@ -34,20 +40,26 @@ public class JigsawTest {
 
     @Test
     void shouldReturnFourHorizontalPieces() {
-        assertThat(jigsaw(4, 1), is("""
-           _( )__ _( )__ _( )__ _( )__ 
+        assertThat(
+                jigsaw(4, 1),
+                is(
+                        """
+           _( )__ _( )__ _( )__ _( )__
          _|     _|     _|     _|     _|
-        (_   _ (_   _ (_   _ (_   _ (_ 
+        (_   _ (_   _ (_   _ (_   _ (_
          |__( )_|__( )_|__( )_|__( )_|
          """));
     }
 
     @Test
     void shouldReturn1x2Pieces() {
-        assertThat(jigsaw(1, 2), is("""
-           _( )__ 
+        assertThat(
+                jigsaw(1, 2),
+                is(
+                        """
+           _( )__
          _|     _|
-        (_   _ (_ 
+        (_   _ (_
          |__( )_|
          |_     |_
           _) _   _)
@@ -57,12 +69,15 @@ public class JigsawTest {
 
     @Test
     void shouldReturn2x2Pieces() {
-        assertThat(jigsaw(2, 2), is("""
-          _( )__ _( )__ 
+        assertThat(
+                jigsaw(2, 2),
+                is(
+                        """
+          _( )__ _( )__
         _|     _|     _|
        (_   _ (_   _ (_
         |__( )_|__( )_|
-        |_     |_     |_ 
+        |_     |_     |_
          _) _   _) _   _)
         |__( )_|__( )_|
         """));
@@ -70,8 +85,11 @@ public class JigsawTest {
 
     @Test
     void shouldReturn1x3Pieces() {
-        assertThat(jigsaw(1, 3), is("""
-           _( )__ 
+        assertThat(
+                jigsaw(1, 3),
+                is(
+                        """
+           _( )__
          _|     _|
         (_   _ (_
          |__( )_|
@@ -86,10 +104,13 @@ public class JigsawTest {
 
     @Test
     void shouldReturn4x3Pieces() {
-        assertThat(jigsaw(4, 3), is("""
-           _( )__ _( )__ _( )__ _( )__ 
+        assertThat(
+                jigsaw(4, 3),
+                is(
+                        """
+           _( )__ _( )__ _( )__ _( )__
          _|     _|     _|     _|     _|
-        (_   _ (_   _ (_   _ (_   _ (_ 
+        (_   _ (_   _ (_   _ (_   _ (_
          |__( )_|__( )_|__( )_|__( )_|
          |_     |_     |_     |_     |_
           _) _   _) _   _) _   _) _   _)
@@ -117,15 +138,27 @@ public class JigsawTest {
     }
 
     private static String oddRow(int width) {
-        return " |_" + "     |_".repeat(Math.max(0, width)) + "\n"
-                + "  _)" + " _   _)".repeat(Math.max(0, width)) + "\n"
-                + " |" + "__( )_|".repeat(Math.max(0, width)) + "\n";
+        return " |_"
+                + "     |_".repeat(Math.max(0, width))
+                + "\n"
+                + "  _)"
+                + " _   _)".repeat(Math.max(0, width))
+                + "\n"
+                + " |"
+                + "__( )_|".repeat(Math.max(0, width))
+                + "\n";
     }
 
     private static String evenRow(int width) {
-        return " _|" + "     _|".repeat(Math.max(0, width)) + "\n"
-                + "(_" + "   _ (_".repeat(Math.max(0, width)) + "\n"
-                + " |" + "__( )_|".repeat(Math.max(0, width)) + "\n";
+        return " _|"
+                + "     _|".repeat(Math.max(0, width))
+                + "\n"
+                + "(_"
+                + "   _ (_".repeat(Math.max(0, width))
+                + "\n"
+                + " |"
+                + "__( )_|".repeat(Math.max(0, width))
+                + "\n";
     }
 
     private static String topLine(int width) {

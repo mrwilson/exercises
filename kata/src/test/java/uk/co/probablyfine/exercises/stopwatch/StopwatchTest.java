@@ -301,7 +301,8 @@ public class StopwatchTest {
                 var matches = Arrays.asList(item.display().split("\n")).contains(line);
 
                 if (!matches) {
-                    mismatchDescription.appendText("is a Stopwatch with display ["+item.display()+"]");
+                    mismatchDescription.appendText(
+                            "is a Stopwatch with display [" + item.display() + "]");
                 }
 
                 return matches;

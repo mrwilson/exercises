@@ -1,13 +1,12 @@
 package uk.co.probablyfine.exercises.password;
 
-import org.junit.jupiter.api.Test;
-
-import java.util.stream.IntStream;
-
 import static java.util.function.Predicate.not;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.stream.IntStream;
+import org.junit.jupiter.api.Test;
 
 class PasswordCheckerTest {
 
@@ -19,9 +18,9 @@ class PasswordCheckerTest {
     @Test
     void failsForSizeLessThan10() {
         rangeClosed(0, 9)
-            .mapToObj("a"::repeat)
-            .map(this::enforcePasswordRules)
-            .forEach(result -> assertFalse(result.lengthRequired));
+                .mapToObj("a"::repeat)
+                .map(this::enforcePasswordRules)
+                .forEach(result -> assertFalse(result.lengthRequired));
     }
 
     @Test
@@ -101,11 +100,10 @@ class PasswordCheckerTest {
     }
 
     record PasswordCheckResult(
-        boolean lengthRequired,
-        boolean atLeastOneNumber,
-        boolean atLeastOneLetter,
-        boolean atLeastOneNonAlphanumeric
-    ) {}
+            boolean lengthRequired,
+            boolean atLeastOneNumber,
+            boolean atLeastOneLetter,
+            boolean atLeastOneNonAlphanumeric) {}
 
     private PasswordCheckResult enforcePasswordRules(String password, boolean admin) {
 
@@ -114,10 +112,9 @@ class PasswordCheckerTest {
         }
 
         return new PasswordCheckResult(
-            admin ? password.length() >= 16 : password.length() >= 10,
-            password.chars().filter(Character::isDigit).count() >= 1,
-            password.chars().filter(Character::isLetter).count() >= 1,
-            password.chars().boxed().filter(not(Character::isLetterOrDigit)).count() >= 1
-        );
+                admin ? password.length() >= 16 : password.length() >= 10,
+                password.chars().filter(Character::isDigit).count() >= 1,
+                password.chars().filter(Character::isLetter).count() >= 1,
+                password.chars().boxed().filter(not(Character::isLetterOrDigit)).count() >= 1);
     }
 }
