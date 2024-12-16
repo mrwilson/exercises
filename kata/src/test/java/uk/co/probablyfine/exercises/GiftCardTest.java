@@ -45,25 +45,30 @@ public class GiftCardTest {
 
     @Test
     void combineVoucherTypes() {
-        assertThat(giftCards(733), is(List.of(union(250), union(250), employer(233))));
+        assertThat(giftCards(733), is(List.of(union(250), union(250), union(100), union(100), union(25), employer(8))));
     }
 
     private List<GiftCard> giftCards(int value) {
         return _giftCards(value, new ArrayList<>());
     }
 
-    private List<GiftCard> _giftCards(int value, List<GiftCard> giftCards) {
-        if (value >= 250) {
-            giftCards.add(union(250));
-            return _giftCards(value - 250, giftCards);
+    private List<GiftCard> _giftCards(Integer value, List<GiftCard> giftCards) {
+
+        if (value == 0) {
+            return giftCards;
         }
 
-        if (value > 0) {
-            giftCards.add(employer(value));
-            return _giftCards(0, giftCards);
-        }
+        var next = switch(value) {
+            case Integer s when s >= 250 -> union(250);
+            case Integer s when s >= 100 -> union(100);
+            case Integer s when s >= 50 -> union(50);
+            case Integer s when s >= 25 -> union(25);
+            case Integer s when s >= 20 -> union(20);
+            default -> employer(value);
+        };
 
-        return giftCards;
+        giftCards.add(next);
+        return _giftCards(value - next.amount(), giftCards);
 
     }
 }
