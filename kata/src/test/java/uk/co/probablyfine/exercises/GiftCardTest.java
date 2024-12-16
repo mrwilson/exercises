@@ -30,32 +30,34 @@ public class GiftCardTest {
 
     @Test
     void noCostMeansNoVouchers() {
-        assertThat(giftCards(0), is(emptyList()));
+        assertThat(giftCards(0).giftCards(), is(emptyList()));
     }
 
     @Test
     void preferUnionVouchers() {
-        assertThat(giftCards(250), is(List.of(union(250))));
+        assertThat(giftCards(250).giftCards(), is(List.of(union(250))));
     }
 
     @Test
     void fallBackToNormalVouchers() {
-        assertThat(giftCards(9), is(List.of(employer(9))));
+        assertThat(giftCards(9).giftCards(), is(List.of(employer(9))));
     }
 
     @Test
     void combineVoucherTypes() {
-        assertThat(giftCards(733), is(List.of(union(250), union(250), union(100), union(100), union(25), employer(8))));
+        assertThat(giftCards(733).giftCards(), is(List.of(union(250), union(250), union(100), union(100), union(25), employer(8))));
     }
 
-    private List<GiftCard> giftCards(int value) {
-        return _giftCards(value, new ArrayList<>());
+    record GiftCardResult(List<GiftCard> giftCards, List<GiftCard> balance) { }
+
+    private GiftCardResult giftCards(int value) {
+        return _giftCards(value, new ArrayList<>(), new ArrayList<>());
     }
 
-    private List<GiftCard> _giftCards(Integer value, List<GiftCard> giftCards) {
+    private GiftCardResult _giftCards(Integer value, List<GiftCard> giftCards, List<GiftCard> balance) {
 
         if (value == 0) {
-            return giftCards;
+            return new GiftCardResult(giftCards, balance);
         }
 
         var next = switch(value) {
@@ -68,7 +70,7 @@ public class GiftCardTest {
         };
 
         giftCards.add(next);
-        return _giftCards(value - next.amount(), giftCards);
+        return _giftCards(value - next.amount(), giftCards, balance);
 
     }
 }
