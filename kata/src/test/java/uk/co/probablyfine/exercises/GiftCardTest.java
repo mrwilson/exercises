@@ -18,6 +18,8 @@ public class GiftCardTest {
         EMPLOYER
     }
 
+    record GiftCardResult(List<GiftCard> giftCards, List<GiftCard> balance) { }
+
     record GiftCard(int amount, GiftCardType type) {
         public static GiftCard union(int amount) {
             return new GiftCard(amount, GiftCardType.UNION);
@@ -30,25 +32,25 @@ public class GiftCardTest {
 
     @Test
     void noCostMeansNoVouchers() {
-        assertThat(giftCards(0).giftCards(), is(emptyList()));
+        assertThat(giftCards(0).balance(), is(emptyList()));
     }
 
     @Test
     void preferUnionVouchers() {
-        assertThat(giftCards(250).giftCards(), is(List.of(union(250))));
+        assertThat(giftCards(250).balance(), is(List.of(union(250))));
     }
 
     @Test
     void fallBackToNormalVouchers() {
-        assertThat(giftCards(9).giftCards(), is(List.of(employer(9))));
+        assertThat(giftCards(9).balance(), is(List.of(employer(9))));
     }
 
     @Test
     void combineVoucherTypes() {
-        assertThat(giftCards(733).giftCards(), is(List.of(union(250), union(250), union(100), union(100), union(25), employer(8))));
+        assertThat(giftCards(733).balance(), is(
+                List.of(union(250), union(250), union(100), union(100), union(25), employer(8)))
+        );
     }
-
-    record GiftCardResult(List<GiftCard> giftCards, List<GiftCard> balance) { }
 
     private GiftCardResult giftCards(int value) {
         return _giftCards(value, new ArrayList<>(), new ArrayList<>());
@@ -69,7 +71,13 @@ public class GiftCardTest {
             default -> employer(value);
         };
 
-        giftCards.add(next);
+        int totalBalance = balance.stream().mapToInt(GiftCard::amount).sum();
+        if (totalBalance + next.amount() <= 2000) {
+            balance.add(next);
+        } else {
+            giftCards.add(next);
+        }
+
         return _giftCards(value - next.amount(), giftCards, balance);
 
     }
