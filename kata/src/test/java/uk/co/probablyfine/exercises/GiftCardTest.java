@@ -26,14 +26,6 @@ public class GiftCardTest {
         public static GiftCard employer(int amount) {
             return new GiftCard(amount, GiftCardType.EMPLOYER);
         }
-
-        public double cost() {
-            if (type == GiftCardType.UNION) {
-                return 0.94 * amount;
-            } else {
-                return 0.945 * amount;
-            }
-        }
     }
 
     @Test
@@ -43,22 +35,17 @@ public class GiftCardTest {
 
     @Test
     void preferUnionVouchers() {
-        var cards = giftCards(250);
-        assertThat(cards, is(List.of(union(250))));
-        assertThat(cards.get(0).cost(), is(250 * 0.94));
+        assertThat(giftCards(250), is(List.of(union(250))));
     }
 
     @Test
     void fallBackToNormalVouchers() {
-        var cards = giftCards(9);
-        assertThat(cards, is(List.of(employer(9))));
-        assertThat(cards.get(0).cost(), is(9 * 0.945));
+        assertThat(giftCards(9), is(List.of(employer(9))));
     }
 
     @Test
     void combineVoucherTypes() {
-        var cards = giftCards(733);
-        assertThat(cards, is(List.of(union(250), union(250), employer(233))));
+        assertThat(giftCards(733), is(List.of(union(250), union(250), employer(233))));
     }
 
     private List<GiftCard> giftCards(int value) {
