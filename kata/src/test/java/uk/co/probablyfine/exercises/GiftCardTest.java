@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.GiftCardTest.GiftCard.employer;
 import static uk.co.probablyfine.exercises.GiftCardTest.GiftCard.union;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -54,15 +55,28 @@ public class GiftCardTest {
         assertThat(cards.get(0).cost(), is(9 * 0.945));
     }
 
+    @Test
+    void combineVoucherTypes() {
+        var cards = giftCards(733);
+        assertThat(cards, is(List.of(union(250), union(250), employer(233))));
+    }
+
     private List<GiftCard> giftCards(int value) {
-        if (value == 250) {
-            return List.of(union(value));
+        return _giftCards(value, new ArrayList<>());
+    }
+
+    private List<GiftCard> _giftCards(int value, List<GiftCard> giftCards) {
+        if (value >= 250) {
+            giftCards.add(union(250));
+            return _giftCards(value - 250, giftCards);
         }
 
         if (value > 0) {
-            return List.of(employer(value));
+            giftCards.add(employer(value));
+            return _giftCards(0, giftCards);
         }
 
-        return Collections.emptyList();
+        return giftCards;
+
     }
 }
