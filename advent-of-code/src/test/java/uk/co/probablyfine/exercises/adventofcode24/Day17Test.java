@@ -40,6 +40,8 @@ public class Day17Test {
                 return new Computer(pointer + 2, output, program, A, newB, C);
             } else if (insn == 2) {
                 return new Computer(pointer + 2, output, program, A, combo() % 8, C);
+            } else if (insn == 3) {
+                return new Computer(program.get(pointer + 1), output, program, A, B, C);
             }
 
             return this;
@@ -90,5 +92,12 @@ public class Day17Test {
     void supportBst() {
         assertThat(setup(Arrays.asList(2, 2), 0, 2, 0).tick().B(), is(2));
         assertThat(setup(Arrays.asList(2, 4), 197, 0, 0).tick().B(), is(5));
+    }
+
+    @Test
+    void supportJnz() {
+        var computer = setup(Arrays.asList(3, 6, 0, 0, 0, 0, 2, 4), 197, 0, 0).tick();
+        assertThat(computer.pointer(), is(6));
+        assertThat(computer.tick().B(), is(5));
     }
 }
