@@ -33,12 +33,18 @@ public class Day17Test {
             var insn = program.get(pointer);
 
             if (insn == 0) {
-                var newA = A / Math.pow(2, program.get(pointer + 1));
-                return new Computer(pointer+2, output, program, (int) newA, B, C);
+                var denominator =
+                        switch (program.get(pointer + 1)) {
+                            case 4 -> A;
+                            case 5 -> B;
+                            case 6 -> C;
+                            default -> program.get(pointer + 1);
+                        };
+
+                var newA = A / Math.pow(2, denominator);
+                return new Computer(pointer + 2, output, program, (int) newA, B, C);
             }
-                return this;
-
-
+            return this;
         }
     }
 
@@ -67,5 +73,12 @@ public class Day17Test {
         var computer = Computer.setup(Arrays.asList(0, 1), 16, 0, 0).tick();
 
         assertThat(computer.A(), is(16 / 2));
+    }
+
+    @Test
+    void supportDivisionWithComboOperator() {
+        var computer = Computer.setup(Arrays.asList(0, 5), 16, 3, 0).tick();
+
+        assertThat(computer.A(), is(16 / 8));
     }
 }
