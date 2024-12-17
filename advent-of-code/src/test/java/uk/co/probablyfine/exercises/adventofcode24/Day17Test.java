@@ -36,25 +36,24 @@ public class Day17Test {
             return pointer >= program.size();
         }
 
+        public Computer update(int pointer, int A, int B, int C) {
+            return new Computer(pointer, output, program, A, B, C);
+        }
+
         public Computer tick() {
 
             return switch (program.get(pointer)) {
-                case 0 -> new Computer(
-                        pointer + 2, output, program, (int) (A / pow(2, combo())), B, C);
-                case 1 -> new Computer(
-                        pointer + 2, output, program, A, B ^ program.get(pointer + 1), C);
-                case 2 -> new Computer(pointer + 2, output, program, A, combo() % 8, C);
-                case 3 -> new Computer(
-                        A == 0 ? pointer + 2 : program.get(pointer + 1), output, program, A, B, C);
-                case 4 -> new Computer(pointer + 2, output, program, A, B ^ C, C);
+                case 0 -> update(pointer + 2, (int) (A / pow(2, combo())), B, C);
+                case 1 -> update(pointer + 2, A, B ^ program.get(pointer + 1), C);
+                case 2 -> update(pointer + 2, A, combo() % 8, C);
+                case 3 -> update(A == 0 ? pointer + 2 : program.get(pointer + 1), A, B, C);
+                case 4 -> update(pointer + 2, A, B ^ C, C);
                 case 5 -> {
                     output.add(combo() % 8);
-                    yield new Computer(pointer + 2, output, program, A, B, C);
+                    yield update(pointer + 2, A, B, C);
                 }
-                case 6 -> new Computer(
-                        pointer + 2, output, program, A, (int) (A / pow(2, combo())), C);
-                case 7 -> new Computer(
-                        pointer + 2, output, program, A, B, (int) (A / pow(2, combo())));
+                case 6 -> update(pointer + 2, A, (int) (A / pow(2, combo())), C);
+                case 7 -> update(pointer + 2, A, B, (int) (A / pow(2, combo())));
                 default -> this;
             };
         }
