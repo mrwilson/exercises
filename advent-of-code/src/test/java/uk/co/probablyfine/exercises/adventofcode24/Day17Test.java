@@ -1,6 +1,7 @@
 package uk.co.probablyfine.exercises.adventofcode24;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.probablyfine.exercises.adventofcode24.Day17Test.Computer.setup;
@@ -44,6 +45,9 @@ public class Day17Test {
                 return new Computer(program.get(pointer + 1), output, program, A, B, C);
             } else if (insn == 4) {
                 return new Computer(pointer + 2, output, program, A, B ^ C, C);
+            } else if (insn == 5) {
+                output.add(combo());
+                return this;
             }
 
             return this;
@@ -106,5 +110,11 @@ public class Day17Test {
     @Test
     void supportBxc() {
         assertThat(setup(Arrays.asList(4, -1), 0, 3, 8).tick().B(), is(11));
+    }
+
+    @Test
+    void supportOut() {
+        assertThat(setup(Arrays.asList(5, 3), 0, 0, 0).tick().output(), is(singletonList(3)));
+        assertThat(setup(Arrays.asList(5, 6), 0, 0, 10).tick().output(), is(singletonList(10)));
     }
 }
