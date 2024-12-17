@@ -33,31 +33,25 @@ public class Day17Test {
             var insn = program.get(pointer);
 
             if (insn == 0) {
-                var denominator =
-                        switch (program.get(pointer + 1)) {
-                            case 4 -> A;
-                            case 5 -> B;
-                            case 6 -> C;
-                            default -> program.get(pointer + 1);
-                        };
-
-                var newA = A / Math.pow(2, denominator);
-                return new Computer(pointer + 2, output, program, (int) newA, B, C);
+                int newA = (int) (A / Math.pow(2, combo()));
+                return new Computer(pointer + 2, output, program, newA, B, C);
             } else if (insn == 1) {
-                return new Computer(pointer + 2, output, program, A, B ^ program.get(pointer+1), C);
+                int newB = B ^ program.get(pointer + 1);
+                return new Computer(pointer + 2, output, program, A, newB, C);
             } else if (insn == 2) {
-
-                var value =
-                        switch (program.get(pointer + 1)) {
-                            case 4 -> A;
-                            case 5 -> B;
-                            case 6 -> C;
-                            default -> program.get(pointer + 1);
-                        };
-
-                return new Computer(pointer + 2, output, program, A, value % 8, C);
+                return new Computer(pointer + 2, output, program, A, combo() % 8, C);
             }
+
             return this;
+        }
+
+        private int combo() {
+            return switch (program.get(pointer + 1)) {
+                case 4 -> A;
+                case 5 -> B;
+                case 6 -> C;
+                default -> program.get(pointer + 1);
+            };
         }
     }
 
