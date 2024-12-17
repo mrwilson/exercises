@@ -12,6 +12,6 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '19'
+          java-version: '22'
       - name: Test
         run: mvn clean test
