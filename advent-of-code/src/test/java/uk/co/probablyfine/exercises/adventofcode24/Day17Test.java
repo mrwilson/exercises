@@ -1,5 +1,6 @@
 package uk.co.probablyfine.exercises.adventofcode24;
 
+import static java.lang.Math.pow;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -36,33 +37,26 @@ public class Day17Test {
         }
 
         public Computer tick() {
-            var insn = program.get(pointer);
 
-            if (insn == 0) {
-                int newA = (int) (A / Math.pow(2, combo()));
-                return new Computer(pointer + 2, output, program, newA, B, C);
-            } else if (insn == 1) {
-                int newB = B ^ program.get(pointer + 1);
-                return new Computer(pointer + 2, output, program, A, newB, C);
-            } else if (insn == 2) {
-                return new Computer(pointer + 2, output, program, A, combo() % 8, C);
-            } else if (insn == 3) {
-                var next = A == 0 ? pointer + 2 : program.get(pointer + 1);
-                return new Computer(next, output, program, A, B, C);
-            } else if (insn == 4) {
-                return new Computer(pointer + 2, output, program, A, B ^ C, C);
-            } else if (insn == 5) {
-                output.add(combo() % 8);
-                return new Computer(pointer + 2, output, program, A, B, C);
-            } else if (insn == 6) {
-                int newB = (int) (A / Math.pow(2, combo()));
-                return new Computer(pointer + 2, output, program, A, newB, C);
-            } else if (insn == 7) {
-                int newC = (int) (A / Math.pow(2, combo()));
-                return new Computer(pointer + 2, output, program, A, B, newC);
-            }
-
-            return this;
+            return switch (program.get(pointer)) {
+                case 0 -> new Computer(
+                        pointer + 2, output, program, (int) (A / pow(2, combo())), B, C);
+                case 1 -> new Computer(
+                        pointer + 2, output, program, A, B ^ program.get(pointer + 1), C);
+                case 2 -> new Computer(pointer + 2, output, program, A, combo() % 8, C);
+                case 3 -> new Computer(
+                        A == 0 ? pointer + 2 : program.get(pointer + 1), output, program, A, B, C);
+                case 4 -> new Computer(pointer + 2, output, program, A, B ^ C, C);
+                case 5 -> {
+                    output.add(combo() % 8);
+                    yield new Computer(pointer + 2, output, program, A, B, C);
+                }
+                case 6 -> new Computer(
+                        pointer + 2, output, program, A, (int) (A / pow(2, combo())), C);
+                case 7 -> new Computer(
+                        pointer + 2, output, program, A, B, (int) (A / pow(2, combo())));
+                default -> this;
+            };
         }
 
         private int combo() {
