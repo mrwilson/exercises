@@ -79,8 +79,7 @@ public class Day17Test {
 
         var values = Arrays.stream(input.split("\\D+")).skip(1).map(Integer::parseInt).toList();
 
-        return setup(
-                values.subList(3, values.size() - 1), values.get(0), values.get(1), values.get(2));
+        return setup(values.subList(3, values.size()), values.get(0), values.get(1), values.get(2));
     }
 
     @Test
@@ -88,7 +87,7 @@ public class Day17Test {
         var computer = parse(sampleInput());
 
         assertThat(computer.pointer(), is(0));
-        assertThat(computer.program(), is(asList(0, 1, 5, 4, 3)));
+        assertThat(computer.program(), is(asList(0, 1, 5, 4, 3, 0)));
         assertThat(computer.A(), is(729));
         assertThat(computer.B(), is(0));
         assertThat(computer.C(), is(0));
@@ -151,6 +150,11 @@ public class Day17Test {
                 is(asList(4, 2, 5, 6, 7, 7, 7, 7, 3, 1, 0)));
         assertThat(run(setup(asList(1, 7), 0, 29, 0)).B(), is(26));
         assertThat(run(setup(asList(4, 0), 0, 2024, 43690)).B(), is(44354));
+    }
+
+    @Test
+    void sample() {
+        assertThat(run(parse(sampleInput())).output(), is(asList(4, 6, 3, 5, 6, 3, 5, 2, 1, 0)));
     }
 
     public static Computer run(Computer computer) {
