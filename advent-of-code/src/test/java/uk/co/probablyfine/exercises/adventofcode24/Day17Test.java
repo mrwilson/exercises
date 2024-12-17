@@ -48,6 +48,9 @@ public class Day17Test {
             } else if (insn == 5) {
                 output.add(combo());
                 return this;
+            } else if (insn == 6) {
+                int newB = (int) (A / Math.pow(2, combo()));
+                return new Computer(pointer + 2, output, program, A, newB, C);
             }
 
             return this;
@@ -116,5 +119,11 @@ public class Day17Test {
     void supportOut() {
         assertThat(setup(Arrays.asList(5, 3), 0, 0, 0).tick().output(), is(singletonList(3)));
         assertThat(setup(Arrays.asList(5, 6), 0, 0, 10).tick().output(), is(singletonList(10)));
+    }
+
+    @Test
+    void supportBdv() {
+        assertThat(setup(Arrays.asList(6, 1), 16, 0, 0).tick().B(), is(16 / 2));
+        assertThat(setup(Arrays.asList(6, 5), 16, 3, 0).tick().B(), is(16 / 8));
     }
 }
