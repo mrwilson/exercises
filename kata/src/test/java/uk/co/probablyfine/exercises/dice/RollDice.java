@@ -46,8 +46,9 @@ public class RollDice {
                 case "+" -> sum + Integer.parseInt(match.group(5));
                 case "-" -> sum - Integer.parseInt(match.group(5));
                 case "*" -> sum * Integer.parseInt(match.group(5));
-                default -> throw new InvalidDiceRollException(
-                        "[" + match.group(0) + "] is not a valid dice-roll operation");
+                default ->
+                        throw new InvalidDiceRollException(
+                                "[" + match.group(0) + "] is not a valid dice-roll operation");
             };
         } else {
             return sum;
