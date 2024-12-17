@@ -51,7 +51,10 @@ public class Day17Test {
             } else if (insn == 6) {
                 int newB = (int) (A / Math.pow(2, combo()));
                 return new Computer(pointer + 2, output, program, A, newB, C);
-            }
+            } else if (insn == 7) {
+            int newC = (int) (A / Math.pow(2, combo()));
+            return new Computer(pointer + 2, output, program, A, B, newC);
+        }
 
             return this;
         }
@@ -125,5 +128,11 @@ public class Day17Test {
     void supportBdv() {
         assertThat(setup(Arrays.asList(6, 1), 16, 0, 0).tick().B(), is(16 / 2));
         assertThat(setup(Arrays.asList(6, 5), 16, 3, 0).tick().B(), is(16 / 8));
+    }
+
+    @Test
+    void supportCdv() {
+        assertThat(setup(Arrays.asList(7, 1), 16, 0, 0).tick().C(), is(16 / 2));
+        assertThat(setup(Arrays.asList(7, 5), 16, 3, 0).tick().C(), is(16 / 8));
     }
 }
