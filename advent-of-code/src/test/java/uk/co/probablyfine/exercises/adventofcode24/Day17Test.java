@@ -43,6 +43,8 @@ public class Day17Test {
 
                 var newA = A / Math.pow(2, denominator);
                 return new Computer(pointer + 2, output, program, (int) newA, B, C);
+            } else if (insn == 1) {
+                return new Computer(pointer + 2, output, program, A, B ^ program.get(pointer+1), C);
             }
             return this;
         }
@@ -80,5 +82,12 @@ public class Day17Test {
         var computer = Computer.setup(Arrays.asList(0, 5), 16, 3, 0).tick();
 
         assertThat(computer.A(), is(16 / 8));
+    }
+
+    @Test
+    void supportBxl() {
+        var computer = Computer.setup(Arrays.asList(1, 8), 0, 3, 0).tick();
+
+        assertThat(computer.B(), is(11));
     }
 }
