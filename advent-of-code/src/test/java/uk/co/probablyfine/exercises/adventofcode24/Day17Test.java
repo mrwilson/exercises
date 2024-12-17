@@ -83,23 +83,13 @@ public class Day17Test {
 
     @Test
     void supportDivision() {
-        var computer = setup(Arrays.asList(0, 1), 16, 0, 0).tick();
-
-        assertThat(computer.A(), is(16 / 2));
-    }
-
-    @Test
-    void supportDivisionWithComboOperator() {
-        var computer = setup(Arrays.asList(0, 5), 16, 3, 0).tick();
-
-        assertThat(computer.A(), is(16 / 8));
+        assertThat(setup(Arrays.asList(0, 1), 16, 0, 0).tick().A(), is(16 / 2));
+        assertThat(setup(Arrays.asList(0, 5), 16, 3, 0).tick().A(), is(16 / 8));
     }
 
     @Test
     void supportBxl() {
-        var computer = setup(Arrays.asList(1, 8), 0, 3, 0).tick();
-
-        assertThat(computer.B(), is(11));
+        assertThat(setup(Arrays.asList(1, 8), 0, 3, 0).tick().B(), is(11));
     }
 
     @Test
