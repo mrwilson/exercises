@@ -6,7 +6,6 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static uk.co.probablyfine.exercises.adventofcode24.Day17Test.Computer.setup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,10 +26,6 @@ public class Day17Test {
 
     public record Computer(
             int pointer, List<Integer> output, List<Integer> program, int A, int B, int C) {
-
-        public static Computer setup(List<Integer> program, int A, int B, int C) {
-            return new Computer(0, new ArrayList<>(), program, A, B, C);
-        }
 
         public boolean halted() {
             return pointer >= program.size();
@@ -73,6 +68,10 @@ public class Day17Test {
         var values = Arrays.stream(input.split("\\D+")).skip(1).map(Integer::parseInt).toList();
 
         return setup(values.subList(3, values.size()), values.get(0), values.get(1), values.get(2));
+    }
+
+    public static Computer setup(List<Integer> program, int A, int B, int C) {
+        return new Computer(0, new ArrayList<>(), program, A, B, C);
     }
 
     @Test
