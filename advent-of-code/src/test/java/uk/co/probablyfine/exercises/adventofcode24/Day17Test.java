@@ -45,6 +45,17 @@ public class Day17Test {
                 return new Computer(pointer + 2, output, program, (int) newA, B, C);
             } else if (insn == 1) {
                 return new Computer(pointer + 2, output, program, A, B ^ program.get(pointer+1), C);
+            } else if (insn == 2) {
+
+                var value =
+                        switch (program.get(pointer + 1)) {
+                            case 4 -> A;
+                            case 5 -> B;
+                            case 6 -> C;
+                            default -> program.get(pointer + 1);
+                        };
+
+                return new Computer(pointer + 2, output, program, A, value % 8, C);
             }
             return this;
         }
@@ -72,22 +83,28 @@ public class Day17Test {
 
     @Test
     void supportDivision() {
-        var computer = Computer.setup(Arrays.asList(0, 1), 16, 0, 0).tick();
+        var computer = setup(Arrays.asList(0, 1), 16, 0, 0).tick();
 
         assertThat(computer.A(), is(16 / 2));
     }
 
     @Test
     void supportDivisionWithComboOperator() {
-        var computer = Computer.setup(Arrays.asList(0, 5), 16, 3, 0).tick();
+        var computer = setup(Arrays.asList(0, 5), 16, 3, 0).tick();
 
         assertThat(computer.A(), is(16 / 8));
     }
 
     @Test
     void supportBxl() {
-        var computer = Computer.setup(Arrays.asList(1, 8), 0, 3, 0).tick();
+        var computer = setup(Arrays.asList(1, 8), 0, 3, 0).tick();
 
         assertThat(computer.B(), is(11));
+    }
+
+    @Test
+    void supportBst() {
+        assertThat(setup(Arrays.asList(2, 2), 0, 2, 0).tick().B(), is(2));
+        assertThat(setup(Arrays.asList(2, 4), 197, 0, 0).tick().B(), is(5));
     }
 }
