@@ -116,6 +116,22 @@ public class CollatorTest {
                         new TestResult("test2", TestStatus.PASS, true)));
     }
 
+    @Test
+    void theCollatorMaintainsOrderOfTestsBetweenRuns() {
+        var collator = new CollatedTests();
+
+        collator.add("test1", TestStatus.PASS);
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, true));
+
+        collator.add("test2", TestStatus.PASS);
+        collator.add("test1", TestStatus.PASS);
+        assertThat(
+                collator.endRun(),
+                Matchers.contains(
+                        new TestResult("test1", TestStatus.PASS, false),
+                        new TestResult("test2", TestStatus.PASS, true)));
+    }
+
     static Matcher<Iterable<? super TestResult>> hasTestResult(
             String test, TestStatus status, boolean isNew) {
         return Matchers.hasItem(new TestResult(test, status, isNew));
