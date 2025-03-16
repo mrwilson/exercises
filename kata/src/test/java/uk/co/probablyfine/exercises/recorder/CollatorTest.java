@@ -39,7 +39,7 @@ public class CollatorTest {
             UNRUN
         }
 
-        private final Set<String> seenTests = new HashSet<>();
+        private final Set<String> seenTests = new TreeSet<>();
         private final Map<String, TestResult> results = new HashMap<>();
 
         public record TestResult(String testName, TestStatus status, boolean isNew) {
@@ -99,6 +99,21 @@ public class CollatorTest {
         assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, true));
 
         assertThat(collator.endRun(), hasTestResult("test1", TestStatus.UNRUN, false));
+    }
+
+    @Test
+    void theCollatorMaintainsOrderOfTestsOverTime() {
+        var collator = new CollatedTests();
+
+        collator.add("test1", TestStatus.PASS);
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, true));
+
+        collator.add("test2", TestStatus.PASS);
+        assertThat(
+                collator.endRun(),
+                Matchers.contains(
+                        new TestResult("test1", TestStatus.UNRUN, false),
+                        new TestResult("test2", TestStatus.PASS, true)));
     }
 
     static Matcher<Iterable<? super TestResult>> hasTestResult(
