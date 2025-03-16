@@ -1,5 +1,12 @@
 package uk.co.probablyfine.exercises.recorder;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.util.Collections;
+import java.util.List;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+
 public class CollatorTest {
     /*
     The CollatedTests class is a class that is used to collect test results across multiple Junit runs.
@@ -23,4 +30,19 @@ public class CollatorTest {
     Finally, if a test has never been run before a particular JUnit run, that TestResult must be marked as “isNew”.
      */
 
+    static class CollatedTests {
+
+        public record TestResult() {}
+
+        public List<TestResult> endRun() {
+            return Collections.emptyList();
+        }
+    }
+
+    @Test
+    void noTestsAddedReturnsEmptySummary() {
+        var collator = new CollatedTests();
+
+        assertThat(collator.endRun(), Matchers.empty());
+    }
 }
