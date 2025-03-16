@@ -39,27 +39,20 @@ public class CollatorTest {
             UNRUN
         }
 
-        private final Set<String> seenTests = new TreeSet<>();
-        private final Map<String, TestResult> results = new HashMap<>();
+        private final Map<String, TestResult> results = new TreeMap<>();
 
-        public record TestResult(String testName, TestStatus status, boolean isNew) {
-            static TestResult unrun(String test) {
-                return new TestResult(test, TestStatus.UNRUN, false);
-            }
-        }
+        public record TestResult(String testName, TestStatus status, boolean isNew) {}
 
         public void add(String testCase, TestStatus status) {
-            results.put(testCase, new TestResult(testCase, status, !seenTests.contains(testCase)));
-            seenTests.add(testCase);
+            results.merge(
+                    testCase,
+                    new TestResult(testCase, status, true),
+                    (o, n) -> new TestResult(o.testName, n.status, false));
         }
 
         public List<TestResult> endRun() {
-            var returnValue =
-                    seenTests.stream()
-                            .map(test -> results.getOrDefault(test, TestResult.unrun(test)))
-                            .toList();
-
-            results.clear();
+            var returnValue = List.copyOf(results.values());
+            results.replaceAll((_, v) -> new TestResult(v.testName, TestStatus.UNRUN, false));
             return returnValue;
         }
     }
