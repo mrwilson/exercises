@@ -6,8 +6,6 @@ import java.util.*;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import uk.co.probablyfine.exercises.recorder.CollatorTest.CollatedTests.TestResult;
-import uk.co.probablyfine.exercises.recorder.CollatorTest.CollatedTests.TestStatus;
 
 public class CollatorTest {
     /*
@@ -32,27 +30,47 @@ public class CollatorTest {
     Finally, if a test has never been run before a particular JUnit run, that TestResult must be marked as “isNew”.
      */
 
-    static class CollatedTests {
+    public enum TestStatus {
+        PASS,
+        FAIL,
+        UNRUN
+    }
 
-        public enum TestStatus {
-            PASS,
-            UNRUN
+    public record TestResult(String testName, TestStatus status, boolean isNew) {
+        public TestResult(String testName, StatusAndNew status) {
+            this(testName, status.status(), status.isNew());
+        }
+    }
+
+    public record StatusAndNew(TestStatus status, boolean isNew) {
+        public StatusAndNew() {
+            this(TestStatus.UNRUN, false);
         }
 
-        private final Map<String, TestResult> results = new TreeMap<>();
+        public StatusAndNew(TestStatus status) {
+            this(status, true);
+        }
 
-        public record TestResult(String testName, TestStatus status, boolean isNew) {}
+        public StatusAndNew seen() {
+            return new StatusAndNew(status, false);
+        }
+    }
+
+    static class CollatedTests {
+
+        private final Map<String, StatusAndNew> results = new TreeMap<>();
 
         public void add(String testCase, TestStatus status) {
-            results.merge(
-                    testCase,
-                    new TestResult(testCase, status, true),
-                    (o, n) -> new TestResult(o.testName, n.status, false));
+            results.merge(testCase, new StatusAndNew(status), (_, next) -> next.seen());
         }
 
         public List<TestResult> endRun() {
-            var returnValue = List.copyOf(results.values());
-            results.replaceAll((_, v) -> new TestResult(v.testName, TestStatus.UNRUN, false));
+            var returnValue =
+                    results.entrySet().stream()
+                            .map(e -> new TestResult(e.getKey(), e.getValue()))
+                            .toList();
+
+            results.replaceAll((_, _) -> new StatusAndNew());
             return returnValue;
         }
     }
@@ -123,6 +141,33 @@ public class CollatorTest {
                 Matchers.contains(
                         new TestResult("test1", TestStatus.PASS, false),
                         new TestResult("test2", TestStatus.PASS, true)));
+    }
+
+    @Test
+    void theCollatorPassesRonsHardTest() {
+        var collator = new CollatedTests();
+
+        collator.add("T1", TestStatus.PASS);
+        assertThat(collator.endRun(), hasTestResult("T1", TestStatus.PASS, true));
+
+        collator.add("T2", TestStatus.PASS);
+        collator.add("T1", TestStatus.FAIL);
+
+        assertThat(
+                collator.endRun(),
+                Matchers.contains(
+                        new TestResult("T1", TestStatus.FAIL, false),
+                        new TestResult("T2", TestStatus.PASS, true)));
+
+        collator.add("T3", TestStatus.PASS);
+        collator.add("T1", TestStatus.FAIL);
+
+        assertThat(
+                collator.endRun(),
+                Matchers.contains(
+                        new TestResult("T1", TestStatus.FAIL, false),
+                        new TestResult("T2", TestStatus.UNRUN, false),
+                        new TestResult("T3", TestStatus.PASS, true)));
     }
 
     static Matcher<Iterable<? super TestResult>> hasTestResult(
