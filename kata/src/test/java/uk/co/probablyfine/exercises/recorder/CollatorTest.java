@@ -3,7 +3,9 @@ package uk.co.probablyfine.exercises.recorder;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
@@ -36,16 +38,20 @@ public class CollatorTest {
             PASS
         }
 
+        private final Set<String> seenTests = new HashSet<>();
         private List<TestResult> results = new ArrayList<>();
 
         public record TestResult(String testName, TestStatus status, boolean isNew) {}
 
         public void add(String testCase, TestStatus status) {
-            results.add(new TestResult(testCase, status, true));
+            results.add(new TestResult(testCase, status, !seenTests.contains(testCase)));
+            seenTests.add(testCase);
         }
 
         public List<TestResult> endRun() {
-            return results;
+            var returnValue = List.copyOf(results);
+            results.clear();
+            return returnValue;
         }
     }
 
@@ -66,5 +72,18 @@ public class CollatorTest {
         var expected = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, true);
 
         assertThat(summary, Matchers.hasItem(expected));
+    }
+
+    @Test
+    void theCollatorTracksNewTests() {
+        var collator = new CollatedTests();
+
+        collator.add("test1", CollatedTests.TestStatus.PASS);
+        var expected = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, true);
+        assertThat(collator.endRun(), Matchers.hasItem(expected));
+
+        collator.add("test1", CollatedTests.TestStatus.PASS);
+        var expected2 = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, false);
+        assertThat(collator.endRun(), Matchers.hasItem(expected2));
     }
 }
