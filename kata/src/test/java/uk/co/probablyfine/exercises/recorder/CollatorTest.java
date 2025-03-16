@@ -2,12 +2,12 @@ package uk.co.probablyfine.exercises.recorder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import uk.co.probablyfine.exercises.recorder.CollatorTest.CollatedTests.TestResult;
+import uk.co.probablyfine.exercises.recorder.CollatorTest.CollatedTests.TestStatus;
 
 public class CollatorTest {
     /*
@@ -39,7 +39,7 @@ public class CollatorTest {
         }
 
         private final Set<String> seenTests = new HashSet<>();
-        private List<TestResult> results = new ArrayList<>();
+        private final List<TestResult> results = new ArrayList<>();
 
         public record TestResult(String testName, TestStatus status, boolean isNew) {}
 
@@ -66,24 +66,24 @@ public class CollatorTest {
     void aSingleSubmittedTestGivesASingleResultBack() {
         var collator = new CollatedTests();
 
-        collator.add("test1", CollatedTests.TestStatus.PASS);
+        collator.add("test1", TestStatus.PASS);
 
-        var summary = collator.endRun();
-        var expected = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, true);
-
-        assertThat(summary, Matchers.hasItem(expected));
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, true));
     }
 
     @Test
     void theCollatorTracksNewTests() {
         var collator = new CollatedTests();
 
-        collator.add("test1", CollatedTests.TestStatus.PASS);
-        var expected = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, true);
-        assertThat(collator.endRun(), Matchers.hasItem(expected));
+        collator.add("test1", TestStatus.PASS);
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, true));
 
-        collator.add("test1", CollatedTests.TestStatus.PASS);
-        var expected2 = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, false);
-        assertThat(collator.endRun(), Matchers.hasItem(expected2));
+        collator.add("test1", TestStatus.PASS);
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, false));
+    }
+
+    static Matcher<Iterable<? super TestResult>> hasTestResult(
+            String test, TestStatus status, boolean isNew) {
+        return Matchers.hasItem(new TestResult(test, status, isNew));
     }
 }
