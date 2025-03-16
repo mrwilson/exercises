@@ -35,21 +35,30 @@ public class CollatorTest {
     static class CollatedTests {
 
         public enum TestStatus {
-            PASS
+            PASS,
+            UNRUN
         }
 
         private final Set<String> seenTests = new HashSet<>();
-        private final List<TestResult> results = new ArrayList<>();
+        private final Map<String, TestResult> results = new HashMap<>();
 
-        public record TestResult(String testName, TestStatus status, boolean isNew) {}
+        public record TestResult(String testName, TestStatus status, boolean isNew) {
+            static TestResult unrun(String test) {
+                return new TestResult(test, TestStatus.UNRUN, false);
+            }
+        }
 
         public void add(String testCase, TestStatus status) {
-            results.add(new TestResult(testCase, status, !seenTests.contains(testCase)));
+            results.put(testCase, new TestResult(testCase, status, !seenTests.contains(testCase)));
             seenTests.add(testCase);
         }
 
         public List<TestResult> endRun() {
-            var returnValue = List.copyOf(results);
+            var returnValue =
+                    seenTests.stream()
+                            .map(test -> results.getOrDefault(test, TestResult.unrun(test)))
+                            .toList();
+
             results.clear();
             return returnValue;
         }
@@ -80,6 +89,16 @@ public class CollatorTest {
 
         collator.add("test1", TestStatus.PASS);
         assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, false));
+    }
+
+    @Test
+    void theCollatorTracksUnrunTests() {
+        var collator = new CollatedTests();
+
+        collator.add("test1", TestStatus.PASS);
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.PASS, true));
+
+        assertThat(collator.endRun(), hasTestResult("test1", TestStatus.UNRUN, false));
     }
 
     static Matcher<Iterable<? super TestResult>> hasTestResult(
