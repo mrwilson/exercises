@@ -2,7 +2,7 @@ package uk.co.probablyfine.exercises.recorder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -32,10 +32,20 @@ public class CollatorTest {
 
     static class CollatedTests {
 
-        public record TestResult() {}
+        public enum TestStatus {
+            PASS
+        }
+
+        private List<TestResult> results = new ArrayList<>();
+
+        public record TestResult(String testName, TestStatus status, boolean isNew) {}
+
+        public void add(String testCase, TestStatus status) {
+            results.add(new TestResult(testCase, status, true));
+        }
 
         public List<TestResult> endRun() {
-            return Collections.emptyList();
+            return results;
         }
     }
 
@@ -44,5 +54,17 @@ public class CollatorTest {
         var collator = new CollatedTests();
 
         assertThat(collator.endRun(), Matchers.empty());
+    }
+
+    @Test
+    void aSingleSubmittedTestGivesASingleResultBack() {
+        var collator = new CollatedTests();
+
+        collator.add("test1", CollatedTests.TestStatus.PASS);
+
+        var summary = collator.endRun();
+        var expected = new CollatedTests.TestResult("test1", CollatedTests.TestStatus.PASS, true);
+
+        assertThat(summary, Matchers.hasItem(expected));
     }
 }
