@@ -6,12 +6,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.LongStream;
 import org.junit.jupiter.api.Test;
 
-public class Day2Test extends BaseTest<Long> {
+public class Day2Test extends BaseTest<List<Day2Test.Range>, Long> {
 
     public static final Predicate<String> DOUBLE_DIGITS =
             Pattern.compile("(\\d+)(\\1)").asMatchPredicate();
@@ -22,6 +23,16 @@ public class Day2Test extends BaseTest<Long> {
     public Day2Test() {
         super(2);
     }
+
+    @Override
+    List<Range> parse(String input) {
+        return Arrays.stream(input.split(","))
+                .map(x -> x.split("-"))
+                .map(x -> new Range(Long.parseLong(x[0]), Long.parseLong(x[1])))
+                .toList();
+    }
+
+    public record Range(long start, long end) {}
 
     @Test
     void rangeWithNoDuplicatesReturnsNothing() {
@@ -56,34 +67,25 @@ public class Day2Test extends BaseTest<Long> {
 
     private static LongStream check(long start, long end, Predicate<String> numberMatcher) {
         return LongStream.rangeClosed(start, end)
-                .mapToObj(Long::toString)
-                .filter(numberMatcher)
-                .mapToLong(Long::parseLong);
+                .parallel()
+                .filter(x -> numberMatcher.test(Long.toString(x)));
+    }
+
+    @Override
+    public Long part1(List<Range> input) {
+        return input.parallelStream()
+                .flatMapToLong(x -> check(x.start, x.end, DOUBLE_DIGITS))
+                .sum();
+    }
+
+    @Override
+    public Long part2(List<Range> input) {
+        return input.parallelStream()
+                .flatMapToLong(x -> check(x.start, x.end, AT_LEAST_DOUBLE_DIGITS))
+                .sum();
     }
 
     public static void main(String... args) {
         new Day2Test().run();
-    }
-
-    @Override
-    public Long part1(String input) {
-        return Arrays.stream(input.split(","))
-                .map(x -> x.split("-"))
-                .flatMapToLong(
-                        x -> check(Long.parseLong(x[0]), Long.parseLong(x[1]), DOUBLE_DIGITS))
-                .sum();
-    }
-
-    @Override
-    public Long part2(String input) {
-        return Arrays.stream(input.split(","))
-                .map(x -> x.split("-"))
-                .flatMapToLong(
-                        x ->
-                                check(
-                                        Long.parseLong(x[0]),
-                                        Long.parseLong(x[1]),
-                                        AT_LEAST_DOUBLE_DIGITS))
-                .sum();
     }
 }
