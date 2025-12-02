@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Mode;
@@ -47,6 +48,7 @@ public abstract class BaseTest<INPUT, OUTPUT> {
 
     @Test
     public void benchmarks() throws RunnerException {
+        Assumptions.assumeTrue(System.getProperty("benchmark") != null);
         var options =
                 new OptionsBuilder()
                         .warmupIterations(3)

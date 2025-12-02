@@ -24,6 +24,8 @@ public class Day2Test extends BaseTest<List<Day2Test.Range>, Long> {
         super(2);
     }
 
+    public record Range(long start, long end) {}
+
     @Override
     List<Range> parse(String input) {
         return Arrays.stream(input.split(","))
@@ -32,7 +34,19 @@ public class Day2Test extends BaseTest<List<Day2Test.Range>, Long> {
                 .toList();
     }
 
-    public record Range(long start, long end) {}
+    @Override
+    public Long part1(List<Range> input) {
+        return input.parallelStream()
+                .flatMapToLong(x -> check(x.start, x.end, DOUBLE_DIGITS))
+                .sum();
+    }
+
+    @Override
+    public Long part2(List<Range> input) {
+        return input.parallelStream()
+                .flatMapToLong(x -> check(x.start, x.end, AT_LEAST_DOUBLE_DIGITS))
+                .sum();
+    }
 
     @Test
     void rangeWithNoDuplicatesReturnsNothing() {
@@ -69,20 +83,6 @@ public class Day2Test extends BaseTest<List<Day2Test.Range>, Long> {
         return LongStream.rangeClosed(start, end)
                 .parallel()
                 .filter(x -> numberMatcher.test(Long.toString(x)));
-    }
-
-    @Override
-    public Long part1(List<Range> input) {
-        return input.parallelStream()
-                .flatMapToLong(x -> check(x.start, x.end, DOUBLE_DIGITS))
-                .sum();
-    }
-
-    @Override
-    public Long part2(List<Range> input) {
-        return input.parallelStream()
-                .flatMapToLong(x -> check(x.start, x.end, AT_LEAST_DOUBLE_DIGITS))
-                .sum();
     }
 
     public static void main(String... args) {
