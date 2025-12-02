@@ -7,15 +7,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.LongStream;
 import org.junit.jupiter.api.Test;
 
-public class Day2Test {
+public class Day2Test extends BaseTest<Long> {
 
     public static final Predicate<String> DOUBLE_DIGITS =
             Pattern.compile("(\\d+)(\\1)").asMatchPredicate();
@@ -46,16 +44,12 @@ public class Day2Test {
 
     @Test
     void part1Example() {
-        var t = exampleSum(DOUBLE_DIGITS);
-
-        assertThat(t, is(1227775554L));
+        assertThat(part1(data("/day2-test.txt")), is(1227775554L));
     }
 
     @Test
     void part2Example() {
-        var t = exampleSum(AT_LEAST_DOUBLE_DIGITS);
-
-        assertThat(t, is(4174379265L));
+        assertThat(part2(data("/day2-test.txt")), is(4174379265L));
     }
 
     private static LongStream check(long start, long end, Predicate<String> numberMatcher) {
@@ -65,35 +59,29 @@ public class Day2Test {
                 .mapToLong(Long::parseLong);
     }
 
-    private static long exampleSum(Predicate<String> atLeastDoubleDigits) {
-        var input =
-                "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124";
+    public static void main(String... args) throws URISyntaxException, IOException {
+        new Day2Test().run("day2.txt");
+    }
 
+    @Override
+    public Long part1(String input) {
+        return Arrays.stream(input.split(","))
+                .map(x -> x.split("-"))
+                .flatMapToLong(
+                        x -> check(Long.parseLong(x[0]), Long.parseLong(x[1]), DOUBLE_DIGITS))
+                .sum();
+    }
+
+    @Override
+    public Long part2(String input) {
         return Arrays.stream(input.split(","))
                 .map(x -> x.split("-"))
                 .flatMapToLong(
                         x ->
                                 check(
-                                        Integer.parseInt(x[0]),
-                                        Integer.parseInt(x[1]),
-                                        atLeastDoubleDigits))
+                                        Long.parseLong(x[0]),
+                                        Long.parseLong(x[1]),
+                                        AT_LEAST_DOUBLE_DIGITS))
                 .sum();
-    }
-
-    public static void main(String... args) throws URISyntaxException, IOException {
-        var input = Files.readString(Paths.get(Day2Test.class.getResource("/day2.txt").toURI()));
-
-        var t =
-                Arrays.stream(input.split(","))
-                        .map(x -> x.split("-"))
-                        .flatMapToLong(
-                                x ->
-                                        check(
-                                                Long.parseLong(x[0]),
-                                                Long.parseLong(x[1]),
-                                                AT_LEAST_DOUBLE_DIGITS))
-                        .sum();
-
-        System.out.println(t);
     }
 }
