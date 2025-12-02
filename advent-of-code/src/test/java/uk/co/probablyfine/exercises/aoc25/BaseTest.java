@@ -7,13 +7,21 @@ import java.nio.file.Paths;
 
 public abstract class BaseTest<T> {
 
+    protected final String testData;
+    protected final String realData;
+
+    public BaseTest(int day) {
+        this.testData = data("/day" + day + "-test.txt");
+        this.realData = data("/day" + day + ".txt");
+    }
+
     abstract T part1(String input);
 
     abstract T part2(String input);
 
-    public void run(String path) {
-        System.out.println("Part 1: " + part1(data(path)));
-        System.out.println("Part 2: " + part2(data(path)));
+    public void run() {
+        System.out.println("Part 1: " + part1(realData));
+        System.out.println("Part 2: " + part2(realData));
     }
 
     public String data(String path) {

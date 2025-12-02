@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -20,6 +18,10 @@ public class Day2Test extends BaseTest<Long> {
 
     public static final Predicate<String> AT_LEAST_DOUBLE_DIGITS =
             Pattern.compile("(\\d+)(\\1)+").asMatchPredicate();
+
+    public Day2Test() {
+        super(2);
+    }
 
     @Test
     void rangeWithNoDuplicatesReturnsNothing() {
@@ -44,12 +46,12 @@ public class Day2Test extends BaseTest<Long> {
 
     @Test
     void part1Example() {
-        assertThat(part1(data("/day2-test.txt")), is(1227775554L));
+        assertThat(part1(testData), is(1227775554L));
     }
 
     @Test
     void part2Example() {
-        assertThat(part2(data("/day2-test.txt")), is(4174379265L));
+        assertThat(part2(testData), is(4174379265L));
     }
 
     private static LongStream check(long start, long end, Predicate<String> numberMatcher) {
@@ -59,8 +61,8 @@ public class Day2Test extends BaseTest<Long> {
                 .mapToLong(Long::parseLong);
     }
 
-    public static void main(String... args) throws URISyntaxException, IOException {
-        new Day2Test().run("day2.txt");
+    public static void main(String... args) {
+        new Day2Test().run();
     }
 
     @Override
