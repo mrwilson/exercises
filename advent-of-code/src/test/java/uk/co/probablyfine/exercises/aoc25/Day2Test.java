@@ -5,10 +5,14 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import org.junit.jupiter.api.Test;
 
 public class Day2Test {
@@ -24,10 +28,10 @@ public class Day2Test {
         var t =
                 Arrays.stream(input.split(","))
                         .map(x -> x.split("-"))
-                        .flatMapToInt(x -> check(Integer.parseInt(x[0]), Integer.parseInt(x[1])))
+                        .flatMapToLong(x -> check(Integer.parseInt(x[0]), Integer.parseInt(x[1])))
                         .sum();
 
-        assertThat(t, is(1227775554));
+        assertThat(t, is(1227775554L));
     }
 
     @Test
@@ -41,21 +45,33 @@ public class Day2Test {
     void rangeWithDuplicatesReturnsDuplicates() {
         var invalidIds = check(10, 20);
 
-        assertThat(invalidIds.boxed().toList(), hasItem(11));
+        assertThat(invalidIds.boxed().toList(), hasItem(11L));
     }
 
     @Test
     void rangeWithDuplicatesReturnsMultipleDuplicates() {
         var invalidIds = check(10, 30);
 
-        assertThat(invalidIds.boxed().toList(), hasItems(11, 22));
+        assertThat(invalidIds.boxed().toList(), hasItems(11L, 22L));
     }
 
-    private IntStream check(int start, int end) {
-        return IntStream.rangeClosed(start, end)
-                .mapToObj(Integer::toString)
+    private static LongStream check(long start, long end) {
+        return LongStream.rangeClosed(start, end)
+                .mapToObj(Long::toString)
                 .filter(x -> x.length() % 2 == 0)
                 .filter(DOUBLE_DIGITS)
-                .mapToInt(Integer::parseInt);
+                .mapToLong(Long::parseLong);
+    }
+
+    public static void main(String... args) throws URISyntaxException, IOException {
+        var input = Files.readString(Paths.get(Day2Test.class.getResource("/day2.txt").toURI()));
+
+        var t =
+                Arrays.stream(input.split(","))
+                        .map(x -> x.split("-"))
+                        .flatMapToLong(x -> check(Long.parseLong(x[0]), Long.parseLong(x[1])))
+                        .sum();
+
+        System.out.println(t);
     }
 }

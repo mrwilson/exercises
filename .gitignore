@@ -1,2 +1,4 @@
 .idea/
 target/
+
+advent-of-code/src/test/resources/*
